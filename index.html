@@ -710,22 +710,36 @@ footer {
 <div class="pay-overlay" id="payOverlay">
   <div class="pay-modal">
     <button class="pay-close" onclick="closePay()">×</button>
-    <div>
-      <span class="pay-badge" id="modalBadge">홍담오가피진 2L</span>
-      <div class="pay-title">주문 확인</div>
+    <div class="pay-title">주문 확인</div>
+    <div class="pay-divider"></div>
+    <!-- 2L -->
+    <div class="pay-row" style="align-items:center;">
+      <div>
+        <div class="pay-label" style="font-weight:700;">홍담오가피진 2L</div>
+        <div style="font-size:12px;color:var(--ogp-muted);margin-top:2px;">25,000원 / 병</div>
+      </div>
+      <div class="pay-modal-qty">
+        <button class="qty-btn" onclick="changeModalQtyFor('2L',-1)">−</button>
+        <div class="qty-num" id="modal-qty-2L">0</div>
+        <button class="qty-btn" onclick="changeModalQtyFor('2L',1)">+</button>
+      </div>
+    </div>
+    <!-- 340mL -->
+    <div class="pay-row" style="align-items:center;margin-top:10px;">
+      <div>
+        <div class="pay-label" style="font-weight:700;">홍담오가피진 340mL</div>
+        <div style="font-size:12px;color:var(--ogp-muted);margin-top:2px;">3,000원 / 병</div>
+      </div>
+      <div class="pay-modal-qty">
+        <button class="qty-btn" onclick="changeModalQtyFor('340',-1)">−</button>
+        <div class="qty-num" id="modal-qty-340">0</div>
+        <button class="qty-btn" onclick="changeModalQtyFor('340',1)">+</button>
+      </div>
     </div>
     <div class="pay-divider"></div>
     <div class="pay-row">
       <span class="pay-label">상품 금액</span>
-      <span class="pay-val" id="modalUnitPrice">25,000원</span>
-    </div>
-    <div class="pay-row">
-      <span class="pay-label">수량</span>
-      <div class="pay-modal-qty">
-        <button class="qty-btn" onclick="changeModalQty(-1)">−</button>
-        <div class="qty-num" id="modalQtyNum">1</div>
-        <button class="qty-btn" onclick="changeModalQty(1)">+</button>
-      </div>
+      <span class="pay-val" id="modalSubtotal">0원</span>
     </div>
     <div class="pay-row">
       <span class="pay-label">배송비</span>
@@ -733,7 +747,7 @@ footer {
     </div>
     <div class="pay-total-row">
       <span class="pay-total-label">합계</span>
-      <span class="pay-total-val" id="modalTotal">28,000원</span>
+      <span class="pay-total-val" id="modalTotal">0원</span>
     </div>
     <button class="pay-confirm-btn" onclick="requestPay()">
       <svg width="20" height="20" viewBox="0 0 24 24" fill="#3A1D1D"><path d="M12 2C6.48 2 2 5.58 2 10c0 2.46 1.36 4.67 3.5 6.18V20l3.72-2.06A11 11 0 0012 18c5.52 0 10-3.58 10-8s-4.48-8-10-8z"/></svg>
@@ -753,46 +767,52 @@ const PRODUCTS = {
   '340': { name: '홍담오가피진 340mL', price: 3000  }
 };
 const SHIP_FEE = 3000, FREE_MIN = 40000;
-let curProd = '2L', modalQty = 1;
+let modalQtys = { '2L': 0, '340': 0 };
 
 function changeQty(type, d) {
   const el = document.getElementById('qty-' + type);
-  let v = parseInt(el.textContent) + d;
-  el.textContent = Math.max(1, Math.min(99, v));
+  el.textContent = Math.max(1, Math.min(99, parseInt(el.textContent) + d));
 }
 
 function openPay(type) {
-  curProd = type;
-  modalQty = parseInt(document.getElementById('qty-' + type).textContent);
+  modalQtys['2L']  = parseInt(document.getElementById('qty-2L').textContent);
+  modalQtys['340'] = parseInt(document.getElementById('qty-340').textContent);
+  if (modalQtys[type] < 1) modalQtys[type] = 1;
   updateModal();
   document.getElementById('payOverlay').classList.add('open');
 }
 function closePay() { document.getElementById('payOverlay').classList.remove('open'); }
 
-function changeModalQty(d) {
-  modalQty = Math.max(1, Math.min(99, modalQty + d));
+function changeModalQtyFor(type, d) {
+  modalQtys[type] = Math.max(0, Math.min(99, modalQtys[type] + d));
   updateModal();
 }
 function updateModal() {
-  const p = PRODUCTS[curProd];
-  const sub = p.price * modalQty;
-  const ship = sub >= FREE_MIN ? 0 : SHIP_FEE;
-  document.getElementById('modalBadge').textContent = p.name;
-  document.getElementById('modalUnitPrice').textContent = p.price.toLocaleString() + '원';
-  document.getElementById('modalQtyNum').textContent = modalQty;
+  const sub2L  = modalQtys['2L']  * PRODUCTS['2L'].price;
+  const sub340 = modalQtys['340'] * PRODUCTS['340'].price;
+  const subtotal = sub2L + sub340;
+  const ship = subtotal > 0 ? (subtotal >= FREE_MIN ? 0 : SHIP_FEE) : 0;
+  document.getElementById('modal-qty-2L').textContent  = modalQtys['2L'];
+  document.getElementById('modal-qty-340').textContent = modalQtys['340'];
+  document.getElementById('modalSubtotal').textContent = subtotal.toLocaleString() + '원';
   document.getElementById('modalShipping').textContent = ship === 0 ? '무료' : ship.toLocaleString() + '원';
-  document.getElementById('modalTotal').textContent = (sub + ship).toLocaleString() + '원';
+  document.getElementById('modalTotal').textContent    = (subtotal + ship).toLocaleString() + '원';
 }
 function requestPay() {
-  const p = PRODUCTS[curProd];
-  const sub = p.price * modalQty;
-  const ship = sub >= FREE_MIN ? 0 : SHIP_FEE;
+  const sub2L  = modalQtys['2L']  * PRODUCTS['2L'].price;
+  const sub340 = modalQtys['340'] * PRODUCTS['340'].price;
+  const subtotal = sub2L + sub340;
+  if (subtotal === 0) { alert('상품을 선택해주세요.'); return; }
+  const ship = subtotal >= FREE_MIN ? 0 : SHIP_FEE;
+  let name = '';
+  if (modalQtys['2L']  > 0) name += '홍담오가피진 2L ' + modalQtys['2L'] + '개';
+  if (modalQtys['340'] > 0) name += (name ? ' + ' : '') + '340mL ' + modalQtys['340'] + '개';
   IMP.request_pay({
     pg: 'kakaopay.TC0ONETIME',
     pay_method: 'card',
     merchant_uid: 'hongdam_' + Date.now(),
-    name: p.name + (modalQty > 1 ? ' ' + modalQty + '개' : ''),
-    amount: sub + ship,
+    name: name,
+    amount: subtotal + ship,
     buyer_name: '', buyer_tel: '', buyer_email: '',
   }, function(rsp) {
     if (rsp.success) {
