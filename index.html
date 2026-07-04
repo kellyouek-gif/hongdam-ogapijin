@@ -366,7 +366,7 @@ header {
 
 /* ── Footer ── */
 footer {
-  background:var(--ogp-green-900); padding:48px 64px;
+  background:var(--ogp-green-900); padding:48px 64px 32px;
   border-top:1px solid rgba(255,255,255,.05);
   display:flex; justify-content:space-between; align-items:flex-end; flex-wrap:wrap; gap:24px;
 }
@@ -719,13 +719,25 @@ footer {
     <a href="#howto">활용법</a>
     <a href="#drinks">음료</a>
     <a href="#b2b">납품 문의</a>
+    <a href="javascript:void(0)" onclick="openPolicy('terms')">이용약관</a>
+    <a href="javascript:void(0)" onclick="openPolicy('privacy')">개인정보처리방침</a>
+    <a href="javascript:void(0)" onclick="openPolicy('refund')">환불정책</a>
   </div>
   <div class="ft-copy">
-    041-633-2676 · www.hongdam.kr<br>
-    충청남도 홍성군 구항면 거북로 430<br>
+    상호: 농업회사법인 조선행도가 주식회사 · 대표자: 유은경 · 사업자등록번호: 390-88-03534<br>
+    주소: 충청남도 홍성군 구항면 거북로 386-35 · 전화: 041-633-2676 · www.hongdam.kr<br>
     © 2026 홍담오가피진. All rights reserved.
   </div>
 </footer>
+
+<!-- ── 약관 모달 ── -->
+<div id="policyOverlay" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:2000;overflow-y:auto;padding:40px 20px;" onclick="if(event.target===this)closePolicy()">
+  <div style="background:#fff;max-width:680px;margin:0 auto;border-radius:14px;padding:40px;position:relative;">
+    <button onclick="closePolicy()" style="position:absolute;top:20px;right:20px;background:none;border:none;font-size:22px;cursor:pointer;color:#666;">×</button>
+    <h2 id="policyTitle" style="font-family:'Gowun Batang',serif;font-size:24px;margin-bottom:24px;color:#1F3D2B;"></h2>
+    <div id="policyBody" style="font-size:14px;line-height:1.9;color:#444;white-space:pre-line;"></div>
+  </div>
+</div>
 
 <!-- ── 결제 모달 ── -->
 <div class="pay-overlay" id="payOverlay">
@@ -847,6 +859,114 @@ function requestPay() {
 document.getElementById('payOverlay').addEventListener('click', function(e) {
   if (e.target === this) closePay();
 });
+
+const POLICIES = {
+  terms: {
+    title: '이용약관',
+    body: `제1조 (목적)
+본 약관은 농업회사법인 조선행도가 주식회사(이하 "회사")가 운영하는 홍담오가피진 웹사이트(www.hongdam.kr)에서 제공하는 서비스의 이용 조건 및 절차에 관한 사항을 규정함을 목적으로 합니다.
+
+제2조 (정의)
+① "서비스"란 회사가 제공하는 홍담오가피진 제품 판매 및 관련 정보 제공 서비스를 의미합니다.
+② "이용자"란 본 약관에 동의하고 서비스를 이용하는 모든 회원 및 비회원을 말합니다.
+
+제3조 (약관의 효력 및 변경)
+① 본 약관은 서비스를 이용하고자 하는 이용자에게 공시함으로써 효력이 발생합니다.
+② 회사는 필요한 경우 약관을 변경할 수 있으며, 변경 시 웹사이트에 공지합니다.
+
+제4조 (서비스의 이용)
+① 서비스 이용은 회사의 업무상 또는 기술상 특별한 지장이 없는 한 연중무휴 제공됩니다.
+② 회사는 서비스 유지·보수를 위해 일시적으로 서비스를 중단할 수 있습니다.
+
+제5조 (구매 및 결제)
+① 이용자는 웹사이트에서 제품을 선택하고 결제 절차를 통해 구매할 수 있습니다.
+② 결제는 카카오페이 등 회사가 제공하는 결제 수단을 이용합니다.
+
+제6조 (면책조항)
+회사는 천재지변, 전쟁, 기타 불가항력적 사유로 서비스를 제공할 수 없는 경우 책임이 면제됩니다.
+
+제7조 (준거법 및 관할)
+본 약관에 관한 분쟁은 대한민국 법률을 준거법으로 하며, 분쟁 발생 시 관할 법원은 회사 소재지 관할 법원으로 합니다.
+
+시행일: 2026년 1월 1일
+사업자: 농업회사법인 조선행도가 주식회사
+대표자: 유은경`
+  },
+  privacy: {
+    title: '개인정보처리방침',
+    body: `농업회사법인 조선행도가 주식회사(이하 "회사")는 개인정보보호법에 따라 이용자의 개인정보를 보호하고 이와 관련한 고충을 신속하게 처리하기 위하여 다음과 같이 개인정보처리방침을 수립·공개합니다.
+
+제1조 (수집하는 개인정보 항목)
+회사는 결제 처리를 위해 아래의 개인정보를 수집합니다.
+· 필수: 구매자명, 연락처, 배송지 주소, 결제 정보
+
+제2조 (개인정보 수집 목적)
+· 상품 주문, 결제, 배송 처리
+· 고객 상담 및 민원 처리
+· 법령에 따른 의무 이행
+
+제3조 (개인정보 보유 및 이용 기간)
+· 전자상거래 기록: 5년 (전자상거래 등에서의 소비자보호에 관한 법률)
+· 소비자 불만 및 분쟁 처리 기록: 3년
+
+제4조 (개인정보 제3자 제공)
+회사는 원칙적으로 이용자의 개인정보를 제3자에게 제공하지 않습니다. 단, 결제 처리를 위해 포트원(주)에 결제 관련 정보를 제공합니다.
+
+제5조 (개인정보 파기)
+보유 기간 경과 후 지체 없이 개인정보를 파기합니다. 전자적 파일은 복구 불가능한 방법으로 영구 삭제합니다.
+
+제6조 (이용자의 권리)
+이용자는 언제든지 개인정보 열람, 수정, 삭제, 처리 정지를 요청할 수 있습니다.
+
+제7조 (개인정보 보호책임자)
+· 담당자: 유은경
+· 연락처: 041-633-2676
+
+시행일: 2026년 1월 1일`
+  },
+  refund: {
+    title: '환불정책',
+    body: `홍담오가피진 환불 및 교환 정책
+
+■ 교환·환불 가능 기간
+상품 수령 후 7일 이내 신청 가능합니다.
+
+■ 교환·환불 가능 사유
+· 상품 불량 또는 파손 (수령 즉시 확인 후 사진 첨부 요청)
+· 주문과 다른 상품이 배송된 경우
+· 소비자 단순 변심 (미개봉 상태에 한함)
+
+■ 교환·환불 불가 사유
+· 개봉 후 단순 변심
+· 소비자 취급 부주의로 인한 파손
+· 소비기한이 충분히 남아있는 정상 상품의 반품 요청 (개봉 후)
+
+■ 환불 처리 절차
+1. 고객센터 041-633-2676 또는 이메일로 환불 신청
+2. 반품 확인 후 3~5 영업일 이내 환불 처리
+3. 결제 수단에 따라 환불 소요 기간이 다를 수 있습니다
+
+■ 배송비 부담
+· 상품 불량·오배송: 회사 부담
+· 단순 변심: 고객 부담 (왕복 배송비)
+
+■ 고객센터
+전화: 041-633-2676
+운영시간: 평일 09:00 ~ 18:00 (주말·공휴일 휴무)`
+  }
+};
+
+function openPolicy(type) {
+  const p = POLICIES[type];
+  document.getElementById('policyTitle').textContent = p.title;
+  document.getElementById('policyBody').textContent = p.body;
+  document.getElementById('policyOverlay').style.display = 'block';
+  document.body.style.overflow = 'hidden';
+}
+function closePolicy() {
+  document.getElementById('policyOverlay').style.display = 'none';
+  document.body.style.overflow = '';
+}
 </script>
 
 <!-- GSAP -->
