@@ -69,7 +69,7 @@ header {
   border-bottom: 1px solid var(--ogp-border);
 }
 .h-brand { display:flex; align-items:center; gap:10px; text-decoration:none; }
-.h-logo { width:36px; height:36px; border-radius:50%; object-fit:cover; border:1.5px solid var(--ogp-border); }
+.h-logo { width:36px; height:36px; object-fit:contain; }
 .h-name { font-family:var(--ogp-font-display); font-weight:700; font-size:18px; color:var(--ogp-green-800); letter-spacing:.02em; }
 .h-nav { display:flex; gap:0; align-items:center; }
 .h-nav a {
@@ -176,7 +176,7 @@ header {
 }
 
 /* ── Sections ── */
-.sec { padding:96px 64px; }
+.sec { padding:120px 64px; }
 .sec-overline {
   display:flex; align-items:center; gap:10px;
   font-size:11px; font-weight:700; letter-spacing:.16em;
@@ -204,20 +204,17 @@ header {
 
 /* ── Products ── */
 #products { background:var(--ogp-paper); padding:0; }
-.prod-header { padding:64px 64px 40px; }
+.prod-header { padding:96px 64px 48px; }
 .prod-grid {
   display:grid; grid-template-columns:1fr 1fr;
   gap:1px; background:var(--ogp-border);
 }
 .prod-card {
   background:var(--ogp-surface);
-  padding:48px 40px; display:flex; flex-direction:column; gap:24px;
+  padding:56px 48px; display:flex; flex-direction:column; gap:28px;
   transition:background .3s;
 }
 .prod-card:hover { background:#FFFEF9; }
-.prod-img { width:100%; aspect-ratio:4/3; overflow:hidden; border-radius:var(--ogp-radius-lg); }
-.prod-img img { width:100%; height:100%; object-fit:cover; transition:transform .5s; }
-.prod-card:hover .prod-img img { transform:scale(1.04); }
 .prod-vol {
   font-family:var(--ogp-font-display); font-weight:700;
   font-size:clamp(56px,10vw,96px); color:var(--ogp-green-700);
@@ -332,25 +329,22 @@ header {
 }
 
 /* ── Drinks ── */
-#drinks { background:var(--ogp-paper); }
-.drink-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:16px; margin-bottom:16px; }
+#drinks { background:var(--ogp-surface); }
+.drink-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:1px; background:var(--ogp-border); }
 .drink-card {
-  background:var(--ogp-surface); border:1px solid var(--ogp-border);
-  border-radius:var(--ogp-radius-lg); overflow:hidden;
-  box-shadow:var(--ogp-shadow-sm); transition:box-shadow .3s, transform .3s;
+  background:var(--ogp-surface);
+  padding:40px 36px;
+  transition:background .25s;
+  border-top:2px solid transparent;
 }
-.drink-card:hover { box-shadow:var(--ogp-shadow-md); transform:translateY(-2px); }
-.drink-card-img { width:100%; aspect-ratio:3/2; overflow:hidden; }
-.drink-card-img img { width:100%; height:100%; object-fit:cover; transition:transform .4s; }
-.drink-card:hover .drink-card-img img { transform:scale(1.04); }
-.drink-card-body { padding:20px 22px 24px; }
+.drink-card:hover { background:#FFFEF9; border-top-color:var(--ogp-gold-500); }
 .drink-badge {
-  font-size:10px; font-weight:700; letter-spacing:.12em;
-  color:var(--ogp-gold-700); text-transform:uppercase;
-  display:block; margin-bottom:10px;
+  font-size:10px; font-weight:700; letter-spacing:.14em;
+  color:var(--ogp-gold-600); text-transform:uppercase;
+  display:block; margin-bottom:14px;
 }
-.drink-name { font-family:var(--ogp-font-display); font-weight:700; font-size:18px; color:var(--ogp-ink); margin-bottom:10px; line-height:1.3; }
-.drink-recipe { font-size:13px; color:var(--ogp-muted); line-height:1.9; }
+.drink-name { font-family:var(--ogp-font-display); font-weight:700; font-size:22px; color:var(--ogp-ink); margin-bottom:12px; line-height:1.3; }
+.drink-recipe { font-size:13px; color:var(--ogp-muted); line-height:2; }
 .drink-recipe b { color:var(--ogp-green-600); font-weight:600; }
 
 /* ── B2B ── */
@@ -440,10 +434,11 @@ footer {
   .hero-left { padding: 60px 24px; }
   .hero-right { height: 280px; }
   .hero-right img { mask-image: linear-gradient(to bottom, transparent 0%, black 30%); -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 30%); }
-  .sec { padding: 64px 24px; }
-  .prod-header { padding: 48px 24px 32px; }
+  .sec { padding: 80px 24px; }
+  .prod-header { padding: 64px 24px 40px; }
   .prod-grid { grid-template-columns: 1fr; }
-  .prod-card { padding: 36px 24px; }
+  .prod-card { padding: 40px 24px; }
+  .drink-grid { grid-template-columns: 1fr; }
   .why-grid { grid-template-columns: 1fr; }
   .drink-grid { grid-template-columns: 1fr; }
   .b2b-grid { grid-template-columns: 1fr; }
@@ -513,9 +508,6 @@ footer {
   <div class="prod-grid">
     <!-- 2L -->
     <div class="prod-card rv">
-      <div class="prod-img">
-        <img src="product-new.jpg" alt="홍담오가피진 2L" style="object-position:55% 5%;">
-      </div>
       <div class="prod-vol">2<span>L</span></div>
       <div>
         <div class="prod-name">홍담오가피진 원액</div>
@@ -545,9 +537,6 @@ footer {
 
     <!-- 340mL -->
     <div class="prod-card rv">
-      <div class="prod-img" style="aspect-ratio:4/3;">
-        <img src="product-new.jpg" alt="홍담오가피진 340mL" style="object-position:82% 5%;">
-      </div>
       <div class="prod-vol" style="font-size:clamp(40px,6vw,64px);">340<span>mL</span></div>
       <div>
         <div class="prod-name">홍담오가피진 음용</div>
@@ -656,36 +645,24 @@ footer {
 
   <div class="drink-grid">
     <div class="drink-card rv">
-      <div class="drink-card-img"><img src="https://images.unsplash.com/photo-1523362628745-0c100150b504?w=500&q=80" alt="오가피진 워터"></div>
-      <div class="drink-card-body">
-        <span class="drink-badge">Water · 01</span>
-        <div class="drink-name">오가피진 워터</div>
-        <div class="drink-recipe">원액 <b>70mL</b> + 얼음물 <b>200mL</b></div>
-      </div>
+      <span class="drink-badge">Water · 01</span>
+      <div class="drink-name">오가피진 워터</div>
+      <div class="drink-recipe">원액 <b>70mL</b> + 얼음물 <b>200mL</b><br>가장 순수하게 즐기는 방법</div>
     </div>
     <div class="drink-card rv">
-      <div class="drink-card-img"><img src="https://images.unsplash.com/photo-1625772299848-391b6a87d7b3?w=500&q=80" alt="오가피진 스파클링"></div>
-      <div class="drink-card-body">
-        <span class="drink-badge">Water · 02</span>
-        <div class="drink-name">오가피진 스파클링</div>
-        <div class="drink-recipe">원액 <b>60mL</b> + 탄산수 <b>180mL</b> + 레몬</div>
-      </div>
+      <span class="drink-badge">Water · 02</span>
+      <div class="drink-name">오가피진 스파클링</div>
+      <div class="drink-recipe">원액 <b>60mL</b> + 탄산수 <b>180mL</b> + 레몬<br>청량하게 즐기는 여름 버전</div>
     </div>
     <div class="drink-card rv">
-      <div class="drink-card-img"><img src="https://images.unsplash.com/photo-1536935338788-846bb9981813?w=500&q=80" alt="오가피 블랙"></div>
-      <div class="drink-card-body">
-        <span class="drink-badge">Black · 01</span>
-        <div class="drink-name">오가피 블랙</div>
-        <div class="drink-recipe">원액 <b>30mL</b> + 에스프레소 <b>1샷</b> + 얼음물 <b>150mL</b></div>
-      </div>
+      <span class="drink-badge">Black · 01</span>
+      <div class="drink-name">오가피 블랙</div>
+      <div class="drink-recipe">원액 <b>30mL</b> + 에스프레소 <b>1샷</b> + 얼음물 <b>150mL</b><br>카페인과 오가피의 시너지</div>
     </div>
     <div class="drink-card rv">
-      <div class="drink-card-img"><img src="https://images.unsplash.com/photo-1461023058943-07fcbe16d735?w=500&q=80" alt="오가피 콜드브루"></div>
-      <div class="drink-card-body">
-        <span class="drink-badge">Black · 02</span>
-        <div class="drink-name">오가피 콜드브루</div>
-        <div class="drink-recipe">원액 <b>40mL</b> + 콜드브루 <b>150mL</b> + 얼음</div>
-      </div>
+      <span class="drink-badge">Black · 02</span>
+      <div class="drink-name">오가피 콜드브루</div>
+      <div class="drink-recipe">원액 <b>40mL</b> + 콜드브루 <b>150mL</b> + 얼음<br>부드럽고 깊은 풍미</div>
     </div>
   </div>
 </section>
