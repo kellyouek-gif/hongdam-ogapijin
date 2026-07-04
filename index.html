@@ -1,0 +1,842 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>홍담오가피진 — 자연에서 온 건강한 한 모금</title>
+<link href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css">
+
+<style>
+/* ── Design Tokens ── */
+:root {
+  --ogp-green-900: #10261A;
+  --ogp-green-800: #16301F;
+  --ogp-green-700: #1F3D2B;
+  --ogp-green-600: #2E5A3A;
+  --ogp-green-500: #3A6B44;
+  --ogp-green-300: #7FA37E;
+  --ogp-green-100: #DCE6D8;
+  --ogp-gold-700:  #A67C2E;
+  --ogp-gold-600:  #B98F38;
+  --ogp-gold-500:  #C9A24B;
+  --ogp-gold-400:  #DDBE74;
+  --ogp-gold-200:  #EBD9AE;
+  --ogp-amber:     #C6702A;
+  --ogp-berry:     #3A2422;
+  --ogp-paper:     #F6F1E7;
+  --ogp-surface:   #FFFDF8;
+  --ogp-sand:      #EFE7D5;
+  --ogp-border:    #E4D9C2;
+  --ogp-muted:     #6B6455;
+  --ogp-ink:       #211F18;
+  --ogp-primary:   var(--ogp-green-700);
+  --ogp-accent:    var(--ogp-gold-500);
+  --ogp-shadow-sm: 0 1px 2px rgba(22,48,31,.08);
+  --ogp-shadow-md: 0 6px 14px -6px rgba(22,48,31,.20);
+  --ogp-shadow-lg: 0 16px 30px -12px rgba(22,48,31,.28);
+  --ogp-shadow-xl: 0 30px 60px -24px rgba(22,48,31,.40);
+  --ogp-font-display: 'Gowun Batang', 'Nanum Myeongjo', serif;
+  --ogp-font-body: 'Pretendard', -apple-system, sans-serif;
+  --ogp-radius-sm: 6px;
+  --ogp-radius-md: 9px;
+  --ogp-radius-lg: 14px;
+  --ogp-radius-xl: 22px;
+  --ogp-radius-pill: 999px;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; overflow-x: hidden; }
+body {
+  font-family: var(--ogp-font-body);
+  background: var(--ogp-paper);
+  color: var(--ogp-ink);
+  word-break: keep-all;
+  overflow-x: hidden;
+}
+
+/* ── Progress bar ── */
+#bar { position:fixed; top:0; left:0; height:2px; background:var(--ogp-gold-500); z-index:999; width:0; transition:width .1s; }
+
+/* ── Header ── */
+header {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 500;
+  height: 64px;
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 0 24px;
+  background: rgba(246,241,231,.92);
+  backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--ogp-border);
+}
+.h-brand { display:flex; align-items:center; gap:10px; text-decoration:none; }
+.h-logo { width:36px; height:36px; border-radius:50%; object-fit:cover; border:1.5px solid var(--ogp-border); }
+.h-name { font-family:var(--ogp-font-display); font-weight:700; font-size:18px; color:var(--ogp-green-800); letter-spacing:.02em; }
+.h-nav { display:flex; gap:0; align-items:center; }
+.h-nav a {
+  font-size:13px; font-weight:600; color:var(--ogp-muted);
+  text-decoration:none; padding:8px 14px; letter-spacing:.02em;
+  transition:color .2s;
+}
+.h-nav a:hover { color:var(--ogp-green-700); }
+.h-cta {
+  background:var(--ogp-green-700); color:var(--ogp-paper) !important;
+  border-radius:var(--ogp-radius-md); margin-left:8px;
+  padding:9px 18px !important; font-weight:700 !important;
+  transition:background .2s !important;
+}
+.h-cta:hover { background:var(--ogp-green-800) !important; color:var(--ogp-paper) !important; }
+
+/* ── Hero ── */
+#hero {
+  min-height: 100svh;
+  padding-top: 64px;
+  background: var(--ogp-green-800);
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  position: relative; overflow: hidden;
+}
+.hero-left {
+  display:flex; flex-direction:column; justify-content:center;
+  padding: 80px 56px 80px 64px;
+  position: relative; z-index: 2;
+}
+.hero-overline {
+  display:flex; align-items:center; gap:12px; margin-bottom:28px;
+}
+.hero-overline-line { width:28px; height:1px; background:var(--ogp-gold-500); }
+.hero-overline-txt {
+  font-family:var(--ogp-font-body); font-size:11px; font-weight:700;
+  letter-spacing:.16em; color:var(--ogp-gold-500); text-transform:uppercase;
+}
+.hero-title {
+  font-family:var(--ogp-font-display); font-weight:700;
+  font-size:clamp(52px,6vw,80px); line-height:1.1;
+  color:var(--ogp-paper); margin-bottom:8px;
+  letter-spacing:-.02em;
+}
+.hero-title-sub {
+  font-family:var(--ogp-font-display); font-weight:400;
+  font-size:clamp(18px,2vw,24px); color:var(--ogp-gold-400);
+  margin-bottom:32px; line-height:1.6;
+}
+.hero-desc {
+  font-size:16px; font-weight:400; color:rgba(246,241,231,.6);
+  line-height:1.8; margin-bottom:48px; max-width:360px;
+}
+.hero-btns { display:flex; gap:12px; flex-wrap:wrap; }
+.btn-primary {
+  font-family:var(--ogp-font-body); font-size:15px; font-weight:700;
+  color:var(--ogp-green-800); background:var(--ogp-gold-500);
+  border:1.5px solid var(--ogp-gold-500); border-radius:var(--ogp-radius-md);
+  padding:14px 28px; cursor:pointer; text-decoration:none;
+  transition:background .2s, border-color .2s;
+  box-shadow:0 8px 18px -8px rgba(201,162,75,.6);
+  display:inline-flex; align-items:center; gap:8px;
+}
+.btn-primary:hover { background:var(--ogp-gold-600); border-color:var(--ogp-gold-600); }
+.btn-secondary {
+  font-family:var(--ogp-font-body); font-size:15px; font-weight:700;
+  color:var(--ogp-paper); background:transparent;
+  border:1.5px solid rgba(246,241,231,.3); border-radius:var(--ogp-radius-md);
+  padding:14px 28px; cursor:pointer; text-decoration:none;
+  transition:border-color .2s, background .2s;
+  display:inline-flex; align-items:center; gap:8px;
+}
+.btn-secondary:hover { border-color:rgba(246,241,231,.6); background:rgba(246,241,231,.06); }
+.hero-right {
+  position:relative; overflow:hidden;
+}
+.hero-right img {
+  width:100%; height:100%; object-fit:cover; object-position:55% center;
+  display:block;
+  mask-image: linear-gradient(to right, transparent 0%, black 20%);
+  -webkit-mask-image: linear-gradient(to right, transparent 0%, black 20%);
+}
+.hero-right-overlay {
+  position:absolute; inset:0;
+  background:linear-gradient(to right, var(--ogp-green-800) 0%, transparent 30%);
+}
+
+/* ── Sections ── */
+.sec { padding:96px 64px; }
+.sec-overline {
+  display:flex; align-items:center; gap:10px;
+  font-size:11px; font-weight:700; letter-spacing:.16em;
+  color:var(--ogp-gold-500); text-transform:uppercase; margin-bottom:16px;
+}
+.sec-overline::before { content:''; width:20px; height:1px; background:var(--ogp-gold-500); }
+.sec-title {
+  font-family:var(--ogp-font-display); font-weight:700;
+  font-size:clamp(32px,4vw,48px); line-height:1.15;
+  letter-spacing:-.02em; color:var(--ogp-ink); margin-bottom:40px;
+}
+.sec-title em { color:var(--ogp-green-600); font-style:normal; }
+.divider { height:1px; background:var(--ogp-border); }
+
+/* ── Brand statement ── */
+#statement { background:var(--ogp-surface); }
+.stmt-body { max-width:600px; }
+.stmt-sub { font-size:17px; font-weight:400; color:var(--ogp-muted); line-height:1.8; }
+.stmt-highlight {
+  display:inline-block; margin-top:24px;
+  font-size:13px; font-weight:700; letter-spacing:.1em;
+  color:var(--ogp-green-700); text-transform:uppercase;
+  border-bottom:2px solid var(--ogp-gold-400); padding-bottom:2px;
+}
+
+/* ── Products ── */
+#products { background:var(--ogp-paper); padding:0; }
+.prod-header { padding:64px 64px 40px; }
+.prod-grid {
+  display:grid; grid-template-columns:1fr 1fr;
+  gap:1px; background:var(--ogp-border);
+}
+.prod-card {
+  background:var(--ogp-surface);
+  padding:48px 40px; display:flex; flex-direction:column; gap:24px;
+  transition:background .3s;
+}
+.prod-card:hover { background:#FFFEF9; }
+.prod-img { width:100%; aspect-ratio:4/3; overflow:hidden; border-radius:var(--ogp-radius-lg); }
+.prod-img img { width:100%; height:100%; object-fit:cover; transition:transform .5s; }
+.prod-card:hover .prod-img img { transform:scale(1.04); }
+.prod-vol {
+  font-family:var(--ogp-font-display); font-weight:700;
+  font-size:clamp(56px,10vw,96px); color:var(--ogp-green-700);
+  line-height:1; letter-spacing:-.03em;
+}
+.prod-vol span { font-size:.42em; color:var(--ogp-green-300); }
+.prod-name { font-size:16px; font-weight:700; color:var(--ogp-ink); margin-bottom:6px; }
+.prod-desc { font-size:14px; font-weight:400; color:var(--ogp-muted); line-height:1.8; }
+.prod-tags { display:flex; flex-wrap:wrap; gap:6px; }
+.prod-tag {
+  font-size:11px; font-weight:700; letter-spacing:.06em;
+  color:var(--ogp-green-700); background:var(--ogp-green-100);
+  border-radius:var(--ogp-radius-pill); padding:5px 12px;
+}
+.prod-price-row { display:flex; align-items:baseline; gap:6px; margin-top:4px; }
+.prod-price {
+  font-family:var(--ogp-font-display); font-weight:700;
+  font-size:28px; color:var(--ogp-ink);
+}
+.prod-price-unit { font-size:13px; color:var(--ogp-muted); font-weight:400; }
+.prod-shipping { font-size:12px; color:var(--ogp-green-500); font-weight:600; margin-top:4px; }
+.qty-wrap { display:flex; align-items:center; gap:12px; }
+.qty-row {
+  display:flex; align-items:center;
+  border:1.5px solid var(--ogp-border); border-radius:var(--ogp-radius-md); overflow:hidden;
+}
+.qty-btn {
+  background:none; border:none; width:36px; height:38px;
+  font-size:18px; color:var(--ogp-green-700); cursor:pointer;
+  display:flex; align-items:center; justify-content:center;
+  transition:background .2s;
+}
+.qty-btn:hover { background:var(--ogp-green-100); }
+.qty-num {
+  min-width:40px; text-align:center; font-weight:700; font-size:15px;
+  color:var(--ogp-ink); border-left:1.5px solid var(--ogp-border); border-right:1.5px solid var(--ogp-border);
+  line-height:38px;
+}
+.prod-buy-btn {
+  font-family:var(--ogp-font-body); font-size:14px; font-weight:700;
+  color:var(--ogp-paper); background:var(--ogp-green-700);
+  border:1.5px solid var(--ogp-green-700); border-radius:var(--ogp-radius-md);
+  padding:13px 24px; cursor:pointer; width:100%; margin-top:auto;
+  transition:background .2s; letter-spacing:.04em;
+  display:flex; align-items:center; justify-content:center; gap:8px;
+}
+.prod-buy-btn:hover { background:var(--ogp-green-800); border-color:var(--ogp-green-800); }
+
+/* 구매 배너 */
+.buy-banner {
+  background:var(--ogp-green-700); padding:32px 64px;
+  display:flex; justify-content:space-between; align-items:center; gap:16px; flex-wrap:wrap;
+}
+.buy-banner-txt {
+  font-family:var(--ogp-font-display); font-weight:700;
+  font-size:22px; color:var(--ogp-paper);
+}
+.buy-banner-sub { font-size:13px; color:rgba(246,241,231,.6); margin-top:4px; font-weight:400; }
+.btn-gold {
+  font-family:var(--ogp-font-body); font-size:14px; font-weight:700;
+  color:var(--ogp-green-800); background:var(--ogp-gold-500);
+  border:1.5px solid var(--ogp-gold-500); border-radius:var(--ogp-radius-md);
+  padding:12px 24px; cursor:pointer; white-space:nowrap;
+  transition:background .2s; text-decoration:none;
+  display:inline-flex; align-items:center; gap:6px;
+}
+.btn-gold:hover { background:var(--ogp-gold-600); border-color:var(--ogp-gold-600); }
+
+/* ── Why ── */
+#why { background:var(--ogp-green-800); }
+#why .sec-title { color:var(--ogp-paper); }
+#why .sec-overline::before { background:var(--ogp-gold-500); }
+.why-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:1px; background:rgba(255,255,255,.05); }
+.why-card {
+  background:var(--ogp-green-800); padding:40px 32px;
+  border-top:2px solid transparent;
+  transition:border-top-color .3s, background .3s;
+  display:flex; flex-direction:column; gap:0;
+}
+.why-card:hover { border-top-color:var(--ogp-gold-500); background:#1a3621; }
+.why-num {
+  font-family:var(--ogp-font-display); font-weight:700;
+  font-size:48px; color:rgba(201,162,75,.1); line-height:1; margin-bottom:20px;
+}
+.why-title {
+  font-family:var(--ogp-font-display); font-weight:700;
+  font-size:20px; color:var(--ogp-paper); line-height:1.3;
+  padding-bottom:14px; border-bottom:1px solid rgba(201,162,75,.15); margin-bottom:14px;
+}
+.why-desc { font-size:13px; color:rgba(246,241,231,.5); line-height:1.9; font-weight:400; }
+
+/* ── How to drink ── */
+#howto { background:var(--ogp-surface); }
+.how-list { display:flex; flex-direction:column; gap:1px; }
+.how-item {
+  display:flex; gap:28px; padding:32px 0;
+  border-bottom:1px solid var(--ogp-border); align-items:flex-start;
+}
+.how-num {
+  font-family:var(--ogp-font-display); font-weight:700;
+  font-size:40px; color:rgba(31,61,43,.1); line-height:1;
+  flex-shrink:0; width:52px; padding-top:4px;
+}
+.how-name { font-size:17px; font-weight:700; color:var(--ogp-ink); margin-bottom:8px; }
+.how-desc { font-size:14px; color:var(--ogp-muted); line-height:1.8; }
+.how-ratio {
+  display:inline-block; margin-top:12px;
+  font-size:11px; font-weight:700; letter-spacing:.08em;
+  color:var(--ogp-green-700); text-transform:uppercase;
+  border:1.5px solid var(--ogp-green-100); border-radius:var(--ogp-radius-pill);
+  padding:5px 14px;
+}
+
+/* ── Drinks ── */
+#drinks { background:var(--ogp-paper); }
+.drink-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:16px; margin-bottom:16px; }
+.drink-card {
+  background:var(--ogp-surface); border:1px solid var(--ogp-border);
+  border-radius:var(--ogp-radius-lg); overflow:hidden;
+  box-shadow:var(--ogp-shadow-sm); transition:box-shadow .3s, transform .3s;
+}
+.drink-card:hover { box-shadow:var(--ogp-shadow-md); transform:translateY(-2px); }
+.drink-card-body { padding:24px 22px 28px; }
+.drink-badge {
+  font-size:10px; font-weight:700; letter-spacing:.12em;
+  color:var(--ogp-gold-700); text-transform:uppercase;
+  display:block; margin-bottom:10px;
+}
+.drink-name { font-family:var(--ogp-font-display); font-weight:700; font-size:18px; color:var(--ogp-ink); margin-bottom:10px; line-height:1.3; }
+.drink-recipe { font-size:13px; color:var(--ogp-muted); line-height:1.9; }
+.drink-recipe b { color:var(--ogp-green-600); font-weight:600; }
+
+/* ── B2B ── */
+#b2b { background:var(--ogp-green-900); }
+#b2b .sec-title { color:var(--ogp-paper); }
+#b2b .sec-overline::before { background:var(--ogp-gold-500); }
+.b2b-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:1px; background:rgba(255,255,255,.04); margin-bottom:40px; }
+.b2b-card {
+  background:var(--ogp-green-900); padding:32px 28px;
+  border-left:2px solid transparent; transition:.3s;
+}
+.b2b-card:hover { background:rgba(255,255,255,.04); border-left-color:var(--ogp-gold-500); }
+.b2b-icon { font-size:24px; display:block; margin-bottom:14px; }
+.b2b-name { font-size:16px; font-weight:700; color:var(--ogp-paper); margin-bottom:8px; }
+.b2b-desc { font-size:13px; color:rgba(246,241,231,.4); line-height:1.8; }
+
+/* ── Footer ── */
+footer {
+  background:var(--ogp-green-900); padding:48px 64px;
+  border-top:1px solid rgba(255,255,255,.05);
+  display:flex; justify-content:space-between; align-items:flex-end; flex-wrap:wrap; gap:24px;
+}
+.ft-name { font-family:var(--ogp-font-display); font-weight:700; font-size:18px; color:rgba(246,241,231,.3); letter-spacing:.02em; }
+.ft-links { display:flex; flex-wrap:wrap; gap:20px; }
+.ft-links a { font-size:12px; color:rgba(246,241,231,.2); text-decoration:none; transition:color .2s; }
+.ft-links a:hover { color:rgba(246,241,231,.55); }
+.ft-copy { font-size:12px; color:rgba(246,241,231,.15); line-height:1.8; }
+
+/* ── Reveal animations ── */
+.rv { opacity:0; transform:translateY(28px); }
+
+/* ── 결제 모달 ── */
+.pay-overlay {
+  display:none; position:fixed; inset:0; z-index:900;
+  background:rgba(16,38,26,.72); backdrop-filter:blur(8px);
+  align-items:center; justify-content:center; padding:20px;
+}
+.pay-overlay.open { display:flex; }
+.pay-modal {
+  background:var(--ogp-surface); border:1px solid var(--ogp-border);
+  border-radius:var(--ogp-radius-xl); width:100%; max-width:440px;
+  padding:40px 36px; display:flex; flex-direction:column; gap:24px;
+  position:relative; box-shadow:var(--ogp-shadow-xl);
+}
+.pay-close {
+  position:absolute; top:20px; right:24px;
+  background:none; border:none; color:var(--ogp-muted);
+  font-size:24px; cursor:pointer; line-height:1;
+  transition:color .2s;
+}
+.pay-close:hover { color:var(--ogp-ink); }
+.pay-badge {
+  font-size:11px; font-weight:700; letter-spacing:.12em; text-transform:uppercase;
+  color:var(--ogp-green-700); background:var(--ogp-green-100);
+  border-radius:var(--ogp-radius-pill); padding:5px 14px;
+  display:inline-block; width:fit-content;
+}
+.pay-title {
+  font-family:var(--ogp-font-display); font-weight:700;
+  font-size:26px; color:var(--ogp-ink); margin-top:8px;
+}
+.pay-divider { height:1px; background:var(--ogp-border); }
+.pay-row { display:flex; justify-content:space-between; align-items:center; }
+.pay-label { font-size:13px; color:var(--ogp-muted); font-weight:400; }
+.pay-val { font-size:14px; font-weight:700; color:var(--ogp-ink); }
+.pay-modal-qty {
+  display:flex; align-items:center;
+  border:1.5px solid var(--ogp-border); border-radius:var(--ogp-radius-md); overflow:hidden;
+}
+.pay-total-row { display:flex; justify-content:space-between; align-items:baseline; padding-top:16px; border-top:1px solid var(--ogp-border); }
+.pay-total-label { font-size:14px; font-weight:700; color:var(--ogp-ink); }
+.pay-total-val { font-family:var(--ogp-font-display); font-weight:700; font-size:30px; color:var(--ogp-green-700); }
+.pay-confirm-btn {
+  background:#FAE100; color:#3A1D1D;
+  border:none; width:100%; padding:17px;
+  font-family:var(--ogp-font-body); font-size:15px; font-weight:700;
+  letter-spacing:.04em; cursor:pointer; border-radius:var(--ogp-radius-md);
+  display:flex; align-items:center; justify-content:center; gap:8px;
+  transition:opacity .2s;
+}
+.pay-confirm-btn:hover { opacity:.9; }
+.pay-notice { font-size:11px; color:var(--ogp-muted); text-align:center; line-height:1.9; }
+
+/* ── Responsive ── */
+@media (max-width: 768px) {
+  #hero { grid-template-columns: 1fr; }
+  .hero-left { padding: 60px 24px; }
+  .hero-right { height: 280px; }
+  .hero-right img { mask-image: linear-gradient(to bottom, transparent 0%, black 30%); -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 30%); }
+  .sec { padding: 64px 24px; }
+  .prod-header { padding: 48px 24px 32px; }
+  .prod-grid { grid-template-columns: 1fr; }
+  .prod-card { padding: 36px 24px; }
+  .why-grid { grid-template-columns: 1fr; }
+  .drink-grid { grid-template-columns: 1fr; }
+  .b2b-grid { grid-template-columns: 1fr; }
+  .buy-banner { padding: 28px 24px; }
+  footer { flex-direction: column; padding: 40px 24px; }
+  header { padding: 0 16px; }
+  .h-nav a { display: none; }
+  .h-cta { display: flex !important; }
+}
+</style>
+</head>
+<body>
+
+<div id="bar"></div>
+
+<!-- ── HEADER ── -->
+<header>
+  <a href="#" class="h-brand">
+    <img class="h-logo" src="label-new.jpg" alt="홍담오가피진">
+    <span class="h-name">홍담오가피진</span>
+  </a>
+  <nav class="h-nav">
+    <a href="#products">제품</a>
+    <a href="#why">효능</a>
+    <a href="#drinks">음료</a>
+    <a href="#b2b">납품문의</a>
+    <a href="#products" class="h-cta">구매하기</a>
+  </nav>
+</header>
+
+<!-- ── HERO ── -->
+<section id="hero">
+  <div class="hero-left rv">
+    <div class="hero-overline">
+      <div class="hero-overline-line"></div>
+      <span class="hero-overline-txt">Acanthopanax Herbal Drink · Since 2024</span>
+    </div>
+    <h1 class="hero-title">홍담<br>오가피진</h1>
+    <p class="hero-title-sub">자연에서 온 건강한 한 모금</p>
+    <p class="hero-desc">끓이고 달이는 번거로움 없이, 따르는 순간 바로 마실 수 있습니다. 국내산 오가피를 정성껏 달여 담았습니다.</p>
+    <div class="hero-btns">
+      <button class="btn-primary" onclick="openPay('2L')">지금 구매하기 →</button>
+      <a href="#why" class="btn-secondary">효능 알아보기</a>
+    </div>
+  </div>
+  <div class="hero-right">
+    <img src="product-new.jpg" alt="홍담오가피진 제품">
+    <div class="hero-right-overlay"></div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ── STATEMENT ── -->
+<section id="statement" class="sec">
+  <div class="stmt-body rv">
+    <p class="sec-overline">Brand Story</p>
+    <h2 class="sec-title">조리 없이,<br><em>그냥 따르면</em><br>됩니다.</h2>
+    <p class="stmt-sub">국내산 오가피를 이미 달여 담았습니다.<br>얼음, 탄산수, 커피 — 무엇과도 잘 어울립니다.</p>
+    <span class="stmt-highlight">인공색소 · 방부제 無</span>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ── PRODUCTS ── -->
+<section id="products">
+  <div class="prod-header">
+    <p class="sec-overline rv">Product</p>
+    <h2 class="sec-title rv">두 가지 용량</h2>
+  </div>
+
+  <div class="prod-grid">
+    <!-- 2L -->
+    <div class="prod-card rv">
+      <div class="prod-img">
+        <img src="product-new.jpg" alt="홍담오가피진 2L" style="object-position:55% 5%;">
+      </div>
+      <div class="prod-vol">2<span>L</span></div>
+      <div>
+        <div class="prod-name">홍담오가피진 원액</div>
+        <div class="prod-desc">오가피진 원액 제품입니다.<br>원액 100mL + 물 300~500mL 희석 후 음용.<br>카페 · 업소용 대용량.</div>
+      </div>
+      <div class="prod-tags">
+        <span class="prod-tag">카페 납품</span>
+        <span class="prod-tag">기업·단체</span>
+        <span class="prod-tag">희석 음용</span>
+      </div>
+      <div>
+        <div class="prod-price-row">
+          <span class="prod-price">25,000원</span>
+          <span class="prod-price-unit">/ 1병</span>
+        </div>
+        <div class="prod-shipping">4만원 이상 무료배송</div>
+      </div>
+      <div class="qty-wrap">
+        <div class="qty-row">
+          <button class="qty-btn" onclick="changeQty('2L',-1)">−</button>
+          <div class="qty-num" id="qty-2L">1</div>
+          <button class="qty-btn" onclick="changeQty('2L',1)">+</button>
+        </div>
+      </div>
+      <button class="prod-buy-btn" onclick="openPay('2L')">구매하기 →</button>
+    </div>
+
+    <!-- 340mL -->
+    <div class="prod-card rv">
+      <div class="prod-img" style="aspect-ratio:4/3;">
+        <img src="product-new.jpg" alt="홍담오가피진 340mL" style="object-position:82% 5%;">
+      </div>
+      <div class="prod-vol" style="font-size:clamp(40px,6vw,64px);">340<span>mL</span></div>
+      <div>
+        <div class="prod-name">홍담오가피진 음용</div>
+        <div class="prod-desc">이미 희석된 완제품입니다.<br>개봉 후 바로 음용 가능.<br>차갑게 드시면 더욱 맛있습니다.</div>
+      </div>
+      <div class="prod-tags">
+        <span class="prod-tag">바로 음용</span>
+        <span class="prod-tag">선물용</span>
+        <span class="prod-tag">휴대 간편</span>
+      </div>
+      <div>
+        <div class="prod-price-row">
+          <span class="prod-price">3,000원</span>
+          <span class="prod-price-unit">/ 1병</span>
+        </div>
+        <div class="prod-shipping">4만원 이상 무료배송</div>
+      </div>
+      <div class="qty-wrap">
+        <div class="qty-row">
+          <button class="qty-btn" onclick="changeQty('340',-1)">−</button>
+          <div class="qty-num" id="qty-340">1</div>
+          <button class="qty-btn" onclick="changeQty('340',1)">+</button>
+        </div>
+      </div>
+      <button class="prod-buy-btn" onclick="openPay('340')">구매하기 →</button>
+    </div>
+  </div>
+
+  <!-- 구매 배너 -->
+  <div class="buy-banner rv">
+    <div>
+      <div class="buy-banner-txt">실온 보관 · 전국 배송</div>
+      <div class="buy-banner-sub">4만원 이상 무료배송</div>
+    </div>
+    <button class="btn-gold" onclick="openPay('2L')">지금 주문하기 →</button>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ── WHY ── -->
+<section id="why" class="sec">
+  <p class="sec-overline rv" style="color:var(--ogp-gold-400);">Why Ogapijin</p>
+  <h2 class="sec-title rv">오가피진이<br><em style="color:var(--ogp-gold-400);">특별한</em> 이유</h2>
+
+  <div class="why-grid">
+    <div class="why-card rv">
+      <div class="why-num">01</div>
+      <div class="why-title">국내산 오가피 원료</div>
+      <div class="why-desc">충남 홍성에서 직접 수급한 국내산 오갈피나무열매를 사용합니다. 산지 직송으로 신선도를 유지합니다.</div>
+    </div>
+    <div class="why-card rv">
+      <div class="why-num">02</div>
+      <div class="why-title">달임 그대로 담았습니다</div>
+      <div class="why-desc">전통 방식으로 직접 달인 원액을 바로 병에 담습니다. 집에서 달이는 번거로움 없이 편하게 즐기세요.</div>
+    </div>
+    <div class="why-card rv">
+      <div class="why-num">03</div>
+      <div class="why-title">인공첨가물 없음</div>
+      <div class="why-desc">인공색소, 방부제, 인공향료를 일절 사용하지 않습니다. 자연 그대로의 맛과 색을 담았습니다.</div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ── HOW TO DRINK ── -->
+<section id="howto" class="sec">
+  <p class="sec-overline rv">How to Drink</p>
+  <h2 class="sec-title rv">차갑게<br>즐기는 법</h2>
+
+  <div class="how-list">
+    <div class="how-item rv">
+      <div class="how-num">01</div>
+      <div>
+        <div class="how-name">오가피진 워터</div>
+        <div class="how-desc">가장 순수하게 즐기는 방법. 얼음물에 희석하면 본연의 맛이 살아납니다.</div>
+        <span class="how-ratio">원액 : 얼음물 = 1 : 3~5</span>
+      </div>
+    </div>
+    <div class="how-item rv">
+      <div class="how-num">02</div>
+      <div>
+        <div class="how-name">얼음 듬뿍 온더락</div>
+        <div class="how-desc">큰 잔에 얼음을 가득 채우고 오가피진 원액을 붓습니다. 얼음이 녹으면서 점점 부드러워집니다.</div>
+        <span class="how-ratio">얼음 가득 + 원액 70~100mL</span>
+      </div>
+    </div>
+    <div class="how-item rv">
+      <div class="how-num">03</div>
+      <div>
+        <div class="how-name">340mL 바로 음용</div>
+        <div class="how-desc">340mL 제품은 이미 희석된 완제품입니다. 개봉 후 바로 드실 수 있습니다. 냉장 보관 후 시원하게 드시면 더욱 맛있습니다.</div>
+        <span class="how-ratio">개봉 즉시 음용 가능</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ── DRINKS ── -->
+<section id="drinks" class="sec">
+  <p class="sec-overline rv">Menu</p>
+  <h2 class="sec-title rv">음료로<br>즐기기</h2>
+
+  <div class="drink-grid">
+    <div class="drink-card rv">
+      <div class="drink-card-body">
+        <span class="drink-badge">Water · 01</span>
+        <div class="drink-name">오가피진 워터</div>
+        <div class="drink-recipe">원액 <b>70mL</b> + 얼음물 <b>200mL</b></div>
+      </div>
+    </div>
+    <div class="drink-card rv">
+      <div class="drink-card-body">
+        <span class="drink-badge">Water · 02</span>
+        <div class="drink-name">오가피진 스파클링</div>
+        <div class="drink-recipe">원액 <b>60mL</b> + 탄산수 <b>180mL</b> + 레몬</div>
+      </div>
+    </div>
+    <div class="drink-card rv">
+      <div class="drink-card-body">
+        <span class="drink-badge">Black · 01</span>
+        <div class="drink-name">오가피 블랙</div>
+        <div class="drink-recipe">원액 <b>30mL</b> + 에스프레소 <b>1샷</b> + 얼음물 <b>150mL</b></div>
+      </div>
+    </div>
+    <div class="drink-card rv">
+      <div class="drink-card-body">
+        <span class="drink-badge">Black · 02</span>
+        <div class="drink-name">오가피 콜드브루</div>
+        <div class="drink-recipe">원액 <b>40mL</b> + 콜드브루 <b>150mL</b> + 얼음</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ── B2B ── -->
+<section id="b2b" class="sec">
+  <p class="sec-overline rv" style="color:var(--ogp-gold-400);">For Business</p>
+  <h2 class="sec-title rv" style="color:var(--ogp-paper);">카페 사장님,<br>납품 상담<br>해드립니다.</h2>
+  <div class="b2b-grid">
+    <div class="b2b-card rv">
+      <span class="b2b-icon">☕</span>
+      <div class="b2b-name">카페 납품</div>
+      <div class="b2b-desc">2L 대용량 기준 · 단가 문의 시 안내드립니다</div>
+    </div>
+    <div class="b2b-card rv">
+      <span class="b2b-icon">📋</span>
+      <div class="b2b-name">레시피 제안</div>
+      <div class="b2b-desc">메뉴판 구성 및 레시피 가이드 제공</div>
+    </div>
+    <div class="b2b-card rv">
+      <span class="b2b-icon">🎁</span>
+      <div class="b2b-name">샘플 제공</div>
+      <div class="b2b-desc">첫 거래 전 무료 샘플 요청 가능</div>
+    </div>
+  </div>
+  <a href="tel:041-633-2676" class="btn-gold rv">납품 문의 041-633-2676 →</a>
+</section>
+
+<!-- ── FOOTER ── -->
+<footer>
+  <div>
+    <div class="ft-name">홍담오가피진</div>
+  </div>
+  <div class="ft-links">
+    <a href="#products">제품</a>
+    <a href="#why">효능</a>
+    <a href="#howto">활용법</a>
+    <a href="#drinks">음료</a>
+    <a href="#b2b">납품 문의</a>
+  </div>
+  <div class="ft-copy">
+    041-633-2676 · www.hongdam.kr<br>
+    충청남도 홍성군 구항면 거북로 430<br>
+    © 2026 홍담오가피진. All rights reserved.
+  </div>
+</footer>
+
+<!-- ── 결제 모달 ── -->
+<div class="pay-overlay" id="payOverlay">
+  <div class="pay-modal">
+    <button class="pay-close" onclick="closePay()">×</button>
+    <div>
+      <span class="pay-badge" id="modalBadge">홍담오가피진 2L</span>
+      <div class="pay-title">주문 확인</div>
+    </div>
+    <div class="pay-divider"></div>
+    <div class="pay-row">
+      <span class="pay-label">상품 금액</span>
+      <span class="pay-val" id="modalUnitPrice">25,000원</span>
+    </div>
+    <div class="pay-row">
+      <span class="pay-label">수량</span>
+      <div class="pay-modal-qty">
+        <button class="qty-btn" onclick="changeModalQty(-1)">−</button>
+        <div class="qty-num" id="modalQtyNum">1</div>
+        <button class="qty-btn" onclick="changeModalQty(1)">+</button>
+      </div>
+    </div>
+    <div class="pay-row">
+      <span class="pay-label">배송비</span>
+      <span class="pay-val" id="modalShipping">3,000원</span>
+    </div>
+    <div class="pay-total-row">
+      <span class="pay-total-label">합계</span>
+      <span class="pay-total-val" id="modalTotal">28,000원</span>
+    </div>
+    <button class="pay-confirm-btn" onclick="requestPay()">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="#3A1D1D"><path d="M12 2C6.48 2 2 5.58 2 10c0 2.46 1.36 4.67 3.5 6.18V20l3.72-2.06A11 11 0 0012 18c5.52 0 10-3.58 10-8s-4.48-8-10-8z"/></svg>
+      카카오페이로 결제하기
+    </button>
+    <div class="pay-notice">테스트 모드 · 실제 결제가 되지 않습니다<br>배송비 3,000원 · 4만원 이상 무료배송</div>
+  </div>
+</div>
+
+<!-- PortOne V1 -->
+<script src="https://cdn.iamport.kr/v1/iamport.js"></script>
+<script>
+IMP.init('imp26122657');
+
+const PRODUCTS = {
+  '2L':  { name: '홍담오가피진 2L',    price: 25000 },
+  '340': { name: '홍담오가피진 340mL', price: 3000  }
+};
+const SHIP_FEE = 3000, FREE_MIN = 40000;
+let curProd = '2L', modalQty = 1;
+
+function changeQty(type, d) {
+  const el = document.getElementById('qty-' + type);
+  let v = parseInt(el.textContent) + d;
+  el.textContent = Math.max(1, Math.min(99, v));
+}
+
+function openPay(type) {
+  curProd = type;
+  modalQty = parseInt(document.getElementById('qty-' + type).textContent);
+  updateModal();
+  document.getElementById('payOverlay').classList.add('open');
+}
+function closePay() { document.getElementById('payOverlay').classList.remove('open'); }
+
+function changeModalQty(d) {
+  modalQty = Math.max(1, Math.min(99, modalQty + d));
+  updateModal();
+}
+function updateModal() {
+  const p = PRODUCTS[curProd];
+  const sub = p.price * modalQty;
+  const ship = sub >= FREE_MIN ? 0 : SHIP_FEE;
+  document.getElementById('modalBadge').textContent = p.name;
+  document.getElementById('modalUnitPrice').textContent = p.price.toLocaleString() + '원';
+  document.getElementById('modalQtyNum').textContent = modalQty;
+  document.getElementById('modalShipping').textContent = ship === 0 ? '무료' : ship.toLocaleString() + '원';
+  document.getElementById('modalTotal').textContent = (sub + ship).toLocaleString() + '원';
+}
+function requestPay() {
+  const p = PRODUCTS[curProd];
+  const sub = p.price * modalQty;
+  const ship = sub >= FREE_MIN ? 0 : SHIP_FEE;
+  IMP.request_pay({
+    pg: 'kakaopay.TC0ONETIME',
+    pay_method: 'card',
+    merchant_uid: 'hongdam_' + Date.now(),
+    name: p.name + (modalQty > 1 ? ' ' + modalQty + '개' : ''),
+    amount: sub + ship,
+    buyer_name: '', buyer_tel: '', buyer_email: '',
+  }, function(rsp) {
+    if (rsp.success) {
+      closePay();
+      alert('결제 완료!\n주문번호: ' + rsp.merchant_uid);
+    } else {
+      alert('결제 실패: ' + rsp.error_msg);
+    }
+  });
+}
+document.getElementById('payOverlay').addEventListener('click', function(e) {
+  if (e.target === this) closePay();
+});
+</script>
+
+<!-- GSAP -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+<script>
+gsap.registerPlugin(ScrollTrigger);
+
+const bar = document.getElementById('bar');
+window.addEventListener('scroll', () => {
+  bar.style.width = (window.scrollY / (document.body.scrollHeight - window.innerHeight) * 100) + '%';
+});
+
+document.querySelectorAll('.rv').forEach(el => {
+  gsap.fromTo(el,
+    { opacity: 0, y: 28 },
+    { opacity: 1, y: 0, duration: .75, ease: 'power2.out',
+      scrollTrigger: { trigger: el, start: 'top 90%', toggleActions: 'play none none none' }
+    }
+  );
+});
+</script>
+</body>
+</html>
