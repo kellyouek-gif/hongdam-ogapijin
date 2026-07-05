@@ -240,6 +240,7 @@ header {
 .prod-header { max-width: 1400px; margin: 0 auto; padding: max(80px,5vw) max(40px,3vw) 48px; }
 .prod-grid { display:grid; grid-template-columns:1fr 1fr; gap:1px; background:var(--ogp-border); }
 .prod-card { background:var(--ogp-surface); padding:max(60px,4vw) max(56px,4vw); display:flex; flex-direction:column; gap:28px; transition:background .3s; }
+.prod-img { width:100%; max-height:320px; object-fit:contain; object-position:center bottom; margin-bottom:8px; }
 .prod-card:hover { background:#FFFEF9; }
 .prod-vol { font-family:var(--ogp-font-display); font-weight:700; font-size:max(96px, 6vw); color:var(--ogp-green-700); line-height:1; letter-spacing:-.03em; }
 .prod-vol span { font-size:.42em; color:var(--ogp-green-300); }
@@ -544,6 +545,7 @@ footer {
   <div class="prod-grid">
     <!-- 2L -->
     <div class="prod-card rv">
+      <img src="2L.png" alt="홍담오가피진 2L" class="prod-img">
       <div class="prod-vol">2<span>L</span></div>
       <div>
         <div class="prod-name">홍담오가피진 원액</div>
@@ -573,7 +575,8 @@ footer {
 
     <!-- 340mL -->
     <div class="prod-card rv">
-      <div class="prod-vol" style="font-size:clamp(40px,6vw,64px);">340<span>mL</span></div>
+      <img src="340mL.png" alt="홍담오가피진 340mL" class="prod-img">
+      <div class="prod-vol">340<span>mL</span></div>
       <div>
         <div class="prod-name">홍담오가피진 음용</div>
         <div class="prod-desc">이미 희석된 완제품입니다.<br>개봉 후 바로 음용 가능.<br>차갑게 드시면 더욱 맛있습니다.</div>
