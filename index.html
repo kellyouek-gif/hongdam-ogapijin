@@ -212,7 +212,7 @@ header {
 .sec { padding: max(80px, 5vw) 0; }
 .sec-overline {
   display: flex; align-items: center; gap: 10px;
-  font-size: max(13px, 0.85vw); font-weight: 700; letter-spacing: .16em;
+  font-size: max(16px, 1.1vw); font-weight: 700; letter-spacing: .16em;
   color: var(--ogp-gold-500); text-transform: uppercase; margin-bottom: 20px;
 }
 .sec-overline::before { content: ''; width: 20px; height: 1px; background: var(--ogp-gold-500); }
@@ -252,20 +252,20 @@ header {
 .prod-vol { font-family:var(--ogp-font-display); font-weight:700; font-size:max(80px,5.5vw); color:var(--ogp-green-700); line-height:1; letter-spacing:-.03em; }
 .prod-vol span { font-size:.42em; color:var(--ogp-green-300); }
 .prod-name { font-size:max(22px,1.4vw); font-weight:700; color:var(--ogp-ink); margin-bottom:8px; }
-.prod-desc { font-size:max(16px,1vw); font-weight:400; color:var(--ogp-muted); line-height:1.9; }
+.prod-desc { font-size:max(18px,1.2vw); font-weight:400; color:var(--ogp-muted); line-height:1.9; }
 .prod-tags { display:flex; flex-wrap:wrap; gap:6px; }
 .prod-tag {
-  font-size:max(13px,0.85vw); font-weight:700; letter-spacing:.06em;
+  font-size:max(15px,1vw); font-weight:700; letter-spacing:.06em;
   color:var(--ogp-green-700); background:var(--ogp-green-100);
-  border-radius:var(--ogp-radius-pill); padding:5px 12px;
+  border-radius:var(--ogp-radius-pill); padding:6px 14px;
 }
 .prod-price-row { display:flex; align-items:baseline; gap:6px; margin-top:4px; }
 .prod-price {
   font-family:var(--ogp-font-display); font-weight:700;
   font-size:max(28px,1.8vw); color:var(--ogp-ink);
 }
-.prod-price-unit { font-size:max(14px,0.9vw); color:var(--ogp-muted); font-weight:400; }
-.prod-shipping { font-size:max(13px,0.85vw); color:var(--ogp-green-500); font-weight:600; margin-top:4px; }
+.prod-price-unit { font-size:max(17px,1.1vw); color:var(--ogp-muted); font-weight:400; }
+.prod-shipping { font-size:max(16px,1.1vw); color:var(--ogp-green-500); font-weight:600; margin-top:4px; }
 .qty-wrap { display:flex; align-items:center; gap:12px; }
 .qty-row {
   display:flex; align-items:center;
@@ -302,9 +302,9 @@ header {
   font-family:var(--ogp-font-display); font-weight:700;
   font-size:max(22px,1.5vw); color:var(--ogp-paper);
 }
-.buy-banner-sub { font-size:max(14px,0.9vw); color:rgba(246,241,231,.7); margin-top:4px; font-weight:400; }
+.buy-banner-sub { font-size:max(17px,1.1vw); color:rgba(246,241,231,.7); margin-top:4px; font-weight:400; }
 .btn-gold {
-  font-family:var(--ogp-font-body); font-size:max(16px,1.1vw); font-weight:700;
+  font-family:var(--ogp-font-body); font-size:max(19px,1.3vw); font-weight:700;
   color:var(--ogp-green-800); background:var(--ogp-gold-500);
   border:2px solid var(--ogp-gold-500); border-radius:var(--ogp-radius-md);
   padding:max(16px,1.1vw) max(36px,2.5vw); cursor:pointer; white-space:nowrap;
@@ -334,7 +334,7 @@ header {
   font-size:max(22px,1.5vw); color:var(--ogp-paper); line-height:1.3;
   padding-bottom:14px; border-bottom:1px solid rgba(201,162,75,.15); margin-bottom:14px;
 }
-.why-desc { font-size:max(15px,1vw); color:rgba(246,241,231,.65); line-height:1.9; font-weight:400; }
+.why-desc { font-size:max(17px,1.2vw); color:rgba(246,241,231,.75); line-height:1.9; font-weight:400; }
 
 /* ── How to drink ── */
 #howto { background:var(--ogp-surface); }
@@ -349,10 +349,10 @@ header {
   flex-shrink:0; width:52px; padding-top:4px;
 }
 .how-name { font-size:max(20px,1.3vw); font-weight:700; color:var(--ogp-ink); margin-bottom:8px; }
-.how-desc { font-size:max(16px,1vw); color:var(--ogp-muted); line-height:1.8; }
+.how-desc { font-size:max(18px,1.2vw); color:var(--ogp-muted); line-height:1.8; }
 .how-ratio {
   display:inline-block; margin-top:12px;
-  font-size:max(13px,0.85vw); font-weight:700; letter-spacing:.08em;
+  font-size:max(15px,1vw); font-weight:700; letter-spacing:.08em;
   color:var(--ogp-green-700); text-transform:uppercase;
   border:1.5px solid var(--ogp-green-100); border-radius:var(--ogp-radius-pill);
   padding:5px 14px;
@@ -372,12 +372,12 @@ header {
 .drink-card:hover .drink-card-img img { transform:scale(1.04); }
 .drink-card-body { padding:28px 32px 36px; }
 .drink-badge {
-  font-size:max(12px,0.8vw); font-weight:700; letter-spacing:.14em;
+  font-size:max(15px,1vw); font-weight:700; letter-spacing:.14em;
   color:var(--ogp-gold-600); text-transform:uppercase;
   display:block; margin-bottom:12px;
 }
 .drink-name { font-family:var(--ogp-font-display); font-weight:700; font-size:max(22px,1.5vw); color:var(--ogp-ink); margin-bottom:10px; line-height:1.3; }
-.drink-recipe { font-size:max(15px,1vw); color:var(--ogp-muted); line-height:2; }
+.drink-recipe { font-size:max(17px,1.2vw); color:var(--ogp-muted); line-height:2; }
 .drink-recipe b { color:var(--ogp-green-600); font-weight:600; }
 
 /* ── B2B ── */
@@ -397,11 +397,11 @@ footer {
   border-top:1px solid rgba(255,255,255,.05);
   display:flex; justify-content:space-between; align-items:flex-end; flex-wrap:wrap; gap:24px;
 }
-.ft-name { font-family:var(--ogp-font-display); font-weight:700; font-size:max(18px,1.2vw); color:rgba(246,241,231,.95); letter-spacing:.02em; }
+.ft-name { font-family:var(--ogp-font-display); font-weight:700; font-size:max(22px,1.5vw); color:rgba(246,241,231,.95); letter-spacing:.02em; }
 .ft-links { display:flex; flex-wrap:wrap; gap:20px; }
-.ft-links a { font-size:max(14px,0.9vw); color:rgba(246,241,231,.75); text-decoration:none; transition:color .2s; }
+.ft-links a { font-size:max(16px,1.1vw); color:rgba(246,241,231,.75); text-decoration:none; transition:color .2s; }
 .ft-links a:hover { color:rgba(246,241,231,1); }
-.ft-copy { font-size:max(14px,0.9vw); color:rgba(246,241,231,.75); line-height:1.8; }
+.ft-copy { font-size:max(15px,1vw); color:rgba(246,241,231,.75); line-height:1.8; }
 
 /* ── Reveal animations ── */
 .rv { opacity:0; transform:translateY(28px); }
