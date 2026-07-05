@@ -390,11 +390,11 @@ footer {
   border-top:1px solid rgba(255,255,255,.05);
   display:flex; justify-content:space-between; align-items:flex-end; flex-wrap:wrap; gap:24px;
 }
-.ft-name { font-family:var(--ogp-font-display); font-weight:700; font-size:18px; color:rgba(246,241,231,.85); letter-spacing:.02em; }
+.ft-name { font-family:var(--ogp-font-display); font-weight:700; font-size:max(18px,1.2vw); color:rgba(246,241,231,.95); letter-spacing:.02em; }
 .ft-links { display:flex; flex-wrap:wrap; gap:20px; }
-.ft-links a { font-size:12px; color:rgba(246,241,231,.55); text-decoration:none; transition:color .2s; }
-.ft-links a:hover { color:rgba(246,241,231,.9); }
-.ft-copy { font-size:12px; color:rgba(246,241,231,.5); line-height:1.8; }
+.ft-links a { font-size:max(14px,0.9vw); color:rgba(246,241,231,.75); text-decoration:none; transition:color .2s; }
+.ft-links a:hover { color:rgba(246,241,231,1); }
+.ft-copy { font-size:max(14px,0.9vw); color:rgba(246,241,231,.75); line-height:1.8; }
 
 /* ── Reveal animations ── */
 .rv { opacity:0; transform:translateY(28px); }
