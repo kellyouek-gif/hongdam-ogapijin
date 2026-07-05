@@ -91,17 +91,22 @@ header {
   min-height: 100svh;
   padding-top: 64px;
   background: var(--ogp-green-800);
-  display: grid;
-  grid-template-columns: 1fr 1fr;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   position: relative; overflow: hidden;
 }
 .hero-left {
-  display:flex; flex-direction:column; justify-content:center;
-  padding: 80px 56px 80px 64px;
+  display:flex; flex-direction:column; align-items:center; justify-content:center;
+  text-align: center;
+  padding: 80px 40px;
   position: relative; z-index: 2;
+  max-width: 720px;
+  width: 100%;
 }
 .hero-overline {
   display:flex; align-items:center; gap:12px; margin-bottom:28px;
+  justify-content: center;
 }
 .hero-overline-line { width:28px; height:1px; background:var(--ogp-gold-500); }
 .hero-overline-txt {
@@ -110,21 +115,16 @@ header {
 }
 .hero-title {
   font-family:var(--ogp-font-display); font-weight:700;
-  font-size:clamp(52px,6vw,88px); line-height:1.1;
+  font-size:clamp(56px,8vw,96px); line-height:1.05;
   color:var(--ogp-gold-500); margin-bottom:8px;
   letter-spacing:.04em;
   text-shadow: 0 2px 24px rgba(201,162,75,.3);
 }
-.hero-title-sub {
-  font-family:var(--ogp-font-display); font-weight:400;
-  font-size:clamp(18px,2vw,24px); color:var(--ogp-gold-400);
-  margin-bottom:32px; line-height:1.6;
-}
 .hero-desc {
-  font-size:16px; font-weight:400; color:rgba(246,241,231,.6);
-  line-height:1.8; margin-bottom:48px; max-width:360px;
+  font-size:17px; font-weight:400; color:rgba(246,241,231,.65);
+  line-height:1.9; margin-bottom:48px; max-width:420px;
 }
-.hero-btns { display:flex; gap:12px; flex-wrap:wrap; }
+.hero-btns { display:flex; gap:12px; flex-wrap:wrap; justify-content:center; }
 .btn-primary {
   font-family:var(--ogp-font-body); font-size:15px; font-weight:700;
   color:var(--ogp-green-800); background:var(--ogp-gold-500);
@@ -433,10 +433,7 @@ footer {
 
 /* ── Responsive ── */
 @media (max-width: 768px) {
-  #hero { grid-template-columns: 1fr; }
   .hero-left { padding: 60px 24px; }
-  .hero-right { height: 280px; }
-  .hero-right img { mask-image: linear-gradient(to bottom, transparent 0%, black 30%); -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 30%); }
   .sec { padding: 80px 24px; }
   .prod-header { padding: 64px 24px 40px; }
   .prod-grid { grid-template-columns: 1fr; }
@@ -485,14 +482,6 @@ footer {
     <div class="hero-btns">
       <a href="#products" class="btn-primary">제품 보기 →</a>
       <a href="#b2b" class="btn-secondary">납품 문의</a>
-    </div>
-  </div>
-  <div class="hero-right">
-    <img src="product-new.jpg" alt="홍담오가피진 제품">
-    <div class="hero-right-overlay"></div>
-    <div class="hero-badge">
-      <div class="hero-badge-main">자연에서 온<br>건강한 한 모금</div>
-      <div class="hero-badge-sub">충남 홍성 · 농업회사법인</div>
     </div>
   </div>
 </section>
