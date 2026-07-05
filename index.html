@@ -384,12 +384,12 @@ header {
 #b2b { background:var(--ogp-green-900); }
 #b2b .sec-title { color:var(--ogp-paper); }
 #b2b .sec-overline::before { background:var(--ogp-gold-500); }
-.b2b-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:1px; background:rgba(255,255,255,.04); margin-bottom:48px; }
-.b2b-card { background:var(--ogp-green-900); padding:40px 32px; border-left:2px solid transparent; transition:.3s; }
-.b2b-card:hover { background:rgba(255,255,255,.04); border-left-color:var(--ogp-gold-500); }
-.b2b-icon { font-size:28px; display:block; margin-bottom:16px; }
-.b2b-name { font-size:max(18px,1.3vw); font-weight:700; color:var(--ogp-paper); margin-bottom:8px; }
-.b2b-desc { font-size:max(15px,1vw); color:rgba(246,241,231,.65); line-height:1.8; }
+.b2b-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:2px; background:rgba(255,255,255,.06); margin-bottom:max(48px,3.5vw); }
+.b2b-card { background:var(--ogp-green-900); padding:max(52px,4vw) max(40px,3vw); border-left:3px solid transparent; transition:.3s; }
+.b2b-card:hover { background:rgba(255,255,255,.05); border-left-color:var(--ogp-gold-500); }
+.b2b-icon { font-size:max(36px,2.8vw); display:block; margin-bottom:max(20px,1.5vw); }
+.b2b-name { font-size:max(24px,1.8vw); font-weight:700; color:var(--ogp-paper); margin-bottom:max(12px,0.8vw); }
+.b2b-desc { font-size:max(17px,1.2vw); color:rgba(246,241,231,.75); line-height:1.9; }
 
 /* ── Footer ── */
 footer {
@@ -761,21 +761,26 @@ footer {
 <!-- ── B2B ── -->
 <section id="b2b" class="sec">
   <div class="wrap">
-  <p class="sec-overline rv" style="color:var(--ogp-gold-400);">For Business</p>
-  <h2 class="sec-title rv" style="color:var(--ogp-paper);">카페 사장님,<br>납품 상담<br>해드립니다.</h2>
+  <p class="sec-overline rv" style="color:var(--ogp-gold-400);">For Everyone</p>
+  <h2 class="sec-title rv" style="color:var(--ogp-paper);">카페부터 가정까지,<br>홍담오가피진</h2>
   <div class="b2b-grid">
+    <div class="b2b-card rv">
+      <span class="b2b-icon">🏠</span>
+      <div class="b2b-name">가정용 구매</div>
+      <div class="b2b-desc">340mL 소용량으로 집에서도 간편하게.<br>냉장 보관 후 희석해 드세요.</div>
+    </div>
     <div class="b2b-card rv">
       <span class="b2b-icon">☕</span>
       <div class="b2b-name">카페 납품</div>
-      <div class="b2b-desc">2L 대용량 기준 · 단가 문의 시 안내드립니다</div>
+      <div class="b2b-desc">2L 대용량 기준 · 단가 문의 시 안내드립니다.<br>레시피 가이드 함께 제공합니다.</div>
     </div>
     <div class="b2b-card rv">
       <span class="b2b-icon">📋</span>
       <div class="b2b-name">레시피 제안</div>
-      <div class="b2b-desc">메뉴판 구성 및 레시피 가이드 제공</div>
+      <div class="b2b-desc">메뉴판 구성 및 레시피 가이드 제공.<br>시즌 음료 기획도 함께 상담드립니다.</div>
     </div>
   </div>
-  <a href="tel:041-633-2676" class="btn-gold rv">납품 문의 041-633-2676 →</a>
+  <a href="tel:041-633-2676" class="btn-gold rv">납품·구매 문의 041-633-2676 →</a>
   </div>
 </section>
 
