@@ -94,90 +94,77 @@ header {
   display: flex;
   align-items: center;
   justify-content: center;
-  padding-left: max(60px, 5vw);
-  padding-right: max(60px, 5vw);
 }
 .hero-inner {
   width: 100%;
-  max-width: 1600px;
+  max-width: 1500px;
+  margin: 0 auto;
   display: grid;
-  grid-template-columns: 1fr auto 1fr;
+  grid-template-columns: 1fr 1fr;
   align-items: center;
-  gap: max(60px, 5vw);
+  gap: max(40px, 4vw);
+  padding: max(60px, 5vw) max(60px, 5vw);
 }
 .hero-logo-col {
   display: flex;
   align-items: center;
-  justify-content: flex-end;
+  justify-content: center;
 }
 .hero-logo {
-  width: min(360px, 28vw);
+  width: min(520px, 38vw);
   height: auto;
   object-fit: contain;
-  border-radius: 16px;
-  box-shadow: 0 24px 60px rgba(0,0,0,.4);
+  border-radius: 20px;
+  box-shadow: 0 32px 80px rgba(0,0,0,.5), 0 0 0 1px rgba(201,162,75,.15);
 }
 .hero-left {
-  display: flex; flex-direction: column; align-items: center;
-  text-align: center;
+  display: flex; flex-direction: column; align-items: flex-start;
+  text-align: left;
 }
 .hero-overline {
-  display: flex; align-items: center; gap: 16px; margin-bottom: 36px;
+  display: flex; align-items: center; gap: 14px; margin-bottom: 32px;
 }
-.hero-overline-line { width: 36px; height: 1px; background: var(--ogp-gold-500); }
+.hero-overline-line { width: 32px; height: 1px; background: var(--ogp-gold-500); }
 .hero-overline-txt {
-  font-size: max(11px, 0.8vw); font-weight: 700; letter-spacing: .2em;
+  font-size: max(12px, 0.85vw); font-weight: 700; letter-spacing: .2em;
   color: var(--ogp-gold-500); text-transform: uppercase;
 }
 .hero-title {
   font-family: var(--ogp-font-display); font-weight: 700;
-  font-size: max(80px, 7vw); line-height: 1.05;
+  font-size: max(72px, 6.5vw); line-height: 1.05;
   color: var(--ogp-gold-500);
   letter-spacing: .02em;
   text-shadow: 0 2px 20px rgba(201,162,75,.2);
   margin-bottom: 0;
 }
 .hero-divider {
-  width: 80px; height: 1px; margin: 40px auto;
-  background: linear-gradient(to right, transparent, var(--ogp-gold-500), transparent);
+  width: 60px; height: 1px; margin: 36px 0;
+  background: linear-gradient(to right, var(--ogp-gold-500), transparent);
 }
 .hero-desc {
   font-size: max(17px, 1.2vw); font-weight: 400;
-  color: rgba(246,241,231,.65);
-  line-height: 1.9; margin-bottom: 48px;
+  color: rgba(246,241,231,.7);
+  line-height: 1.9; margin-bottom: 44px;
 }
-.hero-btns { display: flex; gap: 16px; flex-wrap: wrap; justify-content: center; }
-.hero-qr-col {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 20px;
+.hero-btns { display: flex; gap: 16px; flex-wrap: wrap; margin-bottom: 48px; }
+.hero-qr-inline {
+  display: flex; align-items: center; gap: 16px;
+  padding: 16px 20px;
+  background: rgba(255,255,255,.05);
+  border: 1px solid rgba(201,162,75,.2);
+  border-radius: 12px;
 }
-.hero-qr-box {
-  background: rgba(255,255,255,.06);
-  border: 1px solid rgba(201,162,75,.25);
-  border-radius: 16px;
-  padding: 28px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 16px;
+.hero-qr-inline img { width: max(60px, 4.5vw); height: auto; border-radius: 6px; }
+.hero-qr-inline-text { display: flex; flex-direction: column; gap: 3px; }
+.hero-qr-inline-label {
+  font-size: max(10px, 0.7vw); font-weight: 700; letter-spacing: .15em;
+  color: var(--ogp-gold-400); text-transform: uppercase;
 }
-.hero-qr-box img {
-  width: min(160px, 12vw);
-  height: auto;
-  border-radius: 8px;
-}
-.hero-qr-label {
-  font-size: max(11px, 0.75vw); font-weight: 700; letter-spacing: .15em;
-  color: var(--ogp-gold-400); text-transform: uppercase; text-align: center;
-}
-.hero-qr-sub {
-  font-size: max(11px, 0.75vw); color: rgba(246,241,231,.4);
-  text-align: center; line-height: 1.6;
+.hero-qr-inline-sub {
+  font-size: max(13px, 0.9vw); color: rgba(246,241,231,.6); line-height: 1.5;
 }
 .btn-primary {
-  font-family: var(--ogp-font-body); font-size: 15px; font-weight: 700;
+  font-family: var(--ogp-font-body); font-size: max(15px, 1vw); font-weight: 700;
   color: var(--ogp-green-800); background: var(--ogp-gold-500);
   border: none; border-radius: var(--ogp-radius-md);
   padding: 16px 36px; cursor: pointer; text-decoration: none;
@@ -187,7 +174,7 @@ header {
 }
 .btn-primary:hover { background: var(--ogp-gold-600); }
 .btn-secondary {
-  font-family: var(--ogp-font-body); font-size: 15px; font-weight: 700;
+  font-family: var(--ogp-font-body); font-size: max(15px, 1vw); font-weight: 700;
   color: var(--ogp-paper); background: transparent;
   border: 1.5px solid rgba(246,241,231,.3); border-radius: var(--ogp-radius-md);
   padding: 16px 36px; cursor: pointer; text-decoration: none;
@@ -203,16 +190,16 @@ header {
   display: flex; align-items: center; justify-content: space-between; gap: 48px;
 }
 .qr-strip-label {
-  font-size: 11px; font-weight: 700; letter-spacing: .16em;
+  font-size: max(13px,0.85vw); font-weight: 700; letter-spacing: .16em;
   color: var(--ogp-gold-500); text-transform: uppercase; margin-bottom: 14px;
 }
 .qr-strip-title {
   font-family: var(--ogp-font-display); font-weight: 700;
-  font-size: 44px; color: var(--ogp-paper);
+  font-size: max(44px,3vw); color: var(--ogp-paper);
   line-height: 1.2; margin-bottom: 12px;
 }
 .qr-strip-sub {
-  font-size: 15px; color: rgba(246,241,231,.5); line-height: 1.8;
+  font-size: max(16px,1vw); color: rgba(246,241,231,.6); line-height: 1.8;
 }
 .qr-img-wrap {
   background: var(--ogp-gold-500);
@@ -261,17 +248,17 @@ header {
 .prod-desc { font-size:max(16px,1vw); font-weight:400; color:var(--ogp-muted); line-height:1.9; }
 .prod-tags { display:flex; flex-wrap:wrap; gap:6px; }
 .prod-tag {
-  font-size:11px; font-weight:700; letter-spacing:.06em;
+  font-size:max(13px,0.85vw); font-weight:700; letter-spacing:.06em;
   color:var(--ogp-green-700); background:var(--ogp-green-100);
   border-radius:var(--ogp-radius-pill); padding:5px 12px;
 }
 .prod-price-row { display:flex; align-items:baseline; gap:6px; margin-top:4px; }
 .prod-price {
   font-family:var(--ogp-font-display); font-weight:700;
-  font-size:28px; color:var(--ogp-ink);
+  font-size:max(28px,1.8vw); color:var(--ogp-ink);
 }
-.prod-price-unit { font-size:13px; color:var(--ogp-muted); font-weight:400; }
-.prod-shipping { font-size:12px; color:var(--ogp-green-500); font-weight:600; margin-top:4px; }
+.prod-price-unit { font-size:max(14px,0.9vw); color:var(--ogp-muted); font-weight:400; }
+.prod-shipping { font-size:max(13px,0.85vw); color:var(--ogp-green-500); font-weight:600; margin-top:4px; }
 .qty-wrap { display:flex; align-items:center; gap:12px; }
 .qty-row {
   display:flex; align-items:center;
@@ -306,9 +293,9 @@ header {
 }
 .buy-banner-txt {
   font-family:var(--ogp-font-display); font-weight:700;
-  font-size:22px; color:var(--ogp-paper);
+  font-size:max(22px,1.5vw); color:var(--ogp-paper);
 }
-.buy-banner-sub { font-size:13px; color:rgba(246,241,231,.6); margin-top:4px; font-weight:400; }
+.buy-banner-sub { font-size:max(14px,0.9vw); color:rgba(246,241,231,.7); margin-top:4px; font-weight:400; }
 .btn-gold {
   font-family:var(--ogp-font-body); font-size:14px; font-weight:700;
   color:var(--ogp-green-800); background:var(--ogp-gold-500);
@@ -358,7 +345,7 @@ header {
 .how-desc { font-size:max(16px,1vw); color:var(--ogp-muted); line-height:1.8; }
 .how-ratio {
   display:inline-block; margin-top:12px;
-  font-size:11px; font-weight:700; letter-spacing:.08em;
+  font-size:max(13px,0.85vw); font-weight:700; letter-spacing:.08em;
   color:var(--ogp-green-700); text-transform:uppercase;
   border:1.5px solid var(--ogp-green-100); border-radius:var(--ogp-radius-pill);
   padding:5px 14px;
@@ -378,7 +365,7 @@ header {
 .drink-card:hover .drink-card-img img { transform:scale(1.04); }
 .drink-card-body { padding:28px 32px 36px; }
 .drink-badge {
-  font-size:10px; font-weight:700; letter-spacing:.14em;
+  font-size:max(12px,0.8vw); font-weight:700; letter-spacing:.14em;
   color:var(--ogp-gold-600); text-transform:uppercase;
   display:block; margin-bottom:12px;
 }
@@ -466,15 +453,14 @@ footer {
 
 /* ── Responsive ── */
 @media (max-width: 768px) {
-  #hero { padding-left: 24px; padding-right: 24px; }
-  .hero-inner { grid-template-columns: 1fr; justify-items: center; gap: 40px; }
+  .hero-inner { grid-template-columns: 1fr; padding: 48px 24px; gap: 40px; }
   .hero-logo-col { justify-content: center; }
-  .hero-logo { width: 200px; }
-  .hero-qr-col { align-items: center; }
-  .hero-qr-box img { width: 120px; }
-  .hero-left { padding: 0; }
+  .hero-logo { width: min(280px, 70vw); }
+  .hero-left { align-items: center; text-align: center; }
+  .hero-divider { margin: 28px auto; }
   .hero-title { font-size: 56px; }
-  .hero-desc { font-size: 15px; }
+  .hero-desc { font-size: 16px; }
+  .hero-qr-inline { align-self: center; }
   .btn-primary, .btn-secondary { padding: 14px 28px; font-size: 14px; }
   .sec { padding: 64px 24px; }
   .sec-title { font-size: 36px; margin-bottom: 36px; }
@@ -517,16 +503,15 @@ footer {
 <!-- ── HERO ── -->
 <section id="hero">
   <div class="hero-inner">
-    <!-- 좌: 로고 -->
+    <!-- 좌: 라벨 이미지 -->
     <div class="hero-logo-col rv">
-      <img src="hdlabel-new.png" alt="홍담오가피진 로고" class="hero-logo">
+      <img src="hdlabel-new.png" alt="홍담오가피진 라벨" class="hero-logo">
     </div>
-    <!-- 중: 타이틀 -->
+    <!-- 우: 텍스트 + 버튼 + QR -->
     <div class="hero-left rv">
       <div class="hero-overline">
         <div class="hero-overline-line"></div>
         <span class="hero-overline-txt">Acanthopanax Herbal Drink</span>
-        <div class="hero-overline-line"></div>
       </div>
       <h1 class="hero-title">홍담<br>오가피진</h1>
       <div class="hero-divider"></div>
@@ -535,13 +520,12 @@ footer {
         <a href="#products" class="btn-primary">제품 보기 →</a>
         <a href="#b2b" class="btn-secondary">납품 문의</a>
       </div>
-    </div>
-    <!-- 우: QR -->
-    <div class="hero-qr-col rv">
-      <div class="hero-qr-box">
-        <img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=https%3A%2F%2Fwww.hongdam.kr%2F%23products&bgcolor=1F3D2B&color=C9A24B&margin=8" alt="주문 QR">
-        <div class="hero-qr-label">Easy Order</div>
-        <div class="hero-qr-sub">QR 스캔으로<br>간편 주문</div>
+      <div class="hero-qr-inline">
+        <img src="https://api.qrserver.com/v1/create-qr-code/?size=120x120&data=https%3A%2F%2Fwww.hongdam.kr%2F%23products&bgcolor=1F3D2B&color=C9A24B&margin=6" alt="주문 QR">
+        <div class="hero-qr-inline-text">
+          <span class="hero-qr-inline-label">Easy Order</span>
+          <span class="hero-qr-inline-sub">QR 스캔으로 바로 주문</span>
+        </div>
       </div>
     </div>
   </div>
