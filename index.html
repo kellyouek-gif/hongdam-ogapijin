@@ -176,17 +176,17 @@ header {
 .qr-img-wrap img { display: block; width: 148px; height: 148px; }
 
 /* ── Sections ── */
-.sec { padding: 100px 80px; }
+.sec { padding: max(100px, 6vw) max(80px, 5vw); }
 .sec-overline {
   display: flex; align-items: center; gap: 10px;
-  font-size: 11px; font-weight: 700; letter-spacing: .16em;
+  font-size: max(11px, 0.8vw); font-weight: 700; letter-spacing: .16em;
   color: var(--ogp-gold-500); text-transform: uppercase; margin-bottom: 18px;
 }
 .sec-overline::before { content: ''; width: 20px; height: 1px; background: var(--ogp-gold-500); }
 .sec-title {
   font-family: var(--ogp-font-display); font-weight: 700;
-  font-size: 52px; line-height: 1.15;
-  color: var(--ogp-ink); margin-bottom: 52px;
+  font-size: max(52px, 3.8vw); line-height: 1.15;
+  color: var(--ogp-ink); margin-bottom: max(52px, 3vw);
 }
 .sec-title em { color: var(--ogp-green-600); font-style: normal; }
 .divider { height: 1px; background: var(--ogp-border); }
@@ -208,7 +208,7 @@ header {
 .prod-grid { display:grid; grid-template-columns:1fr 1fr; gap:1px; background:var(--ogp-border); }
 .prod-card { background:var(--ogp-surface); padding:60px 56px; display:flex; flex-direction:column; gap:28px; transition:background .3s; }
 .prod-card:hover { background:#FFFEF9; }
-.prod-vol { font-family:var(--ogp-font-display); font-weight:700; font-size:96px; color:var(--ogp-green-700); line-height:1; letter-spacing:-.03em; }
+.prod-vol { font-family:var(--ogp-font-display); font-weight:700; font-size:max(96px, 6vw); color:var(--ogp-green-700); line-height:1; letter-spacing:-.03em; }
 .prod-vol span { font-size:.42em; color:var(--ogp-green-300); }
 .prod-name { font-size:20px; font-weight:700; color:var(--ogp-ink); margin-bottom:8px; }
 .prod-desc { font-size:15px; font-weight:400; color:var(--ogp-muted); line-height:1.9; }
@@ -468,7 +468,7 @@ footer {
       <div class="hero-overline-line"></div>
       <span class="hero-overline-txt">Acanthopanax Herbal Drink</span>
     </div>
-    <img src="label-new.jpg" alt="홍담오가피진 로고" class="hero-logo">
+    <img src="hdlabel-new.png" alt="홍담오가피진 로고" class="hero-logo">
     <h1 class="hero-title">홍담<br>오가피진</h1>
     <div class="hero-divider"></div>
     <p class="hero-desc">오가피·녹차의 조화.<br>들뜸 없이 지속되는 세련된 에너지를<br>한 잔에 담았습니다.</p>
