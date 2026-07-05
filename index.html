@@ -222,11 +222,12 @@ header {
 .qr-img-wrap img { display: block; width: 148px; height: 148px; }
 
 /* ── Sections ── */
-.sec { padding: max(100px, 6vw) max(80px, 5vw); }
+.wrap { max-width: 1400px; margin: 0 auto; padding: 0 max(40px, 3vw); }
+.sec { padding: max(80px, 5vw) 0; }
 .sec-overline {
   display: flex; align-items: center; gap: 10px;
-  font-size: max(11px, 0.8vw); font-weight: 700; letter-spacing: .16em;
-  color: var(--ogp-gold-500); text-transform: uppercase; margin-bottom: 18px;
+  font-size: max(13px, 0.85vw); font-weight: 700; letter-spacing: .16em;
+  color: var(--ogp-gold-500); text-transform: uppercase; margin-bottom: 20px;
 }
 .sec-overline::before { content: ''; width: 20px; height: 1px; background: var(--ogp-gold-500); }
 .sec-title {
@@ -250,14 +251,14 @@ header {
 
 /* ── Products ── */
 #products { background:var(--ogp-paper); padding:0; }
-.prod-header { padding: 80px 80px 48px; }
+.prod-header { max-width: 1400px; margin: 0 auto; padding: max(80px,5vw) max(40px,3vw) 48px; }
 .prod-grid { display:grid; grid-template-columns:1fr 1fr; gap:1px; background:var(--ogp-border); }
-.prod-card { background:var(--ogp-surface); padding:60px 56px; display:flex; flex-direction:column; gap:28px; transition:background .3s; }
+.prod-card { background:var(--ogp-surface); padding:max(60px,4vw) max(56px,4vw); display:flex; flex-direction:column; gap:28px; transition:background .3s; }
 .prod-card:hover { background:#FFFEF9; }
 .prod-vol { font-family:var(--ogp-font-display); font-weight:700; font-size:max(96px, 6vw); color:var(--ogp-green-700); line-height:1; letter-spacing:-.03em; }
 .prod-vol span { font-size:.42em; color:var(--ogp-green-300); }
-.prod-name { font-size:20px; font-weight:700; color:var(--ogp-ink); margin-bottom:8px; }
-.prod-desc { font-size:15px; font-weight:400; color:var(--ogp-muted); line-height:1.9; }
+.prod-name { font-size:max(22px,1.4vw); font-weight:700; color:var(--ogp-ink); margin-bottom:8px; }
+.prod-desc { font-size:max(16px,1vw); font-weight:400; color:var(--ogp-muted); line-height:1.9; }
 .prod-tags { display:flex; flex-wrap:wrap; gap:6px; }
 .prod-tag {
   font-size:11px; font-weight:700; letter-spacing:.06em;
@@ -324,7 +325,7 @@ header {
 #why .sec-overline::before { background:var(--ogp-gold-500); }
 .why-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:1px; background:rgba(255,255,255,.05); }
 .why-card {
-  background:var(--ogp-green-800); padding:40px 32px;
+  background:var(--ogp-green-800); padding:max(40px,3vw) max(32px,2.5vw);
   border-top:2px solid transparent;
   transition:border-top-color .3s, background .3s;
   display:flex; flex-direction:column; gap:0;
@@ -332,14 +333,14 @@ header {
 .why-card:hover { border-top-color:var(--ogp-gold-500); background:#1a3621; }
 .why-num {
   font-family:var(--ogp-font-display); font-weight:700;
-  font-size:48px; color:rgba(201,162,75,.1); line-height:1; margin-bottom:20px;
+  font-size:max(48px,3vw); color:rgba(201,162,75,.1); line-height:1; margin-bottom:20px;
 }
 .why-title {
   font-family:var(--ogp-font-display); font-weight:700;
-  font-size:22px; color:var(--ogp-paper); line-height:1.3;
+  font-size:max(22px,1.5vw); color:var(--ogp-paper); line-height:1.3;
   padding-bottom:14px; border-bottom:1px solid rgba(201,162,75,.15); margin-bottom:14px;
 }
-.why-desc { font-size:15px; color:rgba(246,241,231,.5); line-height:1.9; font-weight:400; }
+.why-desc { font-size:max(15px,1vw); color:rgba(246,241,231,.65); line-height:1.9; font-weight:400; }
 
 /* ── How to drink ── */
 #howto { background:var(--ogp-surface); }
@@ -353,8 +354,8 @@ header {
   font-size:40px; color:rgba(31,61,43,.1); line-height:1;
   flex-shrink:0; width:52px; padding-top:4px;
 }
-.how-name { font-size:20px; font-weight:700; color:var(--ogp-ink); margin-bottom:8px; }
-.how-desc { font-size:15px; color:var(--ogp-muted); line-height:1.8; }
+.how-name { font-size:max(20px,1.3vw); font-weight:700; color:var(--ogp-ink); margin-bottom:8px; }
+.how-desc { font-size:max(16px,1vw); color:var(--ogp-muted); line-height:1.8; }
 .how-ratio {
   display:inline-block; margin-top:12px;
   font-size:11px; font-weight:700; letter-spacing:.08em;
@@ -381,8 +382,8 @@ header {
   color:var(--ogp-gold-600); text-transform:uppercase;
   display:block; margin-bottom:12px;
 }
-.drink-name { font-family:var(--ogp-font-display); font-weight:700; font-size:22px; color:var(--ogp-ink); margin-bottom:10px; line-height:1.3; }
-.drink-recipe { font-size:14px; color:var(--ogp-muted); line-height:2; }
+.drink-name { font-family:var(--ogp-font-display); font-weight:700; font-size:max(22px,1.5vw); color:var(--ogp-ink); margin-bottom:10px; line-height:1.3; }
+.drink-recipe { font-size:max(15px,1vw); color:var(--ogp-muted); line-height:2; }
 .drink-recipe b { color:var(--ogp-green-600); font-weight:600; }
 
 /* ── B2B ── */
@@ -393,8 +394,8 @@ header {
 .b2b-card { background:var(--ogp-green-900); padding:40px 32px; border-left:2px solid transparent; transition:.3s; }
 .b2b-card:hover { background:rgba(255,255,255,.04); border-left-color:var(--ogp-gold-500); }
 .b2b-icon { font-size:28px; display:block; margin-bottom:16px; }
-.b2b-name { font-size:18px; font-weight:700; color:var(--ogp-paper); margin-bottom:8px; }
-.b2b-desc { font-size:14px; color:rgba(246,241,231,.45); line-height:1.8; }
+.b2b-name { font-size:max(18px,1.3vw); font-weight:700; color:var(--ogp-paper); margin-bottom:8px; }
+.b2b-desc { font-size:max(15px,1vw); color:rgba(246,241,231,.65); line-height:1.8; }
 
 /* ── Footer ── */
 footer {
@@ -643,6 +644,7 @@ footer {
 
 <!-- ── WHY ── -->
 <section id="why" class="sec">
+  <div class="wrap">
   <p class="sec-overline rv" style="color:var(--ogp-gold-400);">Why Ogapijin</p>
   <h2 class="sec-title rv">오가피진이<br><em style="color:var(--ogp-gold-400);">특별한</em> 이유</h2>
 
@@ -663,12 +665,14 @@ footer {
       <div class="why-desc">인공색소, 방부제, 인공향료를 일절 사용하지 않습니다. 자연 그대로의 맛과 색을 담았습니다.</div>
     </div>
   </div>
+  </div>
 </section>
 
 <div class="divider"></div>
 
 <!-- ── HOW TO DRINK ── -->
 <section id="howto" class="sec">
+  <div class="wrap">
   <p class="sec-overline rv">How to Drink</p>
   <h2 class="sec-title rv">차갑게<br>즐기는 법</h2>
 
@@ -698,12 +702,14 @@ footer {
       </div>
     </div>
   </div>
+  </div>
 </section>
 
 <div class="divider"></div>
 
 <!-- ── DRINKS ── -->
 <section id="drinks" class="sec">
+  <div class="wrap">
   <p class="sec-overline rv">Menu</p>
   <h2 class="sec-title rv">음료로<br>즐기기</h2>
 
@@ -741,12 +747,14 @@ footer {
       </div>
     </div>
   </div>
+  </div>
 </section>
 
 <div class="divider"></div>
 
 <!-- ── B2B ── -->
 <section id="b2b" class="sec">
+  <div class="wrap">
   <p class="sec-overline rv" style="color:var(--ogp-gold-400);">For Business</p>
   <h2 class="sec-title rv" style="color:var(--ogp-paper);">카페 사장님,<br>납품 상담<br>해드립니다.</h2>
   <div class="b2b-grid">
@@ -766,6 +774,7 @@ footer {
     </div>
   </div>
   <a href="tel:041-633-2676" class="btn-gold rv">납품 문의 041-633-2676 →</a>
+  </div>
 </section>
 
 <!-- ── FOOTER ── -->
