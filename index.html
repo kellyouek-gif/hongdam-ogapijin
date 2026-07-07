@@ -453,7 +453,8 @@ footer {
   font-family:var(--ogp-font-body); font-size:15px; font-weight:700;
   letter-spacing:.04em; cursor:pointer; border-radius:var(--ogp-radius-md);
   display:flex; align-items:center; justify-content:center; gap:8px;
-  transition:opacity .2s;
+  transition:opacity .2s; position:relative; z-index:10;
+  pointer-events:auto;
 }
 .pay-confirm-btn:hover { opacity:.9; }
 .pay-notice { font-size:11px; color:var(--ogp-muted); text-align:center; line-height:1.9; }
