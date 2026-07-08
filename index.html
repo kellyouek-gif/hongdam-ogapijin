@@ -989,7 +989,7 @@ footer {
     </div>
     <button class="pay-confirm-btn" onclick="requestPay()">
       <svg width="20" height="20" viewBox="0 0 24 24" fill="#3A1D1D"><path d="M12 2C6.48 2 2 5.58 2 10c0 2.46 1.36 4.67 3.5 6.18V20l3.72-2.06A11 11 0 0012 18c5.52 0 10-3.58 10-8s-4.48-8-10-8z"/></svg>
-      카카오페이로 결제하기
+      카드로 결제하기
     </button>
     <div class="pay-notice">배송비 3,000원 · 4만원 이상 무료배송</div>
   </div>
@@ -1047,13 +1047,12 @@ async function requestPay() {
     if (modalQtys['340'] > 0) name += (name ? ' + ' : '') + '340mL ' + modalQtys['340'] + '개';
     const response = await PortOne.requestPayment({
       storeId: 'store-30116eef-f63a-40c4-beb3-dcdb8bafb9bb',
-      channelKey: 'channel-key-56eed54c-30a7-468f-a0b7-f098b855e6fa',
+      channelKey: 'channel-key-c99e987b-1586-4187-9b17-8c03a20f515f',
       paymentId: 'hongdam_' + Date.now(),
       orderName: name,
       totalAmount: subtotal + ship,
       currency: 'KRW',
-      payMethod: 'EASY_PAY',
-      easyPay: { easyPayProvider: 'KAKAOPAY' }
+      payMethod: 'CARD'
     });
     if (response.code != null) {
       alert('결제 실패: ' + response.message);
