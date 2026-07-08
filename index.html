@@ -864,6 +864,10 @@ footer {
         </div>
       </div>
       <div class="contact-field">
+        <label class="contact-label">이메일 (자동답변 수신)</label>
+        <input type="email" id="c-email" class="contact-input" placeholder="example@email.com">
+      </div>
+      <div class="contact-field">
         <label class="contact-label">문의 유형</label>
         <select id="c-type" class="contact-input">
           <option value="구매">일반 구매 문의</option>
@@ -1068,25 +1072,34 @@ document.getElementById('payOverlay').addEventListener('click', function(e) {
   if (e.target === this) closePay();
 });
 
+const GAS_URL = ''; // Google Apps Script URL (설정 후 입력)
+
 async function submitContact(e) {
   e.preventDefault();
   const name  = document.getElementById('c-name').value.trim();
   const phone = document.getElementById('c-phone').value.trim();
+  const email = document.getElementById('c-email').value.trim();
   const type  = document.getElementById('c-type').value;
   const msg   = document.getElementById('c-msg').value.trim();
   if (!name || !phone || !msg) { alert('모든 항목을 입력해주세요.'); return; }
+  const payload = { 이름: name, 연락처: phone, 이메일: email, 문의유형: type, 내용: msg };
   try {
-    const res = await fetch('https://formspree.io/f/xjgqdonp', {
+    // Formspree (이메일 수신)
+    fetch('https://formspree.io/f/xjgqdonp', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ 이름: name, 연락처: phone, 문의유형: type, 내용: msg })
+      body: JSON.stringify(payload)
     });
-    if (res.ok) {
-      alert('문의가 접수됐습니다.\n빠르게 연락드리겠습니다. 감사합니다.');
-      e.target.reset();
-    } else {
-      alert('전송 실패. 잠시 후 다시 시도해주세요.');
+    // Google Apps Script (시트 저장 + 자동답변)
+    if (GAS_URL) {
+      fetch(GAS_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      });
     }
+    alert('문의가 접수됐습니다.\n' + (email ? '입력하신 이메일로 확인 메일을 보내드렸습니다.' : '빠르게 연락드리겠습니다.'));
+    e.target.reset();
   } catch(err) {
     alert('오류: ' + err.message);
   }

@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>홍담오가피진 · 문의 자동화 설정 가이드</title>
+<style>
+:root {
+  --green: #14291C;
+  --green-mid: #1E3D2A;
+  --gold: #C9A24B;
+  --cream: #F6F1E7;
+  --cream-dark: #EDE5D4;
+  --ink: #1A1A1A;
+  --muted: #6B7280;
+  --surface: #FFFFFF;
+  --border: #DDD6C8;
+  --radius: 12px;
+  --done: #2D6A4F;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Apple SD Gothic Neo', sans-serif; background: var(--cream); color: var(--ink); }
+
+.header { background: var(--green); padding: 24px 40px; display: flex; align-items: center; justify-content: space-between; }
+.header-left { display: flex; align-items: center; gap: 14px; }
+.header-logo { width: 8px; height: 8px; border-radius: 50%; background: var(--gold); box-shadow: 0 0 0 4px rgba(201,162,75,.25); }
+.header-title { font-size: 18px; font-weight: 800; color: #fff; }
+.header-sub { font-size: 12px; color: rgba(255,255,255,.5); margin-top: 3px; }
+.header-tag { background: rgba(201,162,75,.2); border: 1px solid var(--gold); color: var(--gold); font-size: 11px; font-weight: 700; padding: 5px 14px; border-radius: 20px; letter-spacing: .06em; }
+
+.hero { background: var(--green-mid); padding: 48px 40px; text-align: center; }
+.hero-title { font-size: 28px; font-weight: 800; color: #fff; margin-bottom: 12px; }
+.hero-title span { color: var(--gold); }
+.hero-desc { font-size: 15px; color: rgba(255,255,255,.65); line-height: 1.8; }
+.flow { display: flex; align-items: center; justify-content: center; gap: 0; margin-top: 32px; flex-wrap: wrap; gap: 0; }
+.flow-item { background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.15); border-radius: 10px; padding: 14px 20px; text-align: center; min-width: 130px; }
+.flow-icon { font-size: 24px; margin-bottom: 6px; }
+.flow-label { font-size: 12px; color: rgba(255,255,255,.8); font-weight: 600; }
+.flow-arrow { color: var(--gold); font-size: 20px; margin: 0 8px; }
+
+.container { max-width: 800px; margin: 0 auto; padding: 40px 24px; }
+
+.section { margin-bottom: 40px; }
+.section-num { display: inline-flex; align-items: center; justify-content: center; width: 32px; height: 32px; background: var(--gold); color: var(--green); font-size: 14px; font-weight: 800; border-radius: 50%; margin-bottom: 14px; }
+.section-title { font-size: 20px; font-weight: 800; color: var(--green); margin-bottom: 6px; }
+.section-desc { font-size: 14px; color: var(--muted); line-height: 1.7; margin-bottom: 20px; }
+
+.card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; margin-bottom: 16px; }
+.card-head { padding: 16px 24px; background: var(--cream-dark); border-bottom: 1px solid var(--border); display: flex; align-items: center; gap: 10px; }
+.card-head-title { font-size: 14px; font-weight: 700; color: var(--green); }
+.card-body { padding: 24px; }
+.step-row { display: flex; gap: 16px; align-items: flex-start; padding: 14px 0; border-bottom: 1px solid var(--border); }
+.step-row:last-child { border-bottom: none; padding-bottom: 0; }
+.step-circle { width: 26px; height: 26px; min-width: 26px; border-radius: 50%; background: var(--green); color: #fff; font-size: 11px; font-weight: 800; display: flex; align-items: center; justify-content: center; margin-top: 1px; }
+.step-text { flex: 1; }
+.step-label { font-size: 14px; font-weight: 700; color: var(--ink); margin-bottom: 4px; }
+.step-hint { font-size: 13px; color: var(--muted); line-height: 1.7; }
+.step-hint b { color: var(--green); }
+.step-hint a { color: var(--gold); text-decoration: none; font-weight: 600; }
+
+.code-wrap { margin-top: 12px; position: relative; }
+.code-label { font-size: 11px; font-weight: 700; color: var(--gold); letter-spacing: .1em; text-transform: uppercase; margin-bottom: 6px; }
+.code-box { background: #0F1F14; color: #A8D8A8; font-size: 12.5px; font-family: 'Courier New', 'D2Coding', monospace; padding: 20px; border-radius: 8px; white-space: pre; overflow-x: auto; line-height: 1.75; border: 1px solid #1E3D2A; }
+.code-box .comment { color: #5A8A6A; }
+.code-box .string { color: #C9A24B; }
+.copy-btn { position: absolute; top: 28px; right: 10px; background: var(--gold); color: var(--green); border: none; padding: 6px 14px; border-radius: 6px; font-size: 12px; font-weight: 700; cursor: pointer; transition: all .2s; }
+.copy-btn:hover { background: #E8C87A; }
+.copy-btn.done { background: var(--done); color: #fff; }
+
+.url-input-wrap { margin-top: 16px; display: flex; gap: 10px; }
+.url-input { flex: 1; padding: 12px 16px; border: 2px solid var(--border); border-radius: 8px; font-size: 14px; color: var(--ink); background: var(--surface); font-family: monospace; }
+.url-input:focus { outline: none; border-color: var(--gold); }
+.url-btn { background: var(--green); color: #fff; border: none; padding: 12px 20px; border-radius: 8px; font-size: 14px; font-weight: 700; cursor: pointer; white-space: nowrap; transition: background .2s; }
+.url-btn:hover { background: var(--green-mid); }
+.url-btn.done { background: var(--done); }
+
+.notice { background: rgba(201,162,75,.1); border: 1px solid rgba(201,162,75,.3); border-radius: 8px; padding: 14px 18px; font-size: 13px; color: #7A5A10; line-height: 1.7; margin-top: 12px; }
+.notice b { color: #5A3D00; }
+
+.done-box { background: #EBF7F1; border: 1px solid #A7D7BC; border-radius: var(--radius); padding: 24px; text-align: center; margin-top: 16px; display: none; }
+.done-box.show { display: block; }
+.done-icon { font-size: 36px; margin-bottom: 8px; }
+.done-title { font-size: 18px; font-weight: 800; color: var(--done); margin-bottom: 6px; }
+.done-desc { font-size: 14px; color: #3D7A5E; }
+
+.summary-table { width: 100%; border-collapse: collapse; font-size: 14px; }
+.summary-table th { background: var(--green); color: #fff; padding: 12px 16px; text-align: left; font-size: 12px; font-weight: 700; letter-spacing: .06em; }
+.summary-table td { padding: 12px 16px; border-bottom: 1px solid var(--border); }
+.summary-table tr:last-child td { border-bottom: none; }
+.summary-table tr:nth-child(even) td { background: var(--cream); }
+.badge { display: inline-block; font-size: 11px; font-weight: 700; padding: 3px 10px; border-radius: 10px; }
+.badge-free { background: #EBF7F1; color: var(--done); }
+.badge-auto { background: rgba(201,162,75,.15); color: #7A5A10; }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-left">
+    <div class="header-logo"></div>
+    <div>
+      <div class="header-title">홍담오가피진 · 문의 자동화</div>
+      <div class="header-sub">Google Sheets 저장 + 자동답변 이메일 설정 가이드</div>
+    </div>
+  </div>
+  <div class="header-tag">SETUP GUIDE</div>
+</div>
+
+<div class="hero">
+  <div class="hero-title">문의가 오면 <span>자동으로</span> 처리됩니다</div>
+  <div class="hero-desc">한 번만 설정하면 — 문의 저장, 유형별 분류, 자동 답변까지 모두 자동</div>
+  <div class="flow">
+    <div class="flow-item"><div class="flow-icon">🌐</div><div class="flow-label">홍담 사이트<br>문의 접수</div></div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-item"><div class="flow-icon">📊</div><div class="flow-label">구글 시트<br>자동 저장</div></div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-item"><div class="flow-icon">✉️</div><div class="flow-label">자동 답변<br>이메일 발송</div></div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-item"><div class="flow-icon">🔔</div><div class="flow-label">관리자<br>알림 수신</div></div>
+  </div>
+</div>
+
+<div class="container">
+
+  <!-- STEP 1 -->
+  <div class="section">
+    <div class="section-num">1</div>
+    <div class="section-title">구글 스프레드시트 만들기</div>
+    <div class="section-desc">문의 내용이 자동으로 기록될 시트를 만듭니다.</div>
+    <div class="card">
+      <div class="card-body">
+        <div class="step-row">
+          <div class="step-circle">1</div>
+          <div class="step-text">
+            <div class="step-label">구글 스프레드시트 접속</div>
+            <div class="step-hint"><a href="https://sheets.google.com" target="_blank">sheets.google.com</a> 접속 → <b>새 스프레드시트</b> 클릭</div>
+          </div>
+        </div>
+        <div class="step-row">
+          <div class="step-circle">2</div>
+          <div class="step-text">
+            <div class="step-label">시트 이름 변경</div>
+            <div class="step-hint">상단 "제목 없는 스프레드시트" 클릭 → <b>홍담오가피진 문의관리</b> 입력</div>
+          </div>
+        </div>
+        <div class="step-row">
+          <div class="step-circle">3</div>
+          <div class="step-text">
+            <div class="step-label">Apps Script 열기</div>
+            <div class="step-hint">상단 메뉴 <b>확장 프로그램</b> → <b>Apps Script</b> 클릭</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- STEP 2 -->
+  <div class="section">
+    <div class="section-num">2</div>
+    <div class="section-title">Apps Script 코드 붙여넣기</div>
+    <div class="section-desc">기존 내용을 모두 지우고 아래 코드를 붙여넣은 후 저장(Ctrl+S)합니다.</div>
+    <div class="card">
+      <div class="card-body">
+        <div class="code-wrap">
+          <div class="code-label">📋 Apps Script 전체 코드</div>
+          <div class="code-box" id="gas-code">function doPost(e) {
+  try {
+    var data = JSON.parse(e.postData.contents);
+    var ss   = SpreadsheetApp.getActiveSpreadsheet();
+
+    <span class="comment">// ① 전체 문의 시트에 저장</span>
+    var main = ss.getSheetByName('전체문의') || ss.insertSheet('전체문의');
+    if (main.getLastRow() === 0) {
+      main.appendRow(['접수일시','이름','연락처','이메일','문의유형','내용','답변여부']);
+      main.getRange(1,1,1,7).setBackground('#14291C').setFontColor('#FFFFFF').setFontWeight('bold');
+    }
+    main.appendRow([
+      new Date().toLocaleString('ko-KR'),
+      data['이름']    || '',
+      data['연락처']  || '',
+      data['이메일']  || '',
+      data['문의유형'] || '',
+      data['내용']    || '',
+      '미답변'
+    ]);
+
+    <span class="comment">// ② 문의유형별 시트에 저장</span>
+    var typeName  = data['문의유형'] || '기타';
+    var typeSheet = ss.getSheetByName(typeName) || ss.insertSheet(typeName);
+    if (typeSheet.getLastRow() === 0) {
+      typeSheet.appendRow(['접수일시','이름','연락처','이메일','내용','답변여부']);
+      typeSheet.getRange(1,1,1,6).setBackground('#1E3D2A').setFontColor('#FFFFFF').setFontWeight('bold');
+    }
+    typeSheet.appendRow([
+      new Date().toLocaleString('ko-KR'),
+      data['이름']   || '',
+      data['연락처'] || '',
+      data['이메일'] || '',
+      data['내용']   || '',
+      '미답변'
+    ]);
+
+    <span class="comment">// ③ 문의자에게 자동 답변 이메일</span>
+    if (data['이메일']) {
+      GmailApp.sendEmail(
+        data['이메일'],
+        '[홍담오가피진] 문의가 접수되었습니다',
+        '',
+        { htmlBody: makeAutoReply(data['이름'], data['문의유형']), name: '홍담오가피진' }
+      );
+    }
+
+    <span class="comment">// ④ 관리자에게 알림 이메일</span>
+    GmailApp.sendEmail(
+      'kellyouek@gmail.com',
+      '[홍담] 새 문의: ' + typeName + ' – ' + (data['이름'] || ''),
+      '',
+      { htmlBody: makeNotify(data), name: '홍담 문의알림' }
+    );
+
+    return ContentService
+      .createTextOutput(JSON.stringify({ result: 'ok' }))
+      .setMimeType(ContentService.MimeType.JSON);
+
+  } catch(err) {
+    return ContentService
+      .createTextOutput(JSON.stringify({ result: 'error', msg: err.message }))
+      .setMimeType(ContentService.MimeType.JSON);
+  }
+}
+
+function makeAutoReply(name, type) {
+  var msgs = {
+    '구매': '구매 관련 문의는 영업일 기준 1~2일 내 연락드리겠습니다.',
+    '납품': '납품 상담 담당자가 직접 연락드리겠습니다.',
+    '기타': '담당자가 확인 후 빠르게 연락드리겠습니다.'
+  };
+  var msg = msgs[type] || msgs['기타'];
+  return '<div style="font-family:sans-serif;max-width:560px;margin:0 auto;border:1px solid #e5e7eb;border-radius:12px;overflow:hidden">'
+    + '<div style="background:#14291C;padding:28px 32px">'
+    +   '<div style="color:#C9A24B;font-size:22px;font-weight:800">홍담오가피진</div>'
+    +   '<div style="color:rgba(255,255,255,.55);font-size:13px;margin-top:4px">문의 접수 확인</div>'
+    + '</div>'
+    + '<div style="padding:32px;background:#fff">'
+    +   '<p style="font-size:16px;font-weight:700;margin-bottom:16px">' + (name||'고객') + '님, 문의해 주셔서 감사합니다.</p>'
+    +   '<div style="background:#F6F1E7;border-radius:8px;padding:16px 20px;margin-bottom:20px">'
+    +     '<div style="font-size:12px;color:#888;margin-bottom:4px">접수 문의 유형</div>'
+    +     '<div style="font-size:15px;font-weight:700;color:#14291C">' + (type||'기타') + '</div>'
+    +   '</div>'
+    +   '<p style="font-size:14px;color:#374151;line-height:1.8">' + msg + '</p>'
+    +   '<div style="margin-top:24px;padding-top:20px;border-top:1px solid #e5e7eb">'
+    +     '<p style="font-size:13px;color:#888">급한 문의는 아래로 연락 주세요.</p>'
+    +     '<p style="font-size:15px;font-weight:700;color:#14291C;margin-top:6px">☎ 041-633-2676</p>'
+    +     '<p style="font-size:12px;color:#aaa">평일 09:00 – 18:00 (주말·공휴일 휴무)</p>'
+    +   '</div>'
+    + '</div>'
+    + '<div style="background:#F6F1E7;padding:14px 32px;text-align:center;font-size:12px;color:#888">'
+    +   'www.hongdam.kr &nbsp;|&nbsp; 농업회사법인 조선행도가 주식회사'
+    + '</div>'
+    + '</div>';
+}
+
+function makeNotify(d) {
+  function row(label, val) {
+    return '<tr><td style="padding:11px 20px;font-size:13px;color:#888;width:90px;border-bottom:1px solid #eee">'
+      + label + '</td><td style="padding:11px 20px;font-size:14px;border-bottom:1px solid #eee">' + (val||'-') + '</td></tr>';
+  }
+  return '<div style="font-family:sans-serif;max-width:500px">'
+    + '<div style="background:#14291C;padding:20px 24px">'
+    +   '<div style="color:#C9A24B;font-weight:800;font-size:15px">홍담 새 문의 알림 🔔</div>'
+    + '</div>'
+    + '<table style="width:100%;border-collapse:collapse;background:#fff">'
+    + row('문의유형', '<b>' + d['문의유형'] + '</b>')
+    + row('이름', d['이름'])
+    + row('연락처', d['연락처'])
+    + row('이메일', d['이메일'])
+    + '<tr><td style="padding:11px 20px;font-size:13px;color:#888;vertical-align:top">내용</td>'
+    + '<td style="padding:11px 20px;font-size:14px;line-height:1.7">' + (d['내용']||'').replace(/\n/g,'<br>') + '</td></tr>'
+    + '</table></div>';
+}</div>
+          <button class="copy-btn" id="btn-gas" onclick="copyGas()">복사</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- STEP 3 -->
+  <div class="section">
+    <div class="section-num">3</div>
+    <div class="section-title">웹 앱으로 배포하기</div>
+    <div class="section-desc">코드 저장 후 아래 순서대로 배포합니다.</div>
+    <div class="card">
+      <div class="card-body">
+        <div class="step-row">
+          <div class="step-circle">1</div>
+          <div class="step-text">
+            <div class="step-label">배포 메뉴 열기</div>
+            <div class="step-hint">Apps Script 상단 오른쪽 <b>배포</b> 버튼 → <b>새 배포</b> 클릭</div>
+          </div>
+        </div>
+        <div class="step-row">
+          <div class="step-circle">2</div>
+          <div class="step-text">
+            <div class="step-label">배포 유형 선택</div>
+            <div class="step-hint">유형 선택 톱니바퀴 → <b>웹 앱</b> 선택</div>
+          </div>
+        </div>
+        <div class="step-row">
+          <div class="step-circle">3</div>
+          <div class="step-text">
+            <div class="step-label">액세스 권한 설정</div>
+            <div class="step-hint">
+              · 설명: <b>홍담문의자동화</b><br>
+              · 다음 사용자로 실행: <b>나 (kellyouek@gmail.com)</b><br>
+              · 액세스 권한: <b>모든 사용자</b>
+            </div>
+          </div>
+        </div>
+        <div class="step-row">
+          <div class="step-circle">4</div>
+          <div class="step-text">
+            <div class="step-label">배포 & URL 복사</div>
+            <div class="step-hint"><b>배포</b> 버튼 클릭 → Google 계정 권한 허용 → <b>웹 앱 URL</b> 복사</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="notice">⚠️ <b>권한 허용 팝업</b>이 뜨면 → "고급" 클릭 → "홍담문의자동화(으)로 이동" 클릭 → "허용"</div>
+  </div>
+
+  <!-- STEP 4 -->
+  <div class="section">
+    <div class="section-num">4</div>
+    <div class="section-title">복사한 URL 입력하기</div>
+    <div class="section-desc">배포 후 받은 웹 앱 URL을 아래에 입력하면 사이트와 자동 연동됩니다.</div>
+    <div class="card">
+      <div class="card-body">
+        <div class="step-label" style="margin-bottom:10px">웹 앱 URL 붙여넣기</div>
+        <div class="url-input-wrap">
+          <input type="url" class="url-input" id="gas-url" placeholder="https://script.google.com/macros/s/..." />
+          <button class="url-btn" id="btn-apply" onclick="applyUrl()">적용하기</button>
+        </div>
+        <div class="notice" style="margin-top:14px">
+          입력 후 <b>"적용하기"</b> 클릭 → 아래에 나오는 코드를 클로드에게 전달하거나<br>
+          index.html의 <b>GAS_URL = ''</b> 부분에 직접 붙여넣으세요.
+        </div>
+        <div id="result-wrap" style="display:none;margin-top:16px">
+          <div class="code-wrap">
+            <div class="code-label">index.html에 교체할 코드</div>
+            <div class="code-box" id="result-code"></div>
+            <button class="copy-btn" id="btn-result" onclick="copyResult()">복사</button>
+          </div>
+        </div>
+        <div class="done-box" id="done-box">
+          <div class="done-icon">🎉</div>
+          <div class="done-title">설정 완료!</div>
+          <div class="done-desc">이제 홍담 사이트 문의 → 구글 시트 자동 저장 + 자동 답변 이메일이 작동합니다.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 요약 -->
+  <div class="section">
+    <div class="section-num">✓</div>
+    <div class="section-title">설정 완료 후 작동 방식</div>
+    <div class="card">
+      <table class="summary-table">
+        <thead>
+          <tr><th>문의 유형</th><th>저장 위치</th><th>자동 답변</th><th>관리자 알림</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>🛒 일반 구매 문의</td>
+            <td>전체문의 + 구매 시트</td>
+            <td><span class="badge badge-auto">자동 발송</span></td>
+            <td><span class="badge badge-free">실시간</span></td>
+          </tr>
+          <tr>
+            <td>🏪 납품 문의</td>
+            <td>전체문의 + 납품 시트</td>
+            <td><span class="badge badge-auto">자동 발송</span></td>
+            <td><span class="badge badge-free">실시간</span></td>
+          </tr>
+          <tr>
+            <td>💬 기타 문의</td>
+            <td>전체문의 + 기타 시트</td>
+            <td><span class="badge badge-auto">자동 발송</span></td>
+            <td><span class="badge badge-free">실시간</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="notice" style="margin-top:16px">
+      💡 <b>모두 무료입니다.</b> Google Sheets + Google Apps Script + Gmail 모두 구글 계정만 있으면 무료로 사용 가능합니다.
+    </div>
+  </div>
+
+</div>
+
+<script>
+function copyGas() {
+  const code = document.getElementById('gas-code').innerText;
+  navigator.clipboard.writeText(code);
+  const btn = document.getElementById('btn-gas');
+  btn.textContent = '✅ 복사됨!';
+  btn.classList.add('done');
+  setTimeout(() => { btn.textContent = '복사'; btn.classList.remove('done'); }, 2500);
+}
+
+function applyUrl() {
+  const url = document.getElementById('gas-url').value.trim();
+  if (!url || !url.startsWith('https://script.google.com')) {
+    alert('올바른 Google Apps Script URL을 입력해주세요.\nhttps://script.google.com/macros/s/... 형태여야 합니다.');
+    return;
+  }
+  const code = `const GAS_URL = '${url}';`;
+  document.getElementById('result-code').textContent = code;
+  document.getElementById('result-wrap').style.display = 'block';
+  document.getElementById('done-box').classList.add('show');
+  const btn = document.getElementById('btn-apply');
+  btn.textContent = '✅ 적용됨';
+  btn.classList.add('done');
+
+  // Save to localStorage
+  localStorage.setItem('hongdam_gas_url', url);
+}
+
+function copyResult() {
+  const code = document.getElementById('result-code').textContent;
+  navigator.clipboard.writeText(code);
+  const btn = document.getElementById('btn-result');
+  btn.textContent = '✅ 복사됨!';
+  btn.classList.add('done');
+  setTimeout(() => { btn.textContent = '복사'; btn.classList.remove('done'); }, 2500);
+}
+
+// 저장된 URL 불러오기
+window.onload = function() {
+  const saved = localStorage.getItem('hongdam_gas_url');
+  if (saved) {
+    document.getElementById('gas-url').value = saved;
+  }
+};
+</script>
+</body>
+</html>
