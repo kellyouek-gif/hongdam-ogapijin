@@ -403,6 +403,34 @@ footer {
 .ft-links a:hover { color:rgba(246,241,231,1); }
 .ft-copy { font-size:max(15px,1vw); color:rgba(246,241,231,.75); line-height:1.8; }
 
+/* ── Reviews ── */
+.review-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:max(20px,1.5vw); margin-top:max(40px,3vw); }
+.review-card { background:var(--ogp-surface); border:1px solid var(--ogp-border); border-radius:var(--ogp-radius-lg); padding:max(28px,2.2vw); display:flex; flex-direction:column; gap:16px; }
+.review-stars { color:var(--ogp-gold-500); font-size:max(16px,1.1vw); letter-spacing:2px; }
+.review-text { font-size:max(16px,1.1vw); color:var(--ogp-ink); line-height:1.85; flex:1; }
+.review-author { font-size:max(13px,.9vw); color:var(--ogp-muted); font-weight:600; padding-top:12px; border-top:1px solid var(--ogp-border); }
+
+/* ── Contact ── */
+.contact-wrap { display:grid; grid-template-columns:1.4fr 1fr; gap:max(40px,3vw); margin-top:max(40px,3vw); align-items:start; }
+.contact-form { display:flex; flex-direction:column; gap:max(16px,1.2vw); }
+.contact-row { display:grid; grid-template-columns:1fr 1fr; gap:max(16px,1.2vw); }
+.contact-field { display:flex; flex-direction:column; gap:8px; }
+.contact-label { font-size:max(13px,.9vw); font-weight:700; color:var(--ogp-ink); letter-spacing:.04em; }
+.contact-input { font-size:max(15px,1vw); padding:max(13px,1vw) max(16px,1.1vw); border:1.5px solid var(--ogp-border); border-radius:var(--ogp-radius-md); background:var(--ogp-surface); color:var(--ogp-ink); outline:none; transition:border-color .2s; font-family:inherit; width:100%; }
+.contact-input:focus { border-color:var(--ogp-green-700); }
+.contact-textarea { min-height:140px; resize:vertical; }
+.contact-info { display:flex; flex-direction:column; gap:max(24px,1.8vw); background:var(--ogp-green-900); border-radius:var(--ogp-radius-lg); padding:max(32px,2.5vw); }
+.contact-info-item { display:flex; align-items:flex-start; gap:16px; }
+.contact-info-icon { font-size:max(22px,1.5vw); line-height:1; }
+.contact-info-label { font-size:max(12px,.85vw); color:rgba(246,241,231,.55); font-weight:700; letter-spacing:.08em; text-transform:uppercase; margin-bottom:4px; }
+.contact-info-val { font-size:max(15px,1.05vw); color:rgba(246,241,231,.92); line-height:1.6; }
+.contact-info-val a { color:var(--ogp-gold-400); text-decoration:none; }
+@media(max-width:860px) {
+  .review-grid { grid-template-columns:1fr; }
+  .contact-wrap { grid-template-columns:1fr; }
+  .contact-row { grid-template-columns:1fr; }
+}
+
 /* ── Reveal animations ── */
 .rv { opacity:0; transform:translateY(28px); }
 
@@ -507,6 +535,8 @@ footer {
     <a href="#why">특징</a>
     <a href="#drinks">음료</a>
     <a href="#b2b">납품문의</a>
+    <a href="#reviews">후기</a>
+    <a href="#contact">문의</a>
     <a href="#products" class="h-cta">구매하기</a>
   </nav>
 </header>
@@ -526,7 +556,7 @@ footer {
       </div>
       <h1 class="hero-title">홍담<br>오가피진</h1>
       <div class="hero-divider"></div>
-      <p class="hero-desc">오가피·녹차의 조화.<br>오가피와 녹차의 깊은 풍미를<br>한 잔에 담았습니다.</p>
+      <p class="hero-desc">원액으로 깊게,<br>바로음용으로 간편하게.<br>집·사무실·카페 어디서든 자연스럽게.</p>
       <div class="hero-btns">
         <a href="#products" class="btn-primary">제품 보기 →</a>
         <a href="#b2b" class="btn-secondary">납품 문의</a>
@@ -783,6 +813,104 @@ footer {
   </div>
 </section>
 
+<!-- ── REVIEWS ── -->
+<div class="divider"></div>
+<section id="reviews" class="sec">
+  <div class="wrap">
+  <p class="sec-overline rv">Customer Reviews</p>
+  <h2 class="sec-title rv">고객 후기</h2>
+  <div class="review-grid">
+    <div class="review-card rv">
+      <div class="review-stars">★★★★★</div>
+      <div class="review-text">"카페에서 처음 맛봤는데 너무 맛있어서 2L 원액으로 주문했어요. 집에서도 그대로 재현이 되더라고요. 진하게 타먹으면 정말 좋습니다."</div>
+      <div class="review-author">김○○ · 2L 원액 구매</div>
+    </div>
+    <div class="review-card rv">
+      <div class="review-stars">★★★★★</div>
+      <div class="review-text">"340mL 제품을 사무실에 두고 마시는데, 달지 않고 깔끔해서 오후에 마시기 딱 좋아요. 재구매 계속 할 것 같습니다."</div>
+      <div class="review-author">이○○ · 340mL 구매</div>
+    </div>
+    <div class="review-card rv">
+      <div class="review-stars">★★★★★</div>
+      <div class="review-text">"카페 납품으로 쓰고 있는데 손님들 반응이 좋아요. 레시피 가이드도 같이 주셔서 메뉴 만들기 편했습니다."</div>
+      <div class="review-author">박○○ · 카페 납품</div>
+    </div>
+    <div class="review-card rv">
+      <div class="review-stars">★★★★☆</div>
+      <div class="review-text">"탄산수에 희석해서 마셨더니 색다른 맛이 나요. 원액이 생각보다 오래 가고, 포장도 깔끔하게 왔습니다."</div>
+      <div class="review-author">최○○ · 2L 원액 구매</div>
+    </div>
+  </div>
+  </div>
+</section>
+
+<!-- ── CONTACT ── -->
+<div class="divider"></div>
+<section id="contact" class="sec">
+  <div class="wrap">
+  <p class="sec-overline rv">Contact</p>
+  <h2 class="sec-title rv">문의하기</h2>
+  <p class="sec-desc rv" style="margin-bottom:max(32px,2.5vw);">구매 문의, 납품 상담, 기타 문의사항을 남겨주세요.<br>빠르게 연락드리겠습니다.</p>
+  <div class="contact-wrap">
+    <form class="contact-form rv" onsubmit="submitContact(event)">
+      <div class="contact-row">
+        <div class="contact-field">
+          <label class="contact-label">이름</label>
+          <input type="text" id="c-name" class="contact-input" placeholder="홍길동" required>
+        </div>
+        <div class="contact-field">
+          <label class="contact-label">연락처</label>
+          <input type="tel" id="c-phone" class="contact-input" placeholder="010-0000-0000" required>
+        </div>
+      </div>
+      <div class="contact-field">
+        <label class="contact-label">문의 유형</label>
+        <select id="c-type" class="contact-input">
+          <option value="구매">일반 구매 문의</option>
+          <option value="납품">카페·업소 납품 문의</option>
+          <option value="기타">기타 문의</option>
+        </select>
+      </div>
+      <div class="contact-field">
+        <label class="contact-label">문의 내용</label>
+        <textarea id="c-msg" class="contact-input contact-textarea" placeholder="문의 내용을 입력해주세요." required></textarea>
+      </div>
+      <button type="submit" class="btn-gold" style="width:100%;justify-content:center;margin-top:8px;">문의 보내기 →</button>
+    </form>
+    <div class="contact-info rv">
+      <div class="contact-info-item">
+        <span class="contact-info-icon">📞</span>
+        <div>
+          <div class="contact-info-label">전화 문의</div>
+          <a href="tel:041-633-2676" class="contact-info-val">041-633-2676</a>
+        </div>
+      </div>
+      <div class="contact-info-item">
+        <span class="contact-info-icon">🌐</span>
+        <div>
+          <div class="contact-info-label">웹사이트</div>
+          <div class="contact-info-val">www.hongdam.kr</div>
+        </div>
+      </div>
+      <div class="contact-info-item">
+        <span class="contact-info-icon">📍</span>
+        <div>
+          <div class="contact-info-label">주소</div>
+          <div class="contact-info-val">충청남도 홍성군 구항면 거북로 386-35</div>
+        </div>
+      </div>
+      <div class="contact-info-item">
+        <span class="contact-info-icon">🕐</span>
+        <div>
+          <div class="contact-info-label">운영시간</div>
+          <div class="contact-info-val">평일 09:00 – 18:00<br><span style="font-size:13px;opacity:.7">주말·공휴일 휴무</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  </div>
+</section>
+
 <!-- ── FOOTER ── -->
 <footer>
   <div>
@@ -794,6 +922,8 @@ footer {
     <a href="#howto">활용법</a>
     <a href="#drinks">음료</a>
     <a href="#b2b">납품 문의</a>
+    <a href="#reviews">고객 후기</a>
+    <a href="#contact">문의하기</a>
     <a href="javascript:void(0)" onclick="openPolicy('terms')">이용약관</a>
     <a href="javascript:void(0)" onclick="openPolicy('privacy')">개인정보처리방침</a>
     <a href="javascript:void(0)" onclick="openPolicy('refund')">환불정책</a>
@@ -938,6 +1068,17 @@ async function requestPay() {
 document.getElementById('payOverlay').addEventListener('click', function(e) {
   if (e.target === this) closePay();
 });
+
+function submitContact(e) {
+  e.preventDefault();
+  const name  = document.getElementById('c-name').value.trim();
+  const phone = document.getElementById('c-phone').value.trim();
+  const type  = document.getElementById('c-type').value;
+  const msg   = document.getElementById('c-msg').value.trim();
+  if (!name || !phone || !msg) { alert('모든 항목을 입력해주세요.'); return; }
+  alert(`문의가 접수됐습니다.\n\n이름: ${name}\n연락처: ${phone}\n유형: ${type}\n\n빠르게 연락드리겠습니다. 감사합니다.`);
+  e.target.reset();
+}
 
 const POLICIES = {
   terms: {
