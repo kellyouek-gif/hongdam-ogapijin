@@ -1068,15 +1068,28 @@ document.getElementById('payOverlay').addEventListener('click', function(e) {
   if (e.target === this) closePay();
 });
 
-function submitContact(e) {
+async function submitContact(e) {
   e.preventDefault();
   const name  = document.getElementById('c-name').value.trim();
   const phone = document.getElementById('c-phone').value.trim();
   const type  = document.getElementById('c-type').value;
   const msg   = document.getElementById('c-msg').value.trim();
   if (!name || !phone || !msg) { alert('모든 항목을 입력해주세요.'); return; }
-  alert(`문의가 접수됐습니다.\n\n이름: ${name}\n연락처: ${phone}\n유형: ${type}\n\n빠르게 연락드리겠습니다. 감사합니다.`);
-  e.target.reset();
+  try {
+    const res = await fetch('https://formspree.io/f/xjgqdonp', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ 이름: name, 연락처: phone, 문의유형: type, 내용: msg })
+    });
+    if (res.ok) {
+      alert('문의가 접수됐습니다.\n빠르게 연락드리겠습니다. 감사합니다.');
+      e.target.reset();
+    } else {
+      alert('전송 실패. 잠시 후 다시 시도해주세요.');
+    }
+  } catch(err) {
+    alert('오류: ' + err.message);
+  }
 }
 
 const POLICIES = {
