@@ -247,7 +247,8 @@ header {
   padding:max(48px,3vw) max(32px,2vw);
   min-height:max(480px,35vw);
 }
-.prod-img { width:100%; max-width:320px; height:auto; object-fit:contain; filter:drop-shadow(0 16px 32px rgba(22,48,31,.25)); }
+.prod-img { width:auto; max-width:100%; max-height:max(440px,31vw); height:auto; object-fit:contain; filter:drop-shadow(0 16px 32px rgba(22,48,31,.25)); }
+.prod-img--sm { max-height:max(360px,25vw); }
 .prod-info { padding:max(52px,3.5vw) max(48px,3vw); display:flex; flex-direction:column; gap:24px; }
 .prod-vol { font-family:var(--ogp-font-display); font-weight:700; font-size:max(80px,5.5vw); color:var(--ogp-green-700); line-height:1; letter-spacing:-.03em; }
 .prod-vol span { font-size:.42em; color:var(--ogp-green-300); }
@@ -402,6 +403,24 @@ footer {
 .ft-links a { font-size:max(16px,1.1vw); color:rgba(246,241,231,.75); text-decoration:none; transition:color .2s; }
 .ft-links a:hover { color:rgba(246,241,231,1); }
 .ft-copy { font-size:max(15px,1vw); color:rgba(246,241,231,.75); line-height:1.8; }
+.ft-brand { display:flex; align-items:center; gap:14px; }
+.ft-ci { width:64px; height:64px; padding:8px; background:var(--ogp-paper); border-radius:var(--ogp-radius-md); object-fit:contain; flex-shrink:0; }
+
+/* ── Label / Spec ── */
+.spec-wrap {
+  display:grid; grid-template-columns:0.8fr 1.2fr; gap:max(32px,2.5vw);
+  align-items:center; margin-top:max(48px,3.5vw);
+  background:var(--ogp-surface); border:1px solid var(--ogp-border);
+  border-radius:var(--ogp-radius-lg); padding:max(28px,2.2vw);
+}
+.spec-img { width:100%; height:auto; border-radius:var(--ogp-radius-md); object-fit:contain; }
+.spec-title { font-family:var(--ogp-font-display); font-weight:700; font-size:max(22px,1.6vw); color:var(--ogp-ink); margin-bottom:max(18px,1.2vw); }
+.spec-list { display:grid; gap:0; }
+.spec-row { display:grid; grid-template-columns:max(110px,8vw) 1fr; gap:16px; padding:max(11px,.8vw) 0; border-bottom:1px solid var(--ogp-border); }
+.spec-row:last-child { border-bottom:none; }
+.spec-k { font-size:max(14px,.95vw); font-weight:700; color:var(--ogp-green-700); }
+.spec-v { font-size:max(15px,1vw); color:var(--ogp-ink); line-height:1.7; }
+.spec-note { margin-top:max(16px,1.2vw); font-size:max(13px,.9vw); color:var(--ogp-muted); line-height:1.7; }
 
 /* ── Reviews ── */
 .review-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:max(20px,1.5vw); margin-top:max(40px,3vw); }
@@ -491,7 +510,7 @@ footer {
 @media (max-width: 768px) {
   .hero-inner { grid-template-columns: 1fr; padding: 48px 24px; gap: 40px; }
   .hero-logo-col { justify-content: center; }
-  .hero-logo { width: min(280px, 70vw); }
+  .hero-logo { width: min(280px, 70vw); max-width: min(280px, 70vw); }
   .hero-left { align-items: center; text-align: center; }
   .hero-divider { margin: 28px auto; }
   .hero-title { font-size: 56px; }
@@ -504,7 +523,8 @@ footer {
   .prod-grid { grid-template-columns: 1fr; }
   .prod-card { grid-template-columns: 1fr; }
   .prod-img-wrap { min-height: 280px; padding: 40px 24px; }
-  .prod-img { max-width: 200px; }
+  .prod-img { max-height: 300px; }
+  .prod-img--sm { max-height: 250px; }
   .prod-info { padding: 36px 24px; }
   .prod-vol { font-size: 72px; }
   .why-grid { grid-template-columns: 1fr; }
@@ -514,6 +534,8 @@ footer {
   .qr-strip-title { font-size: 32px; }
   .buy-banner { padding: 28px 24px; }
   footer { flex-direction: column; padding: 40px 24px; }
+  .spec-wrap { grid-template-columns: 1fr; }
+  .spec-img { max-width: 320px; margin: 0 auto; }
   header { padding: 0 16px; }
   .h-nav a { display: none; }
   .h-cta { display: flex !important; }
@@ -527,7 +549,7 @@ footer {
 <!-- ── HEADER ── -->
 <header>
   <a href="#" class="h-brand">
-    <img class="h-logo" src="label-new.jpg" alt="홍담오가피진">
+    <img class="h-logo" src="ci-mark.png" alt="홍담에프앤비">
     <span class="h-name">홍담오가피진</span>
   </a>
   <nav class="h-nav">
@@ -546,7 +568,7 @@ footer {
   <div class="hero-inner">
     <!-- 좌: 라벨 이미지 -->
     <div class="hero-logo-col rv">
-      <img src="hdlabel-new.png" alt="홍담오가피진 라벨" class="hero-logo">
+      <img src="productline-2026.jpg" alt="홍담오가피진 신규 라벨 제품군" class="hero-logo">
     </div>
     <!-- 우: 텍스트 + 버튼 + QR -->
     <div class="hero-left rv">
@@ -556,7 +578,7 @@ footer {
       </div>
       <h1 class="hero-title">홍담<br>오가피진</h1>
       <div class="hero-divider"></div>
-      <p class="hero-desc">원액으로 깊게,<br>바로음용으로 간편하게.<br>집·사무실·카페 어디서든 자연스럽게.</p>
+      <p class="hero-desc">고농축 원액을<br>물에 타기만 하면 완성.<br>집·사무실·카페 어디서든 자연스럽게.</p>
       <div class="hero-btns">
         <a href="#products" class="btn-primary">제품 보기 →</a>
         <a href="#b2b" class="btn-secondary">납품 문의</a>
@@ -587,18 +609,19 @@ footer {
     <!-- 2L -->
     <div class="prod-card rv">
       <div class="prod-img-wrap">
-        <img src="2L.png" alt="홍담오가피진 2L" class="prod-img">
+        <img src="2L-2026.jpg" alt="홍담오가피진 2L" class="prod-img">
       </div>
       <div class="prod-info">
         <div class="prod-vol">2<span>L</span></div>
         <div>
           <div class="prod-name">홍담오가피진 원액</div>
-          <div class="prod-desc">오가피진 원액 제품입니다.<br>원액 100mL + 물 300~500mL 희석 후 음용.<br>카페 · 업소용 대용량.</div>
+          <div class="prod-desc">고농축 원액 · 희석용 액상차입니다.<br>원액 30mL + 물·탄산수 약 5배 희석 시 150mL 한 잔.<br>2L 한 병으로 약 66잔 · 카페 · 업소용 대용량.</div>
         </div>
         <div class="prod-tags">
           <span class="prod-tag">카페 납품</span>
           <span class="prod-tag">기업·단체</span>
           <span class="prod-tag">희석 음용</span>
+          <span class="prod-tag">오가피나무열매 12.8%</span>
         </div>
         <div>
           <div class="prod-price-row">
@@ -621,22 +644,22 @@ footer {
     <!-- 340mL -->
     <div class="prod-card rv">
       <div class="prod-img-wrap">
-        <img src="340mL.png" alt="홍담오가피진 340mL" class="prod-img">
+        <img src="340mL-2026.jpg" alt="홍담오가피진 340mL" class="prod-img prod-img--sm">
       </div>
       <div class="prod-info">
         <div class="prod-vol">340<span>mL</span></div>
         <div>
-          <div class="prod-name">홍담오가피진 음용</div>
-          <div class="prod-desc">이미 희석된 완제품입니다.<br>개봉 후 바로 음용 가능.<br>차갑게 드시면 더욱 맛있습니다.</div>
+          <div class="prod-name">홍담오가피진 원액 소용량</div>
+          <div class="prod-desc">2L와 같은 고농축 원액입니다.<br>원액 30mL + 물·탄산수 약 5배 희석 시 150mL 한 잔.<br>340mL 한 병으로 약 11잔 · 가정 · 휴대용.</div>
         </div>
         <div class="prod-tags">
-          <span class="prod-tag">바로 음용</span>
+          <span class="prod-tag">희석 음용</span>
           <span class="prod-tag">선물용</span>
           <span class="prod-tag">휴대 간편</span>
         </div>
         <div>
           <div class="prod-price-row">
-            <span class="prod-price">3,000원</span>
+            <span class="prod-price">5,000원</span>
             <span class="prod-price-unit">/ 1병</span>
           </div>
           <div class="prod-shipping">4만원 이상 무료배송 · 배송완료까지 1-2영업일 소요</div>
@@ -650,6 +673,25 @@ footer {
         </div>
         <button class="prod-buy-btn" onclick="openPay('340')">구매하기 →</button>
       </div>
+    </div>
+  </div>
+
+  <!-- 라벨 · 영양정보 -->
+  <div class="spec-wrap rv">
+    <img class="spec-img" src="label-back-2026.jpg" alt="홍담오가피진 라벨 뒷면 - 영양정보 및 제품정보">
+    <div>
+      <div class="spec-title">제품 정보 · 영양성분</div>
+      <div class="spec-list">
+        <div class="spec-row"><div class="spec-k">제품명</div><div class="spec-v">홍담 오가피진</div></div>
+        <div class="spec-row"><div class="spec-k">식품유형</div><div class="spec-v">액상차</div></div>
+        <div class="spec-row"><div class="spec-k">내용량</div><div class="spec-v">2L (약 66회 제공량) · 1회 제공량 30mL</div></div>
+        <div class="spec-row"><div class="spec-k">주원료</div><div class="spec-v">오가피나무열매 12.8% (국내산) · 녹차나무잎추출액</div></div>
+        <div class="spec-row"><div class="spec-k">영양성분</div><div class="spec-v">30mL당 80kcal · 탄수화물 18g(6%) · 당류 11g(11%)<br>나트륨 0mg · 지방 0g · 트랜스지방 0g · 콜레스테롤 0mg</div></div>
+        <div class="spec-row"><div class="spec-k">소비기한</div><div class="spec-v">제조일로부터 24개월</div></div>
+        <div class="spec-row"><div class="spec-k">보관방법</div><div class="spec-v">직사광선을 피해 서늘한 곳에 보관 · 개봉 후 냉장 보관</div></div>
+        <div class="spec-row"><div class="spec-k">희석 안내</div><div class="spec-v">원액 30mL를 물 또는 탄산수에 약 5배 희석하면 약 150mL 한 잔이 됩니다.</div></div>
+      </div>
+      <div class="spec-note">※ 1일 영양성분 기준치에 대한 비율(%)은 2,000kcal 기준입니다.</div>
     </div>
   </div>
 
@@ -731,9 +773,9 @@ footer {
     <div class="how-item rv">
       <div class="how-num">03</div>
       <div>
-        <div class="how-name">340mL 바로 음용</div>
-        <div class="how-desc">340mL 제품은 이미 희석된 완제품입니다. 개봉 후 바로 드실 수 있습니다. 냉장 보관 후 시원하게 드시면 더욱 맛있습니다.</div>
-        <span class="how-ratio">개봉 즉시 음용 가능</span>
+        <div class="how-name">340mL로 간편하게</div>
+        <div class="how-desc">340mL도 2L와 같은 원액입니다. 텀블러나 컵에 원액을 붓고 물만 더하면 됩니다. 개봉 후에는 냉장 보관하세요.</div>
+        <span class="how-ratio">한 병으로 약 11잔</span>
       </div>
     </div>
   </div>
@@ -903,13 +945,6 @@ footer {
           <div class="contact-info-val">충청남도 홍성군 구항면 거북로 386-35</div>
         </div>
       </div>
-      <div class="contact-info-item">
-        <span class="contact-info-icon">🕐</span>
-        <div>
-          <div class="contact-info-label">운영시간</div>
-          <div class="contact-info-val">평일 09:00 – 18:00<br><span style="font-size:13px;opacity:.7">주말·공휴일 휴무</span></div>
-        </div>
-      </div>
     </div>
   </div>
   </div>
@@ -917,7 +952,8 @@ footer {
 
 <!-- ── FOOTER ── -->
 <footer>
-  <div>
+  <div class="ft-brand">
+    <img class="ft-ci" src="ci-hongdam.png" alt="농업회사법인 홍담에프앤비 주식회사">
     <div class="ft-name">홍담오가피진</div>
   </div>
   <div class="ft-links">
@@ -933,7 +969,7 @@ footer {
     <a href="javascript:void(0)" onclick="openPolicy('refund')">환불정책</a>
   </div>
   <div class="ft-copy">
-    상호: 농업회사법인 조선행도가 주식회사 · 대표자: 유은경 · 사업자등록번호: 390-88-03534<br>
+    상호: 농업회사법인 홍담에프앤비 주식회사 · 대표자: 유은경 · 사업자등록번호: 390-88-03534<br>
     주소: 충청남도 홍성군 구항면 거북로 386-35 · 전화: 041-633-2676 · www.hongdam.kr<br>
     © 2026 홍담오가피진. All rights reserved.
   </div>
@@ -970,7 +1006,7 @@ footer {
     <div class="pay-row" style="align-items:center;margin-top:10px;">
       <div>
         <div class="pay-label" style="font-weight:700;">홍담오가피진 340mL</div>
-        <div style="font-size:12px;color:var(--ogp-muted);margin-top:2px;">3,000원 / 병</div>
+        <div style="font-size:12px;color:var(--ogp-muted);margin-top:2px;">5,000원 / 병</div>
       </div>
       <div class="pay-modal-qty">
         <button class="qty-btn" onclick="changeModalQtyFor('340',-1)">−</button>
@@ -1005,7 +1041,7 @@ footer {
 
 const PRODUCTS = {
   '2L':  { name: '홍담오가피진 2L',    price: 25000 },
-  '340': { name: '홍담오가피진 340mL', price: 3000  }
+  '340': { name: '홍담오가피진 340mL', price: 5000  }
 };
 const SHIP_FEE = 3000, FREE_MIN = 40000;
 let modalQtys = { '2L': 0, '340': 0 };
@@ -1109,7 +1145,7 @@ const POLICIES = {
   terms: {
     title: '이용약관',
     body: `제1조 (목적)
-본 약관은 농업회사법인 조선행도가 주식회사(이하 "회사")가 운영하는 홍담오가피진 웹사이트(www.hongdam.kr)에서 제공하는 서비스의 이용 조건 및 절차에 관한 사항을 규정함을 목적으로 합니다.
+본 약관은 농업회사법인 홍담에프앤비 주식회사(이하 "회사")가 운영하는 홍담오가피진 웹사이트(www.hongdam.kr)에서 제공하는 서비스의 이용 조건 및 절차에 관한 사항을 규정함을 목적으로 합니다.
 
 제2조 (정의)
 ① "서비스"란 회사가 제공하는 홍담오가피진 제품 판매 및 관련 정보 제공 서비스를 의미합니다.
@@ -1134,12 +1170,12 @@ const POLICIES = {
 본 약관에 관한 분쟁은 대한민국 법률을 준거법으로 하며, 분쟁 발생 시 관할 법원은 회사 소재지 관할 법원으로 합니다.
 
 시행일: 2026년 1월 1일
-사업자: 농업회사법인 조선행도가 주식회사
+사업자: 농업회사법인 홍담에프앤비 주식회사
 대표자: 유은경`
   },
   privacy: {
     title: '개인정보처리방침',
-    body: `농업회사법인 조선행도가 주식회사(이하 "회사")는 개인정보보호법에 따라 이용자의 개인정보를 보호하고 이와 관련한 고충을 신속하게 처리하기 위하여 다음과 같이 개인정보처리방침을 수립·공개합니다.
+    body: `농업회사법인 홍담에프앤비 주식회사(이하 "회사")는 개인정보보호법에 따라 이용자의 개인정보를 보호하고 이와 관련한 고충을 신속하게 처리하기 위하여 다음과 같이 개인정보처리방침을 수립·공개합니다.
 
 제1조 (수집하는 개인정보 항목)
 회사는 결제 처리를 위해 아래의 개인정보를 수집합니다.
