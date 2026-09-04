@@ -3,7 +3,20 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>홍담오가피진 — 자연에서 온 건강한 한 모금</title>
+<title>홍담 오가피진 | 국내산 오가피 원액·액상차</title>
+<meta name="description" content="충남 홍성 국내산 오가피나무열매 12.8%. 2L 원액 한 병으로 약 66잔, 잔당 379원. 카페 납품·가정용 340mL 모두 주문 가능합니다.">
+<link rel="canonical" href="https://www.hongdam.kr/">
+<link rel="icon" href="favicon.ico" sizes="any">
+<link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="홍담 오가피진">
+<meta property="og:title" content="홍담 오가피진">
+<meta property="og:description" content="국내산 오가피나무열매 12.8% 고농축 원액. 2L 한 병으로 약 66잔. 카페 납품·가정용 모두 주문 가능합니다.">
+<meta property="og:url" content="https://www.hongdam.kr/">
+<meta property="og:image" content="https://www.hongdam.kr/productline-2026.jpg">
+<meta property="og:locale" content="ko_KR">
+<meta name="twitter:card" content="summary_large_image">
 <link href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css">
 
@@ -248,7 +261,6 @@ header {
   min-height:max(480px,35vw);
 }
 .prod-img { width:auto; max-width:100%; max-height:max(440px,31vw); height:auto; object-fit:contain; filter:drop-shadow(0 16px 32px rgba(22,48,31,.25)); }
-.prod-img--sm { max-height:max(360px,25vw); }
 .prod-info { padding:max(52px,3.5vw) max(48px,3vw); display:flex; flex-direction:column; gap:24px; }
 .prod-vol { font-family:var(--ogp-font-display); font-weight:700; font-size:max(80px,5.5vw); color:var(--ogp-green-700); line-height:1; letter-spacing:-.03em; }
 .prod-vol span { font-size:.42em; color:var(--ogp-green-300); }
@@ -408,7 +420,7 @@ footer {
 
 /* ── Label / Spec ── */
 .spec-wrap {
-  display:grid; grid-template-columns:0.8fr 1.2fr; gap:max(32px,2.5vw);
+  display:grid; grid-template-columns:1fr 1fr; gap:max(32px,2.5vw);
   align-items:center; margin-top:max(48px,3.5vw);
   background:var(--ogp-surface); border:1px solid var(--ogp-border);
   border-radius:var(--ogp-radius-lg); padding:max(28px,2.2vw);
@@ -421,6 +433,14 @@ footer {
 .spec-k { font-size:max(14px,.95vw); font-weight:700; color:var(--ogp-green-700); }
 .spec-v { font-size:max(15px,1vw); color:var(--ogp-ink); line-height:1.7; }
 .spec-note { margin-top:max(16px,1.2vw); font-size:max(13px,.9vw); color:var(--ogp-muted); line-height:1.7; }
+
+/* ── Key visual ── */
+.kv-wrap { display:flex; justify-content:center; }
+.kv-img {
+  width:auto; max-width:100%; max-height:min(620px,70vh); height:auto;
+  border-radius:var(--ogp-radius-lg);
+  box-shadow:0 24px 60px -28px rgba(22,48,31,.45), 0 0 0 1px var(--ogp-border);
+}
 
 /* ── Reviews ── */
 .review-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:max(20px,1.5vw); margin-top:max(40px,3vw); }
@@ -524,7 +544,6 @@ footer {
   .prod-card { grid-template-columns: 1fr; }
   .prod-img-wrap { min-height: 280px; padding: 40px 24px; }
   .prod-img { max-height: 300px; }
-  .prod-img--sm { max-height: 250px; }
   .prod-info { padding: 36px 24px; }
   .prod-vol { font-size: 72px; }
   .why-grid { grid-template-columns: 1fr; }
@@ -535,7 +554,7 @@ footer {
   .buy-banner { padding: 28px 24px; }
   footer { flex-direction: column; padding: 40px 24px; }
   .spec-wrap { grid-template-columns: 1fr; }
-  .spec-img { max-width: 320px; margin: 0 auto; }
+  .spec-img { max-width: 100%; margin: 0 auto; }
   header { padding: 0 16px; }
   .h-nav a { display: none; }
   .h-cta { display: flex !important; }
@@ -557,7 +576,6 @@ footer {
     <a href="#why">특징</a>
     <a href="#drinks">음료</a>
     <a href="#b2b">납품문의</a>
-    <a href="#reviews">후기</a>
     <a href="#contact">문의</a>
     <a href="#products" class="h-cta">구매하기</a>
   </nav>
@@ -568,7 +586,7 @@ footer {
   <div class="hero-inner">
     <!-- 좌: 라벨 이미지 -->
     <div class="hero-logo-col rv">
-      <img src="productline-2026.jpg" alt="홍담오가피진 신규 라벨 제품군" class="hero-logo">
+      <img src="hero-lineup.webp" alt="홍담 오가피진 2L·340mL 제품" class="hero-logo">
     </div>
     <!-- 우: 텍스트 + 버튼 + QR -->
     <div class="hero-left rv">
@@ -597,6 +615,14 @@ footer {
 <div class="divider"></div>
 
 <!-- ── STATEMENT ── -->
+<section id="brandmark" class="sec">
+  <div class="kv-wrap rv">
+    <img src="keyvisual-2026.jpg" alt="홍담에프앤비 CI와 홍담 오가피진 2L·340mL 제품" class="kv-img">
+  </div>
+</section>
+
+<div class="divider"></div>
+
 
 <!-- ── PRODUCTS ── -->
 <section id="products">
@@ -609,7 +635,7 @@ footer {
     <!-- 2L -->
     <div class="prod-card rv">
       <div class="prod-img-wrap">
-        <img src="2L-2026.jpg" alt="홍담오가피진 2L" class="prod-img">
+        <img src="2L-real.webp" alt="홍담 오가피진 2L" class="prod-img">
       </div>
       <div class="prod-info">
         <div class="prod-vol">2<span>L</span></div>
@@ -644,7 +670,7 @@ footer {
     <!-- 340mL -->
     <div class="prod-card rv">
       <div class="prod-img-wrap">
-        <img src="340mL-2026.jpg" alt="홍담오가피진 340mL" class="prod-img prod-img--sm">
+        <img src="340mL-real.webp" alt="홍담 오가피진 340mL" class="prod-img">
       </div>
       <div class="prod-info">
         <div class="prod-vol">340<span>mL</span></div>
@@ -678,14 +704,14 @@ footer {
 
   <!-- 라벨 · 영양정보 -->
   <div class="spec-wrap rv">
-    <img class="spec-img" src="label-back-2026.jpg" alt="홍담오가피진 라벨 뒷면 - 영양정보 및 제품정보">
+    <img class="spec-img" src="label-info-340.jpg" alt="홍담 오가피진 표시사항 - 영양정보 및 원재료명">
     <div>
       <div class="spec-title">제품 정보 · 영양성분</div>
       <div class="spec-list">
         <div class="spec-row"><div class="spec-k">제품명</div><div class="spec-v">홍담 오가피진</div></div>
         <div class="spec-row"><div class="spec-k">식품유형</div><div class="spec-v">액상차</div></div>
-        <div class="spec-row"><div class="spec-k">내용량</div><div class="spec-v">2L (약 66회 제공량) · 1회 제공량 30mL</div></div>
-        <div class="spec-row"><div class="spec-k">주원료</div><div class="spec-v">오가피나무열매 12.8% (국내산) · 녹차나무잎추출액</div></div>
+        <div class="spec-row"><div class="spec-k">내용량</div><div class="spec-v">2L (약 66회 제공량) · 340mL (약 11회 제공량)<br>1회 제공량 30mL</div></div>
+        <div class="spec-row"><div class="spec-k">원재료명</div><div class="spec-v">정제수 40%, 당류 35%, 오갈피나무열매 12.8%(국내산),<br>녹차나무잎추출물분말 10.2%, 효모 2%</div></div>
         <div class="spec-row"><div class="spec-k">영양성분</div><div class="spec-v">30mL당 80kcal · 탄수화물 18g(6%) · 당류 11g(11%)<br>나트륨 0mg · 지방 0g · 트랜스지방 0g · 콜레스테롤 0mg</div></div>
         <div class="spec-row"><div class="spec-k">소비기한</div><div class="spec-v">제조일로부터 24개월</div></div>
         <div class="spec-row"><div class="spec-k">보관방법</div><div class="spec-v">직사광선을 피해 서늘한 곳에 보관 · 개봉 후 냉장 보관</div></div>
@@ -855,37 +881,6 @@ footer {
   </div>
 </section>
 
-<!-- ── REVIEWS ── -->
-<div class="divider"></div>
-<section id="reviews" class="sec">
-  <div class="wrap">
-  <p class="sec-overline rv">Customer Reviews</p>
-  <h2 class="sec-title rv">고객 후기</h2>
-  <div class="review-grid">
-    <div class="review-card rv">
-      <div class="review-stars">★★★★★</div>
-      <div class="review-text">"카페에서 처음 맛봤는데 너무 맛있어서 2L 원액으로 주문했어요. 집에서도 그대로 재현이 되더라고요. 진하게 타먹으면 정말 좋습니다."</div>
-      <div class="review-author">김○○ · 2L 원액 구매</div>
-    </div>
-    <div class="review-card rv">
-      <div class="review-stars">★★★★★</div>
-      <div class="review-text">"340mL 제품을 사무실에 두고 마시는데, 달지 않고 깔끔해서 오후에 마시기 딱 좋아요. 재구매 계속 할 것 같습니다."</div>
-      <div class="review-author">이○○ · 340mL 구매</div>
-    </div>
-    <div class="review-card rv">
-      <div class="review-stars">★★★★★</div>
-      <div class="review-text">"카페 납품으로 쓰고 있는데 손님들 반응이 좋아요. 레시피 가이드도 같이 주셔서 메뉴 만들기 편했습니다."</div>
-      <div class="review-author">박○○ · 카페 납품</div>
-    </div>
-    <div class="review-card rv">
-      <div class="review-stars">★★★★☆</div>
-      <div class="review-text">"탄산수에 희석해서 마셨더니 색다른 맛이 나요. 원액이 생각보다 오래 가고, 포장도 깔끔하게 왔습니다."</div>
-      <div class="review-author">최○○ · 2L 원액 구매</div>
-    </div>
-  </div>
-  </div>
-</section>
-
 <!-- ── CONTACT ── -->
 <div class="divider"></div>
 <section id="contact" class="sec">
@@ -962,11 +957,10 @@ footer {
     <a href="#howto">활용법</a>
     <a href="#drinks">음료</a>
     <a href="#b2b">납품 문의</a>
-    <a href="#reviews">고객 후기</a>
     <a href="#contact">문의하기</a>
-    <a href="javascript:void(0)" onclick="openPolicy('terms')">이용약관</a>
-    <a href="javascript:void(0)" onclick="openPolicy('privacy')">개인정보처리방침</a>
-    <a href="javascript:void(0)" onclick="openPolicy('refund')">환불정책</a>
+    <a href="#terms" onclick="openPolicy('terms');return false;">이용약관</a>
+    <a href="#privacy" onclick="openPolicy('privacy');return false;">개인정보처리방침</a>
+    <a href="#refund" onclick="openPolicy('refund');return false;">환불정책</a>
   </div>
   <div class="ft-copy">
     상호: 농업회사법인 홍담에프앤비 주식회사 · 대표자: 유은경 · 사업자등록번호: 390-88-03534<br>
@@ -1095,13 +1089,13 @@ async function requestPay() {
       payMethod: 'CARD'
     });
     if (response.code != null) {
-      alert('결제 실패: ' + response.message);
+      alert('결제를 완료하지 못했습니다.\n\n전화로도 주문하실 수 있습니다.\n041-633-2676 (평일 09:00~18:00)');
     } else {
       closePay();
       alert('결제 완료!\n주문번호: ' + response.paymentId);
     }
   } catch(e) {
-    alert('오류: ' + e.message);
+    alert('결제 처리 중 문제가 발생했습니다.\n\n전화로도 주문하실 수 있습니다.\n041-633-2676 (평일 09:00~18:00)');
   }
 }
 document.getElementById('payOverlay').addEventListener('click', function(e) {
@@ -1161,7 +1155,7 @@ const POLICIES = {
 
 제5조 (구매 및 결제)
 ① 이용자는 웹사이트에서 제품을 선택하고 결제 절차를 통해 구매할 수 있습니다.
-② 결제는 카카오페이 등 회사가 제공하는 결제 수단을 이용합니다.
+② 결제는 신용카드 등 회사가 제공하는 결제 수단을 이용하며, 결제 대행은 포트원(주)을 통해 처리됩니다.
 
 제6조 (면책조항)
 회사는 천재지변, 전쟁, 기타 불가항력적 사유로 서비스를 제공할 수 없는 경우 책임이 면제됩니다.
@@ -1232,22 +1226,31 @@ const POLICIES = {
 · 단순 변심: 고객 부담 (왕복 배송비)
 
 ■ 고객센터
-전화: 041-633-2676
-운영시간: 평일 09:00 ~ 18:00 (주말·공휴일 휴무)`
+전화: 041-633-2676`
   }
 };
 
 function openPolicy(type) {
   const p = POLICIES[type];
+  if (!p) return;
   document.getElementById('policyTitle').textContent = p.title;
   document.getElementById('policyBody').textContent = p.body;
   document.getElementById('policyOverlay').style.display = 'block';
   document.body.style.overflow = 'hidden';
+  if (location.hash !== '#' + type) history.replaceState(null, '', '#' + type);
 }
 function closePolicy() {
   document.getElementById('policyOverlay').style.display = 'none';
   document.body.style.overflow = '';
+  if (POLICIES[location.hash.slice(1)]) history.replaceState(null, '', location.pathname);
 }
+// www.hongdam.kr/#refund 처럼 주소로 바로 열 수 있도록
+function openPolicyFromHash() {
+  const t = location.hash.slice(1);
+  if (POLICIES[t]) openPolicy(t);
+}
+window.addEventListener('hashchange', openPolicyFromHash);
+openPolicyFromHash();
 </script>
 
 <!-- GSAP -->
