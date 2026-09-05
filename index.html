@@ -126,8 +126,8 @@ header {
   max-width: min(900px, 45vw);
   height: auto;
   object-fit: contain;
-  border-radius: 20px;
-  box-shadow: 0 32px 80px rgba(0,0,0,.5), 0 0 0 1px rgba(201,162,75,.15);
+  /* 투명 배경 제품컷이므로 박스 그림자 대신 실루엣 그림자를 사용 */
+  filter: drop-shadow(0 28px 46px rgba(0,0,0,.55));
 }
 .hero-left {
   display: flex; flex-direction: column; align-items: flex-start;
