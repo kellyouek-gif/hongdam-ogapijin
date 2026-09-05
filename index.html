@@ -480,15 +480,18 @@ footer {
 .pay-overlay {
   display:none; position:fixed; inset:0; z-index:900;
   background:rgba(16,38,26,.72); backdrop-filter:blur(8px);
-  align-items:center; justify-content:center; padding:20px;
+  align-items:flex-start; justify-content:center;
+  padding:20px; overflow-y:auto; -webkit-overflow-scrolling:touch;
 }
 .pay-overlay.open { display:flex; }
 .pay-modal {
   background:var(--ogp-surface); border:1px solid var(--ogp-border);
   border-radius:var(--ogp-radius-xl); width:90%; max-width:720px;
-  padding:60px 56px; display:flex; flex-direction:column; gap:32px;
+  padding:40px 40px 36px; display:flex; flex-direction:column; gap:18px;
   position:relative; box-shadow:var(--ogp-shadow-xl);
+  margin:auto;
 }
+@media (max-width:600px) { .pay-modal { padding:32px 22px 28px; width:100%; } }
 .pay-close {
   position:absolute; top:20px; right:24px;
   background:none; border:none; color:var(--ogp-muted);
@@ -527,6 +530,30 @@ footer {
   pointer-events:auto;
 }
 .pay-confirm-btn:hover { background:var(--ogp-green-800); }
+.ship-title { font-size:15px; font-weight:700; color:var(--ogp-ink); margin-bottom:14px; }
+.ship-grid { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
+.ship-field { display:flex; flex-direction:column; gap:6px; margin-bottom:12px; }
+.ship-field label { font-size:12px; font-weight:700; color:var(--ogp-muted); letter-spacing:.02em; }
+.req { color:#B4463A; }
+.ship-input {
+  width:100%; font-family:inherit; font-size:14px; padding:11px 13px;
+  border:1.5px solid var(--ogp-border); border-radius:var(--ogp-radius-md);
+  background:var(--ogp-surface); color:var(--ogp-ink); outline:none; transition:border-color .2s;
+}
+.ship-input:focus { border-color:var(--ogp-green-700); }
+.ship-input[readonly] { background:var(--ogp-sand); cursor:pointer; }
+.ship-input.err { border-color:#B4463A; }
+.ship-zip-row { display:grid; grid-template-columns:1fr auto; gap:8px; }
+.ship-zip-btn {
+  border:1.5px solid var(--ogp-green-700); background:var(--ogp-green-700); color:var(--ogp-paper);
+  font-family:inherit; font-size:13px; font-weight:700; padding:0 16px;
+  border-radius:var(--ogp-radius-md); cursor:pointer; white-space:nowrap;
+}
+.ship-zip-btn:hover { background:var(--ogp-green-800); }
+.ship-agree { display:flex; align-items:flex-start; gap:8px; margin:4px 0 16px; font-size:12.5px; color:var(--ogp-muted); line-height:1.6; cursor:pointer; }
+.ship-agree input { margin-top:2px; flex-shrink:0; width:16px; height:16px; accent-color:var(--ogp-green-700); }
+.ship-agree a { color:var(--ogp-green-700); font-weight:700; }
+@media (max-width:520px) { .ship-grid { grid-template-columns:1fr; } }
 .pay-notice { font-size:11px; color:var(--ogp-muted); text-align:center; line-height:1.9; }
 
 /* ── Responsive ── */
@@ -1026,6 +1053,35 @@ footer {
       <span class="pay-total-label">합계</span>
       <span class="pay-total-val" id="modalTotal">0원</span>
     </div>
+    <div class="pay-divider"></div>
+    <div class="ship-title">배송 정보</div>
+    <div class="ship-grid">
+      <div class="ship-field">
+        <label for="o-name">받는 분 <span class="req">*</span></label>
+        <input id="o-name" class="ship-input" type="text" autocomplete="name" placeholder="홍길동">
+      </div>
+      <div class="ship-field">
+        <label for="o-phone">연락처 <span class="req">*</span></label>
+        <input id="o-phone" class="ship-input" type="tel" inputmode="numeric" autocomplete="tel" placeholder="010-1234-5678">
+      </div>
+    </div>
+    <div class="ship-field">
+      <label for="o-zip">주소 <span class="req">*</span></label>
+      <div class="ship-zip-row">
+        <input id="o-zip" class="ship-input" type="text" readonly placeholder="우편번호">
+        <button type="button" class="ship-zip-btn" onclick="findPostcode()">주소 찾기</button>
+      </div>
+      <input id="o-addr" class="ship-input" type="text" readonly placeholder="기본 주소" style="margin-top:8px;">
+      <input id="o-addr2" class="ship-input" type="text" autocomplete="address-line2" placeholder="상세 주소 (동·호수 등)" style="margin-top:8px;">
+    </div>
+    <div class="ship-field">
+      <label for="o-memo">배송 요청사항</label>
+      <input id="o-memo" class="ship-input" type="text" placeholder="예: 부재 시 경비실에 맡겨주세요">
+    </div>
+    <label class="ship-agree">
+      <input type="checkbox" id="o-agree">
+      <span>주문·배송을 위한 개인정보 수집·이용에 동의합니다 <a href="#privacy" onclick="event.preventDefault();openPolicy('privacy');">[내용 보기]</a> <span class="req">*</span></span>
+    </label>
     <button class="pay-confirm-btn" onclick="requestPay()">
       <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="5" width="20" height="14" rx="2.5"/><path d="M2 10h20"/><path d="M6 15h4"/></svg>
       카드로 결제하기
@@ -1037,6 +1093,7 @@ footer {
 
 <!-- PortOne V2 -->
 <script src="https://cdn.portone.io/v2/browser-sdk.js"></script>
+<script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script>
 
 const PRODUCTS = {
@@ -1075,30 +1132,99 @@ function updateModal() {
   document.getElementById('modalShipping').textContent = ship === 0 ? '무료' : ship.toLocaleString() + '원';
   document.getElementById('modalTotal').textContent    = (subtotal + ship).toLocaleString() + '원';
 }
+function findPostcode() {
+  if (typeof daum === 'undefined' || !daum.Postcode) {
+    // 우편번호 서비스를 못 불러온 경우 직접 입력할 수 있도록 전환
+    ['o-zip','o-addr'].forEach(function(id){ document.getElementById(id).removeAttribute('readonly'); });
+    document.getElementById('o-addr').focus();
+    return;
+  }
+  new daum.Postcode({ oncomplete: function(d) {
+    document.getElementById('o-zip').value  = d.zonecode;
+    document.getElementById('o-addr').value = d.roadAddress || d.jibunAddress;
+    document.getElementById('o-addr2').focus();
+  }}).open();
+}
+
+function collectOrderInfo() {
+  var g = function(id){ return document.getElementById(id); };
+  var v = function(id){ return g(id).value.trim(); };
+  [ 'o-name','o-phone','o-zip','o-addr' ].forEach(function(id){ g(id).classList.remove('err'); });
+
+  var name = v('o-name'), phone = v('o-phone'), zip = v('o-zip'), addr = v('o-addr');
+  if (!name)  { g('o-name').classList.add('err');  g('o-name').focus();  alert('받는 분 성함을 입력해주세요.'); return null; }
+  if (!/^0\d{1,2}-?\d{3,4}-?\d{4}$/.test(phone.replace(/\s/g,''))) {
+    g('o-phone').classList.add('err'); g('o-phone').focus(); alert('연락처를 정확히 입력해주세요.'); return null;
+  }
+  if (!addr) { g('o-addr').classList.add('err'); alert('주소를 입력해주세요.'); return null; }
+  if (!g('o-agree').checked) { alert('개인정보 수집·이용에 동의해주세요.'); return null; }
+
+  return {
+    name: name, phone: phone,
+    zip: zip, addr: addr, addr2: v('o-addr2'), memo: v('o-memo'),
+    fullAddress: (zip ? '(' + zip + ') ' : '') + addr + (v('o-addr2') ? ' ' + v('o-addr2') : '')
+  };
+}
+
+function saveOrder(order, items, subtotal, ship, total, paymentId) {
+  // 주문 내역을 이메일로 수신 (문의 폼과 동일한 Formspree 사용)
+  try {
+    fetch('https://formspree.io/f/xjgqdonp', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        _subject: '[주문] ' + order.name + ' / ' + total.toLocaleString() + '원',
+        구분: '주문',
+        주문번호: paymentId,
+        받는분: order.name,
+        연락처: order.phone,
+        주소: order.fullAddress,
+        요청사항: order.memo,
+        주문상품: items,
+        상품금액: subtotal.toLocaleString() + '원',
+        배송비: ship.toLocaleString() + '원',
+        결제금액: total.toLocaleString() + '원',
+        주문시각: new Date().toLocaleString('ko-KR')
+      })
+    });
+  } catch (err) { /* 주문 저장 실패가 결제 완료 안내를 막지 않도록 함 */ }
+}
+
 async function requestPay() {
   try {
     const sub2L  = modalQtys['2L']  * PRODUCTS['2L'].price;
     const sub340 = modalQtys['340'] * PRODUCTS['340'].price;
     const subtotal = sub2L + sub340;
     if (subtotal === 0) { alert('상품을 선택해주세요.'); return; }
+
+    const order = collectOrderInfo();
+    if (!order) return;
+
     const ship = subtotal >= FREE_MIN ? 0 : SHIP_FEE;
+    const total = subtotal + ship;
     let name = '';
     if (modalQtys['2L']  > 0) name += '홍담오가피진 2L ' + modalQtys['2L'] + '개';
     if (modalQtys['340'] > 0) name += (name ? ' + ' : '') + '340mL ' + modalQtys['340'] + '개';
+    const paymentId = 'hongdam_' + Date.now();
+
     const response = await PortOne.requestPayment({
       storeId: 'store-30116eef-f63a-40c4-beb3-dcdb8bafb9bb',
       channelKey: 'channel-key-c99e987b-1586-4187-9b17-8c03a20f515f',
-      paymentId: 'hongdam_' + Date.now(),
+      paymentId: paymentId,
       orderName: name,
-      totalAmount: subtotal + ship,
+      totalAmount: total,
       currency: 'KRW',
-      payMethod: 'CARD'
+      payMethod: 'CARD',
+      customer: { fullName: order.name, phoneNumber: order.phone },
+      products: [{ id: 'ogapijin', name: name, amount: total, quantity: 1 }]
     });
+
     if (response.code != null) {
       alert('결제를 완료하지 못했습니다.\n\n전화로도 주문하실 수 있습니다.\n041-633-2676');
     } else {
+      saveOrder(order, name, subtotal, ship, total, response.paymentId || paymentId);
       closePay();
-      alert('결제 완료!\n주문번호: ' + response.paymentId);
+      alert('주문이 완료되었습니다.\n\n주문번호: ' + (response.paymentId || paymentId) + '\n받는 분: ' + order.name + '\n배송지: ' + order.fullAddress + '\n\n배송완료까지 1-2영업일 소요됩니다.');
     }
   } catch(e) {
     alert('결제 처리 중 문제가 발생했습니다.\n\n전화로도 주문하실 수 있습니다.\n041-633-2676');
