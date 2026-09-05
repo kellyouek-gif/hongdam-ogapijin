@@ -518,15 +518,15 @@ footer {
 .pay-total-label { font-size:14px; font-weight:700; color:var(--ogp-ink); }
 .pay-total-val { font-family:var(--ogp-font-display); font-weight:700; font-size:36px; color:var(--ogp-green-700); }
 .pay-confirm-btn {
-  background:#FAE100; color:#3A1D1D;
+  background:var(--ogp-green-700); color:var(--ogp-paper);
   border:none; width:100%; padding:17px;
   font-family:var(--ogp-font-body); font-size:15px; font-weight:700;
   letter-spacing:.04em; cursor:pointer; border-radius:var(--ogp-radius-md);
   display:flex; align-items:center; justify-content:center; gap:8px;
-  transition:opacity .2s; position:relative; z-index:10;
+  transition:background .2s; position:relative; z-index:10;
   pointer-events:auto;
 }
-.pay-confirm-btn:hover { opacity:.9; }
+.pay-confirm-btn:hover { background:var(--ogp-green-800); }
 .pay-notice { font-size:11px; color:var(--ogp-muted); text-align:center; line-height:1.9; }
 
 /* ── Responsive ── */
@@ -1027,7 +1027,7 @@ footer {
       <span class="pay-total-val" id="modalTotal">0원</span>
     </div>
     <button class="pay-confirm-btn" onclick="requestPay()">
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="#3A1D1D"><path d="M12 2C6.48 2 2 5.58 2 10c0 2.46 1.36 4.67 3.5 6.18V20l3.72-2.06A11 11 0 0012 18c5.52 0 10-3.58 10-8s-4.48-8-10-8z"/></svg>
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="5" width="20" height="14" rx="2.5"/><path d="M2 10h20"/><path d="M6 15h4"/></svg>
       카드로 결제하기
     </button>
     <div class="pay-notice">배송비 3,000원 · 6만원 이상 무료배송 · 배송완료까지 1-2영업일 소요</div>
