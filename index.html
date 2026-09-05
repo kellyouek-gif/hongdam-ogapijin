@@ -948,6 +948,10 @@ footer {
         <label class="contact-label">문의 내용</label>
         <textarea id="c-msg" class="contact-input contact-textarea" placeholder="문의 내용을 입력해주세요." required></textarea>
       </div>
+      <label class="ship-agree" style="margin:4px 0 0;">
+        <input type="checkbox" id="c-agree">
+        <span>문의 응대를 위한 개인정보 수집·이용에 동의합니다 <a href="#privacy" onclick="event.preventDefault();openPolicy('privacy');">[내용 보기]</a> <span class="req">*</span></span>
+      </label>
       <button type="submit" class="btn-gold" style="width:100%;justify-content:center;margin-top:8px;">문의 보내기 →</button>
     </form>
     <div class="contact-info rv">
@@ -1215,8 +1219,7 @@ async function requestPay() {
       totalAmount: total,
       currency: 'KRW',
       payMethod: 'CARD',
-      customer: { fullName: order.name, phoneNumber: order.phone },
-      products: [{ id: 'ogapijin', name: name, amount: total, quantity: 1 }]
+      customer: { fullName: order.name, phoneNumber: order.phone }
     });
 
     if (response.code != null) {
@@ -1244,6 +1247,7 @@ async function submitContact(e) {
   const type  = document.getElementById('c-type').value;
   const msg   = document.getElementById('c-msg').value.trim();
   if (!name || !phone || !msg) { alert('모든 항목을 입력해주세요.'); return; }
+  if (!document.getElementById('c-agree').checked) { alert('개인정보 수집·이용에 동의해주세요.'); return; }
   const payload = { 이름: name, 연락처: phone, 이메일: email, 문의유형: type, 내용: msg };
   try {
     // Formspree (이메일 수신)
@@ -1304,8 +1308,11 @@ const POLICIES = {
     body: `농업회사법인 조선행도가 주식회사(이하 "회사")는 개인정보보호법에 따라 이용자의 개인정보를 보호하고 이와 관련한 고충을 신속하게 처리하기 위하여 다음과 같이 개인정보처리방침을 수립·공개합니다.
 
 제1조 (수집하는 개인정보 항목)
-회사는 결제 처리를 위해 아래의 개인정보를 수집합니다.
-· 필수: 구매자명, 연락처, 배송지 주소, 결제 정보
+회사는 아래의 개인정보를 수집합니다.
+· 주문·배송(필수): 구매자명, 연락처, 배송지 주소, 결제 정보
+· 주문·배송(선택): 배송 요청사항
+· 문의 접수(필수): 성명, 연락처, 문의 내용
+· 문의 접수(선택): 이메일 주소
 
 제2조 (개인정보 수집 목적)
 · 상품 주문, 결제, 배송 처리
