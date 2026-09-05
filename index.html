@@ -474,6 +474,9 @@ footer {
 .rv { opacity:0; transform:translateY(28px); }
 
 /* ── 결제 모달 ── */
+.pay-tel { margin-top:10px; text-align:center; font-size:13px; color:var(--ogp-muted); }
+.pay-tel a { color:var(--ogp-green-700); font-weight:700; text-decoration:none; }
+.pay-tel a:hover { text-decoration:underline; }
 .pay-overlay {
   display:none; position:fixed; inset:0; z-index:900;
   background:rgba(16,38,26,.72); backdrop-filter:blur(8px);
@@ -1028,6 +1031,7 @@ footer {
       카드로 결제하기
     </button>
     <div class="pay-notice">배송비 3,000원 · 6만원 이상 무료배송 · 배송완료까지 1-2영업일 소요</div>
+    <div class="pay-tel">전화로도 주문하실 수 있습니다 · <a href="tel:041-633-2676">041-633-2676</a></div>
   </div>
 </div>
 
@@ -1091,13 +1095,13 @@ async function requestPay() {
       payMethod: 'CARD'
     });
     if (response.code != null) {
-      alert('결제를 완료하지 못했습니다.\n\n전화로도 주문하실 수 있습니다.\n041-633-2676 (평일 09:00~18:00)');
+      alert('결제를 완료하지 못했습니다.\n\n전화로도 주문하실 수 있습니다.\n041-633-2676');
     } else {
       closePay();
       alert('결제 완료!\n주문번호: ' + response.paymentId);
     }
   } catch(e) {
-    alert('결제 처리 중 문제가 발생했습니다.\n\n전화로도 주문하실 수 있습니다.\n041-633-2676 (평일 09:00~18:00)');
+    alert('결제 처리 중 문제가 발생했습니다.\n\n전화로도 주문하실 수 있습니다.\n041-633-2676');
   }
 }
 document.getElementById('payOverlay').addEventListener('click', function(e) {
