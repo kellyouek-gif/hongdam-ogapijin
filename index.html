@@ -435,12 +435,19 @@ footer {
 .spec-note { margin-top:max(16px,1.2vw); font-size:max(13px,.9vw); color:var(--ogp-muted); line-height:1.7; }
 
 /* ── Key visual ── */
-.kv-wrap { display:flex; justify-content:center; }
+.kv-wrap { display:flex; justify-content:center; gap:max(20px,2vw); flex-wrap:wrap; align-items:flex-start; }
+.kv-item { margin:0; display:flex; flex-direction:column; gap:12px; align-items:center; }
+.kv-item figcaption { font-size:max(13px,.9vw); color:var(--ogp-muted); letter-spacing:.02em; }
 .kv-img {
-  width:auto; max-width:100%; max-height:min(620px,70vh); height:auto;
-  border-radius:var(--ogp-radius-lg);
+  width:auto; max-width:100%; max-height:min(640px,72vh); height:auto; display:block;
+  border-radius:var(--ogp-radius-md);
   box-shadow:0 24px 60px -28px rgba(22,48,31,.45), 0 0 0 1px var(--ogp-border);
+  transition:transform .25s, box-shadow .25s;
 }
+.kv-item a:hover .kv-img { transform:translateY(-4px); box-shadow:0 30px 70px -28px rgba(22,48,31,.55), 0 0 0 1px var(--ogp-gold-500); }
+.kv-dl { text-align:center; margin:max(28px,2vw) 0 0; }
+.kv-dl a { font-size:max(14px,1vw); font-weight:700; color:var(--ogp-green-700); text-decoration:none; border-bottom:1.5px solid var(--ogp-gold-500); padding-bottom:2px; }
+.kv-dl a:hover { color:var(--ogp-gold-700); }
 
 /* ── Reviews ── */
 .review-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:max(20px,1.5vw); margin-top:max(40px,3vw); }
@@ -647,8 +654,20 @@ footer {
 <!-- ── STATEMENT ── -->
 <section id="brandmark" class="sec">
   <div class="kv-wrap rv">
-    <img src="keyvisual-2026.jpg" alt="홍담에프앤비 CI와 홍담 오가피진 2L·340mL 제품" class="kv-img">
+    <figure class="kv-item">
+      <a href="홍담오가피진-리플렛.pdf" target="_blank" rel="noopener">
+        <img src="leaflet-front.jpg" alt="홍담 오가피진 리플렛 앞면 - 제품 소개" class="kv-img">
+      </a>
+      <figcaption>앞면 · 제품 소개</figcaption>
+    </figure>
+    <figure class="kv-item">
+      <a href="홍담오가피진-리플렛.pdf" target="_blank" rel="noopener">
+        <img src="leaflet-back.jpg" alt="홍담 오가피진 리플렛 뒷면 - 음용 가이드" class="kv-img">
+      </a>
+      <figcaption>뒷면 · 음용 가이드</figcaption>
+    </figure>
   </div>
+  <p class="kv-dl rv"><a href="홍담오가피진-리플렛.pdf" target="_blank" rel="noopener">리플렛 PDF 내려받기 ↓</a></p>
 </section>
 
 <div class="divider"></div>
