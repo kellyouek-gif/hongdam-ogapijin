@@ -1090,7 +1090,7 @@ footer {
       <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="5" width="20" height="14" rx="2.5"/><path d="M2 10h20"/><path d="M6 15h4"/></svg>
       카드로 결제하기
     </button>
-    <div class="pay-notice">배송비 3,000원 · 6만원 이상 무료배송 · 배송완료까지 1-2영업일 소요</div>
+    <div class="pay-notice">배송비 3,000원 · 6만원 이상 무료배송 · 배송완료까지 1-2영업일 소요<br>온라인 주문은 상품당 최대 20개 · 대량 주문은 전화 문의</div>
     <div class="pay-tel">전화로도 주문하실 수 있습니다 · <a href="tel:041-633-2676">041-633-2676</a></div>
   </div>
 </div>
@@ -1105,11 +1105,20 @@ const PRODUCTS = {
   '340': { name: '홍담오가피진 340mL', price: 5500  }
 };
 const SHIP_FEE = 3000, FREE_MIN = 60000;
+// 온라인 1회 주문 수량 상한 (대량 주문은 전화 상담)
+const MAX_QTY = { '2L': 20, '340': 20 };
 let modalQtys = { '2L': 0, '340': 0 };
 
 function changeQty(type, d) {
   const el = document.getElementById('qty-' + type);
-  el.textContent = Math.max(1, Math.min(99, parseInt(el.textContent) + d));
+  const cur = parseInt(el.textContent);
+  const next = Math.max(1, Math.min(MAX_QTY[type], cur + d));
+  if (d > 0 && next === cur) { alertMaxQty(type); return; }
+  el.textContent = next;
+}
+
+function alertMaxQty(type) {
+  alert('온라인 주문은 상품당 최대 ' + MAX_QTY[type] + '개까지 가능합니다.\n\n더 많은 수량이 필요하시면 전화로 문의해주세요.\n041-633-2676');
 }
 
 function openPay(type) {
@@ -1122,7 +1131,10 @@ function openPay(type) {
 function closePay() { document.getElementById('payOverlay').classList.remove('open'); }
 
 function changeModalQtyFor(type, d) {
-  modalQtys[type] = Math.max(0, Math.min(99, modalQtys[type] + d));
+  const cur = modalQtys[type];
+  const next = Math.max(0, Math.min(MAX_QTY[type], cur + d));
+  if (d > 0 && next === cur) { alertMaxQty(type); return; }
+  modalQtys[type] = next;
   updateModal();
 }
 function updateModal() {
@@ -1171,27 +1183,36 @@ function collectOrderInfo() {
 }
 
 function saveOrder(order, items, subtotal, ship, total, paymentId) {
-  // 주문 내역을 이메일로 수신 (문의 폼과 동일한 Formspree 사용)
+  // 주문 내역을 이메일(Formspree) + 구글 시트(GAS)로 이중 저장
+  const payload = {
+    _subject: '[주문] ' + order.name + ' / ' + total.toLocaleString() + '원',
+    구분: '주문',
+    주문번호: paymentId,
+    받는분: order.name,
+    연락처: order.phone,
+    주소: order.fullAddress,
+    요청사항: order.memo,
+    주문상품: items,
+    상품금액: subtotal.toLocaleString() + '원',
+    배송비: ship.toLocaleString() + '원',
+    결제금액: total.toLocaleString() + '원',
+    주문시각: new Date().toLocaleString('ko-KR')
+  };
   try {
     fetch('https://formspree.io/f/xjgqdonp', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        _subject: '[주문] ' + order.name + ' / ' + total.toLocaleString() + '원',
-        구분: '주문',
-        주문번호: paymentId,
-        받는분: order.name,
-        연락처: order.phone,
-        주소: order.fullAddress,
-        요청사항: order.memo,
-        주문상품: items,
-        상품금액: subtotal.toLocaleString() + '원',
-        배송비: ship.toLocaleString() + '원',
-        결제금액: total.toLocaleString() + '원',
-        주문시각: new Date().toLocaleString('ko-KR')
-      })
+      method: 'POST', headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
     });
   } catch (err) { /* 주문 저장 실패가 결제 완료 안내를 막지 않도록 함 */ }
+  try {
+    if (GAS_URL) {
+      fetch(GAS_URL, {
+        method: 'POST', mode: 'no-cors',
+        headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+        body: JSON.stringify(payload)
+      });
+    }
+  } catch (err) { /* 시트 저장 실패도 결제 흐름을 막지 않음 */ }
 }
 
 async function requestPay() {
@@ -1200,6 +1221,11 @@ async function requestPay() {
     const sub340 = modalQtys['340'] * PRODUCTS['340'].price;
     const subtotal = sub2L + sub340;
     if (subtotal === 0) { alert('상품을 선택해주세요.'); return; }
+
+    if (modalQtys['2L'] > MAX_QTY['2L'] || modalQtys['340'] > MAX_QTY['340']) {
+      alert('온라인 주문 수량 한도를 초과했습니다.\n\n대량 주문은 전화로 문의해주세요.\n041-633-2676');
+      return;
+    }
 
     const order = collectOrderInfo();
     if (!order) return;
