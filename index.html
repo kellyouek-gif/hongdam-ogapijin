@@ -326,6 +326,12 @@ header {
 }
 .btn-gold:hover { background:var(--ogp-gold-600); border-color:var(--ogp-gold-600); }
 
+/* ── Retail / 진열대 ── */
+.retail-grid { display:grid; grid-template-columns:repeat(5,1fr); gap:1px; background:var(--ogp-border); }
+.retail-item { aspect-ratio:3/4; overflow:hidden; background:var(--ogp-surface); }
+.retail-item img { width:100%; height:100%; object-fit:cover; display:block; transition:transform .5s; }
+.retail-item:hover img { transform:scale(1.05); }
+
 /* ── Why ── */
 #why { background:var(--ogp-green-800); }
 #why .sec-title { color:var(--ogp-paper); }
@@ -384,6 +390,10 @@ header {
 .drink-card-img img { width:100%; height:100%; object-fit:cover; transition:transform .5s; filter:brightness(.92) saturate(1.05); }
 .drink-card:hover .drink-card-img img { transform:scale(1.04); }
 .drink-card-body { padding:28px 32px 36px; }
+.drink-feature { display:grid; grid-template-columns:1fr 1fr; gap:max(40px,3vw); align-items:center; border:1px solid var(--ogp-border); border-radius:var(--ogp-radius-lg); overflow:hidden; background:var(--ogp-surface); }
+.drink-feature-img { height:100%; min-height:360px; overflow:hidden; }
+.drink-feature-img img { width:100%; height:100%; object-fit:cover; display:block; }
+.drink-feature-body { padding:max(28px,2vw) max(44px,3vw) max(28px,2vw) 0; }
 .drink-badge {
   font-size:max(15px,1vw); font-weight:700; letter-spacing:.14em;
   color:var(--ogp-gold-600); text-transform:uppercase;
@@ -585,6 +595,10 @@ footer {
   .prod-vol { font-size: 72px; }
   .why-grid { grid-template-columns: 1fr; }
   .drink-grid { grid-template-columns: 1fr; }
+  .retail-grid { grid-template-columns: repeat(2, 1fr); }
+  .drink-feature { grid-template-columns: 1fr; }
+  .drink-feature-img { min-height: 240px; }
+  .drink-feature-body { padding: 28px 24px; }
   .b2b-grid { grid-template-columns: 1fr; }
   .qr-strip { flex-direction: column; align-items: flex-start; padding: 48px 24px; }
   .qr-strip-title { font-size: 32px; }
@@ -610,6 +624,7 @@ footer {
   </a>
   <nav class="h-nav">
     <a href="#products">제품</a>
+    <a href="#retail">매장</a>
     <a href="#why">특징</a>
     <a href="#drinks">음료</a>
     <a href="#b2b">납품문의</a>
@@ -796,6 +811,24 @@ footer {
 
 <div class="divider"></div>
 
+<!-- ── RETAIL ── -->
+<section id="retail" class="sec">
+  <div class="wrap">
+  <p class="sec-overline rv">Now In Store</p>
+  <h2 class="sec-title rv">전국 매장 진열대에서<br><em>만나고 있습니다</em></h2>
+  <div class="retail-grid">
+    <div class="retail-item rv"><img src="images/display/display-01.jpg" alt="홍담오가피진 매장 진열대 1" loading="lazy"></div>
+    <div class="retail-item rv"><img src="images/display/display-02.jpg" alt="홍담오가피진 매장 진열대 2" loading="lazy"></div>
+    <div class="retail-item rv"><img src="images/display/display-03.jpg" alt="홍담오가피진 매장 진열대 3" loading="lazy"></div>
+    <div class="retail-item rv"><img src="images/display/display-04.jpg" alt="홍담오가피진 매장 진열대 4" loading="lazy"></div>
+    <div class="retail-item rv"><img src="images/display/display-05.jpg" alt="홍담오가피진 매장 진열대 5" loading="lazy"></div>
+  </div>
+  <a href="tel:041-633-2676" class="btn-gold rv" style="margin-top:max(40px,3vw);">우리 매장에도 입점 문의 041-633-2676 →</a>
+  </div>
+</section>
+
+<div class="divider"></div>
+
 <!-- ── WHY ── -->
 <section id="why" class="sec">
   <div class="wrap">
@@ -867,38 +900,13 @@ footer {
   <p class="sec-overline rv">Menu</p>
   <h2 class="sec-title rv">음료로<br>즐기기</h2>
 
-  <div class="drink-grid">
-    <div class="drink-card rv">
-      <div class="drink-card-img"><img src="https://images.unsplash.com/photo-1513558161293-cdaf765ed2fd?w=600&q=80" alt="오가피진 워터"></div>
-      <div class="drink-card-body">
-        <span class="drink-badge">Water · 01</span>
-        <div class="drink-name">오가피진 워터</div>
-        <div class="drink-recipe">원액 <b>70mL</b> + 얼음물 <b>200mL</b><br>가장 순수하게 즐기는 방법</div>
-      </div>
-    </div>
-    <div class="drink-card rv">
-      <div class="drink-card-img"><img src="https://images.unsplash.com/photo-1602904761432-f9ad96133982?w=600&q=80" alt="오가피진 스파클링"></div>
-      <div class="drink-card-body">
-        <span class="drink-badge">Water · 02</span>
-        <div class="drink-name">오가피진 스파클링</div>
-        <div class="drink-recipe">원액 <b>60mL</b> + 탄산수 <b>180mL</b> + 레몬<br>청량하게 즐기는 여름 버전</div>
-      </div>
-    </div>
-    <div class="drink-card rv">
-      <div class="drink-card-img"><img src="https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=600&q=80" alt="오가피 블랙"></div>
-      <div class="drink-card-body">
-        <span class="drink-badge">Black · 01</span>
-        <div class="drink-name">오가피 블랙</div>
-        <div class="drink-recipe">원액 <b>30mL</b> + 에스프레소 <b>1샷</b> + 얼음물 <b>150mL</b><br>카페인과 오가피의 시너지</div>
-      </div>
-    </div>
-    <div class="drink-card rv">
-      <div class="drink-card-img"><img src="https://images.unsplash.com/photo-1461023058943-07fcbe16d735?w=600&q=80" alt="오가피 콜드브루"></div>
-      <div class="drink-card-body">
-        <span class="drink-badge">Black · 02</span>
-        <div class="drink-name">오가피 콜드브루</div>
-        <div class="drink-recipe">원액 <b>40mL</b> + 콜드브루 <b>150mL</b> + 얼음<br>부드럽고 깊은 풍미</div>
-      </div>
+  <div class="drink-feature rv">
+    <div class="drink-feature-img"><img src="recipe-onrocks.jpg" alt="홍담오가피진 온 더 락"></div>
+    <div class="drink-feature-body">
+      <span class="drink-badge">Signature Recipe</span>
+      <div class="drink-name">홍담오가피진 온 더 락</div>
+      <div class="drink-recipe">홍담오가피진 <b>30mL</b> + 물(또는 탄산수) 가득 + 얼음</div>
+      <div style="margin-top:10px;color:var(--ogp-muted);font-size:max(15px,1vw);line-height:1.8;">물 대신 탄산수로 채우면 더욱 청량하게 즐길 수 있어요.</div>
     </div>
   </div>
   </div>
@@ -1008,6 +1016,7 @@ footer {
   </div>
   <div class="ft-links">
     <a href="#products">제품</a>
+    <a href="#retail">매장</a>
     <a href="#why">특징</a>
     <a href="#howto">활용법</a>
     <a href="#drinks">음료</a>
