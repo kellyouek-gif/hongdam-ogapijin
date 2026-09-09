@@ -320,9 +320,10 @@ header {
   font-family:var(--ogp-font-body); font-size:max(19px,1.3vw); font-weight:700;
   color:var(--ogp-green-800); background:var(--ogp-gold-500);
   border:2px solid var(--ogp-gold-500); border-radius:var(--ogp-radius-md);
-  padding:max(16px,1.1vw) max(36px,2.5vw); cursor:pointer; white-space:nowrap;
+  padding:max(16px,1.1vw) max(36px,2.5vw); cursor:pointer; white-space:normal;
   transition:background .2s; text-decoration:none;
-  display:inline-flex; align-items:center; gap:8px;
+  display:inline-flex; align-items:center; justify-content:center; gap:8px;
+  max-width:100%; text-align:center; box-sizing:border-box;
 }
 .btn-gold:hover { background:var(--ogp-gold-600); border-color:var(--ogp-gold-600); }
 
@@ -572,6 +573,7 @@ footer {
 .ship-agree a { color:var(--ogp-green-700); font-weight:700; }
 @media (max-width:520px) { .ship-grid { grid-template-columns:1fr; } }
 .pay-notice { font-size:11px; color:var(--ogp-muted); text-align:center; line-height:1.9; }
+.pay-ship-note { font-size:12.5px; color:var(--ogp-green-700); font-weight:700; text-align:center; margin:6px 0 2px; }
 
 /* ── Responsive ── */
 @media (max-width: 768px) {
@@ -1072,6 +1074,7 @@ footer {
         <button class="qty-btn" onclick="changeModalQtyFor('340',1)">+</button>
       </div>
     </div>
+    <div class="pay-ship-note">🚚 6만원 이상 구매 시 배송비 무료</div>
     <div class="pay-divider"></div>
     <div class="pay-row">
       <span class="pay-label">상품 금액</span>
