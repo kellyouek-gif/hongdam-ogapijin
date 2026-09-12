@@ -391,8 +391,8 @@ header {
 .drink-card-img img { width:100%; height:100%; object-fit:cover; transition:transform .5s; filter:brightness(.92) saturate(1.05); }
 .drink-card:hover .drink-card-img img { transform:scale(1.04); }
 .drink-card-body { padding:28px 32px 36px; }
-.drink-feature { display:flex; flex-wrap:wrap; gap:max(40px,3vw); border:1px solid var(--ogp-border); border-radius:var(--ogp-radius-lg); overflow:hidden; background:var(--ogp-surface); }
-.drink-feature-img { flex:1 1 320px; height:440px; overflow:hidden; }
+.drink-feature { display:flex; flex-wrap:wrap; align-items:center; gap:max(40px,3vw); border:1px solid var(--ogp-border); border-radius:var(--ogp-radius-lg); overflow:hidden; background:var(--ogp-surface); }
+.drink-feature-img { flex:0 0 340px; aspect-ratio:1170/1758; overflow:hidden; }
 .drink-feature-img img { width:100%; height:100%; object-fit:cover; display:block; }
 .drink-feature-body { flex:1 1 320px; padding:max(28px,2vw) max(44px,3vw) max(28px,2vw) 0; display:flex; flex-direction:column; justify-content:center; }
 .drink-badge {
@@ -610,8 +610,9 @@ footer {
   .drink-grid { grid-template-columns: 1fr; }
   .retail-grid { column-count: 2; column-gap: 10px; }
   .retail-item { margin-bottom: 10px; }
-  .drink-feature-img { flex-basis: 100%; height: 280px; }
-  .drink-feature-body { flex-basis: 100%; padding: 28px 24px; }
+  .drink-feature-img { flex-basis: 100%; height: auto; aspect-ratio: 1170/1758; }
+  .drink-feature-body { flex-basis: 100%; padding: 24px 20px; }
+  .sec .wrap { padding: 0; }
   .kv-img { width: min(320px, 70vw); }
   .b2b-grid { grid-template-columns: 1fr; }
   .qr-strip { flex-direction: column; align-items: flex-start; padding: 48px 24px; }
@@ -918,7 +919,7 @@ footer {
     <div class="drink-feature-img"><img src="recipe-onrocks.jpg" alt="홍담오가피진 온 더 락"></div>
     <div class="drink-feature-body">
       <span class="drink-badge">Signature Recipe</span>
-      <div class="drink-name">홍담오가피진 온 더 락</div>
+      <div class="drink-name">홍담오가피진 온 더&nbsp;락</div>
       <div class="drink-recipe">홍담오가피진 <b>30mL</b> + 물(또는 탄산수) 가득 + 얼음</div>
       <div style="margin-top:10px;color:var(--ogp-muted);font-size:max(15px,1vw);line-height:1.8;">물 대신 탄산수로 채우면 더욱 청량하게 즐길 수 있어요.</div>
     </div>
