@@ -328,10 +328,10 @@ header {
 .btn-gold:hover { background:var(--ogp-gold-600); border-color:var(--ogp-gold-600); }
 
 /* ── Retail / 진열대 ── */
-.retail-grid { display:grid; grid-template-columns:repeat(5,1fr); gap:1px; background:var(--ogp-border); }
-.retail-item { aspect-ratio:3/4; overflow:hidden; background:var(--ogp-surface); }
-.retail-item img { width:100%; height:100%; object-fit:cover; display:block; transition:transform .5s; }
-.retail-item:hover img { transform:scale(1.05); }
+.retail-grid { column-count:3; column-gap:max(16px,1.2vw); }
+.retail-item { break-inside:avoid; margin-bottom:max(16px,1.2vw); border-radius:var(--ogp-radius-md); overflow:hidden; box-shadow:0 16px 40px -20px rgba(22,48,31,.35); }
+.retail-item img { width:100%; height:auto; display:block; transition:transform .5s; }
+.retail-item:hover img { transform:scale(1.04); }
 
 /* ── Why ── */
 #why { background:var(--ogp-green-800); }
@@ -597,7 +597,8 @@ footer {
   .prod-vol { font-size: 72px; }
   .why-grid { grid-template-columns: 1fr; }
   .drink-grid { grid-template-columns: 1fr; }
-  .retail-grid { grid-template-columns: repeat(2, 1fr); }
+  .retail-grid { column-count: 2; column-gap: 10px; }
+  .retail-item { margin-bottom: 10px; }
   .drink-feature { grid-template-columns: 1fr; }
   .drink-feature-img { min-height: 240px; }
   .drink-feature-body { padding: 28px 24px; }
