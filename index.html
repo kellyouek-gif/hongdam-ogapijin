@@ -1136,7 +1136,7 @@ footer {
     </label>
     <button class="pay-confirm-btn" onclick="requestPay()">
       <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="5" width="20" height="14" rx="2.5"/><path d="M2 10h20"/><path d="M6 15h4"/></svg>
-      카드로 결제하기
+      카카오페이로 결제하기
     </button>
     <div class="pay-notice">배송비 3,000원 · 6만원 이상 무료배송 · 배송완료까지 1-2영업일 소요<br>온라인 주문은 상품당 최대 20개 · 대량 주문은 전화 문의</div>
     <div class="pay-tel">전화로도 주문하실 수 있습니다 · <a href="tel:041-633-2676">041-633-2676</a></div>
@@ -1230,11 +1230,13 @@ function collectOrderInfo() {
   };
 }
 
-function saveOrder(order, items, subtotal, ship, total, paymentId) {
+function saveOrder(order, items, subtotal, ship, total, paymentId, status) {
   // 주문 내역을 이메일(Formspree) + 구글 시트(GAS)로 이중 저장
+  // status 가 있으면(결제 실패 등) 제목에 표시해 운영자가 바로 연락할 수 있게 함
   const payload = {
-    _subject: '[주문] ' + order.name + ' / ' + total.toLocaleString() + '원',
+    _subject: (status ? '[결제실패·연락필요] ' : '[주문] ') + order.name + ' / ' + total.toLocaleString() + '원',
     구분: '주문',
+    결제상태: status || '결제완료',
     주문번호: paymentId,
     받는분: order.name,
     연락처: order.phone,
@@ -1285,18 +1287,32 @@ async function requestPay() {
     if (modalQtys['340'] > 0) name += (name ? ' + ' : '') + '340mL ' + modalQtys['340'] + '개';
     const paymentId = 'hongdam_' + Date.now();
 
+    // 휴대폰에서는 카카오페이 앱으로 넘어갔다가 이 페이지로 돌아오므로,
+    // 돌아왔을 때 주문 정보를 다시 쓸 수 있게 잠시 저장해 둠
+    try {
+      localStorage.setItem('hongdam_pending_order', JSON.stringify({
+        paymentId: paymentId, order: order, name: name,
+        subtotal: subtotal, ship: ship, total: total
+      }));
+    } catch (err) {}
+
     const response = await PortOne.requestPayment({
       storeId: 'store-30116eef-f63a-40c4-beb3-dcdb8bafb9bb',
-      channelKey: 'channel-key-c99e987b-1586-4187-9b17-8c03a20f515f',
+      channelKey: 'channel-key-d3757d4c-b124-482e-852d-a192a742f5bc', // 카카오페이 (실연동)
       paymentId: paymentId,
       orderName: name,
       totalAmount: total,
       currency: 'KRW',
-      payMethod: 'CARD',
+      payMethod: 'EASY_PAY',
+      redirectUrl: location.origin + location.pathname,
       customer: { fullName: order.name, phoneNumber: order.phone }
     });
 
+    if (!response) return; // 모바일: 결제 후 페이지로 돌아오며 아래 handlePaymentReturn 에서 처리
+    try { localStorage.removeItem('hongdam_pending_order'); } catch (err) {}
+
     if (response.code != null) {
+      saveOrder(order, name, subtotal, ship, total, paymentId, '결제실패 (' + (response.message || response.code) + ')');
       alert('결제를 완료하지 못했습니다.\n\n전화로도 주문하실 수 있습니다.\n041-633-2676');
     } else {
       saveOrder(order, name, subtotal, ship, total, response.paymentId || paymentId);
@@ -1309,6 +1325,26 @@ async function requestPay() {
 }
 document.getElementById('payOverlay').addEventListener('click', function(e) {
   if (e.target === this) closePay();
+});
+
+// 휴대폰 결제 후 돌아왔을 때 주문 완료/실패 처리
+window.addEventListener('load', function handlePaymentReturn() {
+  const q = new URLSearchParams(location.search);
+  const pid = q.get('paymentId');
+  if (!pid) return;
+  let pending = null;
+  try { pending = JSON.parse(localStorage.getItem('hongdam_pending_order') || 'null'); } catch (err) {}
+  try { localStorage.removeItem('hongdam_pending_order'); } catch (err) {}
+  history.replaceState(null, '', location.pathname + location.hash);
+  if (!pending || pending.paymentId !== pid) return; // 이미 처리했거나 다른 기기
+  const p = pending;
+  if (q.get('code')) {
+    saveOrder(p.order, p.name, p.subtotal, p.ship, p.total, pid, '결제실패 (' + (q.get('message') || q.get('code')) + ')');
+    alert('결제를 완료하지 못했습니다.\n\n전화로도 주문하실 수 있습니다.\n041-633-2676');
+  } else {
+    saveOrder(p.order, p.name, p.subtotal, p.ship, p.total, pid);
+    alert('주문이 완료되었습니다.\n\n주문번호: ' + pid + '\n받는 분: ' + p.order.name + '\n배송지: ' + p.order.fullAddress + '\n\n배송완료까지 1-2영업일 소요됩니다.');
+  }
 });
 
 const GAS_URL = ''; // Google Apps Script URL (설정 후 입력)
