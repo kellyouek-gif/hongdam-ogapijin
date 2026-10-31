@@ -550,6 +550,20 @@ footer {
   pointer-events:auto;
 }
 .pay-confirm-btn:hover { background:var(--ogp-green-800); }
+.pay-confirm-btn:disabled { opacity:.55; cursor:wait; }
+.pay-alt-btn {
+  width:100%; padding:14px; margin-top:-6px;
+  background:#FEE500; color:#191919; border:none; border-radius:var(--ogp-radius-md);
+  font-family:var(--ogp-font-body); font-size:14px; font-weight:700; cursor:pointer;
+  transition:filter .2s;
+}
+.pay-alt-btn:hover { filter:brightness(.96); }
+.pay-back { background:none; border:none; color:var(--ogp-muted); font-size:13px; cursor:pointer; padding:4px; }
+.pay-back:hover { color:var(--ogp-ink); text-decoration:underline; }
+.toss-summary { display:flex; justify-content:space-between; align-items:baseline; gap:12px; font-size:14px; color:var(--ogp-muted); }
+.toss-summary b { font-family:var(--ogp-font-display); font-size:26px; color:var(--ogp-green-700); white-space:nowrap; }
+#toss-methods, #toss-agreement { margin:0 -12px; min-height:20px; }
+.pay-loading { position:fixed; inset:0; z-index:1000; background:rgba(16,38,26,.72); display:flex; align-items:center; justify-content:center; color:#fff; font-size:16px; font-weight:700; }
 .ship-title { font-size:15px; font-weight:700; color:var(--ogp-ink); margin-bottom:14px; }
 .ship-grid { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
 .ship-field { display:flex; flex-direction:column; gap:6px; margin-bottom:12px; }
@@ -1134,15 +1148,32 @@ footer {
       <input type="checkbox" id="o-agree">
       <span>주문·배송을 위한 개인정보 수집·이용에 동의합니다 <a href="#privacy" onclick="event.preventDefault();openPolicy('privacy');">[내용 보기]</a> <span class="req">*</span></span>
     </label>
-    <button class="pay-confirm-btn" onclick="requestPay()">
+    <button class="pay-confirm-btn" onclick="startTossPay()">
       <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="5" width="20" height="14" rx="2.5"/><path d="M2 10h20"/><path d="M6 15h4"/></svg>
-      카카오페이로 결제하기
+      카드 · 간편결제로 결제하기
     </button>
+    <button class="pay-alt-btn" onclick="requestPay()">카카오페이로 결제하기</button>
     <div class="pay-notice">배송비 3,000원 · 6만원 이상 무료배송 · 배송완료까지 1-2영업일 소요<br>온라인 주문은 상품당 최대 20개 · 대량 주문은 전화 문의</div>
     <div class="pay-tel">전화로도 주문하실 수 있습니다 · <a href="tel:041-633-2676">041-633-2676</a></div>
   </div>
 </div>
 
+<!-- ── 토스페이먼츠 결제수단 선택 ── -->
+<div class="pay-overlay" id="tossOverlay">
+  <div class="pay-modal">
+    <button class="pay-close" onclick="closeToss()">×</button>
+    <div class="pay-title">결제 수단 선택</div>
+    <div class="toss-summary"><span id="tossOrderName"></span><b id="tossOrderTotal"></b></div>
+    <div class="pay-divider"></div>
+    <div id="toss-methods"></div>
+    <div id="toss-agreement"></div>
+    <button class="pay-confirm-btn" id="tossPayBtn" onclick="confirmTossPay()" disabled>결제 수단 불러오는 중…</button>
+    <button class="pay-back" onclick="backToOrder()">← 주문 정보로 돌아가기</button>
+  </div>
+</div>
+
+<!-- 토스페이먼츠 결제위젯 -->
+<script src="https://js.tosspayments.com/v2/standard"></script>
 <!-- PortOne V2 -->
 <script src="https://cdn.portone.io/v2/browser-sdk.js"></script>
 <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
@@ -1344,6 +1375,157 @@ window.addEventListener('load', function handlePaymentReturn() {
   } else {
     saveOrder(p.order, p.name, p.subtotal, p.ship, p.total, pid);
     alert('주문이 완료되었습니다.\n\n주문번호: ' + pid + '\n받는 분: ' + p.order.name + '\n배송지: ' + p.order.fullAddress + '\n\n배송완료까지 1-2영업일 소요됩니다.');
+  }
+});
+
+
+/* ───────── 토스페이먼츠 (카드·간편결제) ───────── */
+const TOSS_CLIENT_KEY = 'live_gck_DnyRpQWGrNmJWngGopN7VKwv1M9E'; // 결제위젯 연동 키 (공개용)
+let tossWidgets = null;
+let tossCheckout = null;
+
+function itemsLabel(q2L, q340) {
+  let n = '';
+  if (q2L  > 0) n += '홍담오가피진 2L ' + q2L + '개';
+  if (q340 > 0) n += (n ? ' + ' : '') + '340mL ' + q340 + '개';
+  return n;
+}
+
+// 주문 모달의 수량·배송정보를 확인해 결제 정보로 묶음 (문제가 있으면 null)
+function prepareCheckout() {
+  const subtotal = modalQtys['2L'] * PRODUCTS['2L'].price + modalQtys['340'] * PRODUCTS['340'].price;
+  if (subtotal === 0) { alert('상품을 선택해주세요.'); return null; }
+  if (modalQtys['2L'] > MAX_QTY['2L'] || modalQtys['340'] > MAX_QTY['340']) {
+    alert('온라인 주문 수량 한도를 초과했습니다.\n\n대량 주문은 전화로 문의해주세요.\n041-633-2676');
+    return null;
+  }
+  const order = collectOrderInfo();
+  if (!order) return null;
+  const ship = subtotal >= FREE_MIN ? 0 : SHIP_FEE;
+  return {
+    order: order,
+    name: itemsLabel(modalQtys['2L'], modalQtys['340']),
+    subtotal: subtotal, ship: ship, total: subtotal + ship,
+    // 서버(api/toss-confirm.js)가 이 주문번호의 수량으로 금액을 다시 계산해 확인함
+    orderId: 'hd-' + Date.now() + '-' + modalQtys['2L'] + 'x' + modalQtys['340']
+  };
+}
+
+async function startTossPay() {
+  const c = prepareCheckout();
+  if (!c) return;
+  if (typeof TossPayments === 'undefined') {
+    alert('카드결제 화면을 불러오지 못했습니다.\n새로고침 후 다시 시도하시거나 카카오페이를 이용해주세요.\n\n전화 주문: 041-633-2676');
+    return;
+  }
+  tossCheckout = c;
+  document.getElementById('tossOrderName').textContent = c.name + (c.ship ? ' (배송비 포함)' : '');
+  document.getElementById('tossOrderTotal').textContent = c.total.toLocaleString() + '원';
+  const btn = document.getElementById('tossPayBtn');
+  btn.disabled = true;
+  btn.textContent = '결제 수단 불러오는 중…';
+  closePay();
+  document.getElementById('tossOverlay').classList.add('open');
+
+  try {
+    if (!tossWidgets) {
+      const w = TossPayments(TOSS_CLIENT_KEY).widgets({ customerKey: TossPayments.ANONYMOUS });
+      await w.setAmount({ currency: 'KRW', value: c.total });
+      await Promise.all([
+        w.renderPaymentMethods({ selector: '#toss-methods', variantKey: 'DEFAULT' }),
+        w.renderAgreement({ selector: '#toss-agreement', variantKey: 'AGREEMENT' })
+      ]);
+      tossWidgets = w;
+    } else {
+      await tossWidgets.setAmount({ currency: 'KRW', value: c.total });
+    }
+    btn.disabled = false;
+    btn.textContent = c.total.toLocaleString() + '원 결제하기';
+  } catch (err) {
+    tossWidgets = null;
+    document.getElementById('toss-methods').innerHTML = '';
+    document.getElementById('toss-agreement').innerHTML = '';
+    closeToss();
+    alert('결제 화면을 여는 중 문제가 발생했습니다.\n\n카카오페이 또는 전화로 주문하실 수 있습니다.\n041-633-2676');
+  }
+}
+
+function closeToss() { document.getElementById('tossOverlay').classList.remove('open'); }
+function backToOrder() { closeToss(); document.getElementById('payOverlay').classList.add('open'); }
+
+async function confirmTossPay() {
+  const c = tossCheckout;
+  if (!c || !tossWidgets) return;
+  // 결제 후 이 페이지로 돌아왔을 때 배송정보를 쓰기 위해 잠시 저장
+  try { localStorage.setItem('hongdam_pending_toss', JSON.stringify(c)); } catch (err) {}
+  const base = location.origin + location.pathname;
+  try {
+    await tossWidgets.requestPayment({
+      orderId: c.orderId,
+      orderName: c.name,
+      successUrl: base + '?toss=success',
+      failUrl: base + '?toss=fail',
+      customerName: c.order.name,
+      customerMobilePhone: c.order.phone.replace(/\D/g, '')
+    });
+  } catch (err) {
+    if (err && err.code === 'USER_CANCEL') return; // 고객이 결제창을 닫음
+    if (err && err.code === 'NEED_AGREEMENT_WITH_REQUIRED_TERMS') { alert('필수 약관에 동의해주세요.'); return; }
+    alert('결제를 진행하지 못했습니다.' + (err && err.message ? '\n' + err.message : '') + '\n\n전화로도 주문하실 수 있습니다.\n041-633-2676');
+  }
+}
+
+document.getElementById('tossOverlay').addEventListener('click', function(e) {
+  if (e.target === this) closeToss();
+});
+
+// 토스 결제 후 돌아왔을 때: 서버에서 금액 확인·최종 승인 → 주문 저장
+window.addEventListener('load', async function handleTossReturn() {
+  const q = new URLSearchParams(location.search);
+  const st = q.get('toss');
+  if (!st) return;
+  let p = null;
+  try { p = JSON.parse(localStorage.getItem('hongdam_pending_toss') || 'null'); } catch (err) {}
+  try { localStorage.removeItem('hongdam_pending_toss'); } catch (err) {}
+  history.replaceState(null, '', location.pathname + location.hash);
+  const orderId = q.get('orderId');
+  if (p && p.orderId !== orderId) p = null;
+  // 다른 브라우저로 돌아온 경우 등 배송정보가 없으면 연락이 필요하다고 표시
+  const order = p ? p.order : { name: '(배송정보 없음·연락필요)', phone: '', fullAddress: '(배송정보 없음·연락필요)', memo: '' };
+
+  if (st === 'fail') {
+    if (q.get('code') === 'PAY_PROCESS_CANCELED') return;
+    if (p) saveOrder(order, p.name, p.subtotal, p.ship, p.total, orderId || p.orderId, '결제실패 (' + (q.get('message') || q.get('code')) + ')');
+    alert('결제를 완료하지 못했습니다.\n\n전화로도 주문하실 수 있습니다.\n041-633-2676');
+    return;
+  }
+
+  const loading = document.createElement('div');
+  loading.className = 'pay-loading';
+  loading.textContent = '결제를 확인하고 있습니다…';
+  document.body.appendChild(loading);
+  let r = null;
+  try {
+    const res = await fetch('/api/toss-confirm', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ paymentKey: q.get('paymentKey'), orderId: orderId, amount: Number(q.get('amount')) })
+    });
+    r = await res.json();
+  } catch (err) {
+    r = { ok: false, message: '결제 확인 서버에 연결하지 못했습니다.' };
+  }
+  loading.remove();
+
+  if (r && r.ok) {
+    const name = itemsLabel(r.items['2L'], r.items['340']);
+    const how = r.easyPay ? r.easyPay : (r.method || '카드');
+    saveOrder(order, name, r.subtotal, r.ship, r.totalAmount, r.orderId + ' (토스·' + how + ')');
+    alert('주문이 완료되었습니다.\n\n주문번호: ' + r.orderId + '\n받는 분: ' + order.name + '\n배송지: ' + order.fullAddress + '\n\n배송완료까지 1-2영업일 소요됩니다.');
+  } else {
+    const msg = (r && r.message) || '알 수 없는 오류';
+    if (p) saveOrder(order, p.name, p.subtotal, p.ship, p.total, orderId, '결제실패 (' + msg + ')');
+    alert('결제를 완료하지 못했습니다.\n' + msg + '\n\n결제가 확정되지 않았습니다. 다시 시도하시거나 전화로 문의해주세요.\n041-633-2676');
   }
 });
 

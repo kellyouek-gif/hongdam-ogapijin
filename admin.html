@@ -2,6 +2,7 @@
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
+<meta name="robots" content="noindex, nofollow">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>홍담오가피진 문의 관리</title>
 <style>
@@ -93,6 +94,15 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','Apple SD Gothic Ne
 /* ── PANEL TOGGLE ── */
 .panel{display:none;}
 .panel.active{display:block;}
+
+/* ── 로그인 사용자 / 권한 ── */
+a.tab-btn{text-decoration:none;}
+.admin-only{display:none !important;}
+body.is-admin .admin-only{display:flex !important;}
+body.is-admin .sidebar-label.admin-only{display:block !important;}
+.header-user{display:flex;align-items:center;gap:10px;}
+.header-logout{color:rgba(255,255,255,.7);font-size:12px;text-decoration:none;border:1px solid rgba(255,255,255,.25);padding:4px 12px;border-radius:20px;}
+.header-logout:hover{color:#fff;border-color:var(--gold);}
 </style>
 </head>
 <body>
@@ -105,7 +115,10 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','Apple SD Gothic Ne
       <div class="header-sub">자동답변 템플릿 · 시트 연동 가이드</div>
     </div>
   </div>
-  <div class="header-badge">ADMIN</div>
+  <div class="header-user">
+    <div class="header-badge" id="role-badge">관리</div>
+    <a class="header-logout" href="/admin/logout">로그아웃</a>
+  </div>
 </div>
 
 <div class="layout">
@@ -125,14 +138,17 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','Apple SD Gothic Ne
       <span class="tab-icon">💬</span> 기타 문의
     </button>
 
-    <div class="sidebar-divider"></div>
-    <div class="sidebar-label">설정</div>
-    <button class="tab-btn" onclick="showTab('sheets')">
+    <div class="sidebar-divider admin-only"></div>
+    <div class="sidebar-label admin-only">설정 · 관리자 전용</div>
+    <a class="tab-btn admin-only" href="/admin-settings.html#sheets">
       <span class="tab-icon">📊</span> 시트 자동 저장
-    </button>
-    <button class="tab-btn" onclick="showTab('autoreply')">
+    </a>
+    <a class="tab-btn admin-only" href="/admin-settings.html#autoreply">
       <span class="tab-icon">✉️</span> 자동 답변 설정
-    </button>
+    </a>
+    <a class="tab-btn admin-only" href="/setup-guide.html">
+      <span class="tab-icon">🛠️</span> 설정 가이드
+    </a>
   </aside>
 
   <!-- 메인 -->
@@ -169,158 +185,6 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','Apple SD Gothic Ne
         <div class="section-desc">일반 문의 및 기타 사항에 사용할 템플릿입니다.</div>
       </div>
       <div class="template-grid" id="etc-templates"></div>
-    </div>
-
-    <!-- 시트 연동 가이드 -->
-    <div class="panel" id="panel-sheets">
-      <div class="section-head">
-        <div class="section-title">📊 Google Sheets 자동 저장 설정</div>
-        <div class="section-desc">문의가 오면 구글 스프레드시트에 자동으로 기록됩니다.</div>
-      </div>
-
-      <div class="guide-card">
-        <div class="guide-title">설정 방법 (1회만 하면 됩니다)</div>
-        <div class="steps">
-          <div class="step">
-            <div class="step-num">1</div>
-            <div class="step-body">
-              <div class="step-title">구글 스프레드시트 만들기</div>
-              <div class="step-desc"><a href="https://sheets.google.com" target="_blank">sheets.google.com</a> 접속 → 새 스프레드시트 생성 → 이름: "홍담 문의 관리"</div>
-            </div>
-          </div>
-          <div class="step">
-            <div class="step-num">2</div>
-            <div class="step-body">
-              <div class="step-title">Apps Script 열기</div>
-              <div class="step-desc">스프레드시트 상단 메뉴 → <b>확장 프로그램</b> → <b>Apps Script</b> 클릭</div>
-            </div>
-          </div>
-          <div class="step">
-            <div class="step-num">3</div>
-            <div class="step-body">
-              <div class="step-title">아래 코드 붙여넣기</div>
-              <div class="step-desc">기존 내용 모두 지우고 아래 코드 붙여넣기 → 저장(Ctrl+S)</div>
-              <div class="code-block">function doPost(e) {
-  const data = JSON.parse(e.postData.contents);
-  const sheet = SpreadsheetApp.getActiveSpreadsheet()
-    .getSheetByName(data['문의유형'])
-    || SpreadsheetApp.getActiveSpreadsheet().insertSheet(data['문의유형']);
-
-  // 헤더 없으면 추가
-  if (sheet.getLastRow() === 0) {
-    sheet.appendRow(['접수일시','이름','연락처','문의유형','내용']);
-  }
-
-  sheet.appendRow([
-    new Date().toLocaleString('ko-KR'),
-    data['이름'],
-    data['연락처'],
-    data['문의유형'],
-    data['내용']
-  ]);
-
-  return ContentService
-    .createTextOutput(JSON.stringify({result:'ok'}))
-    .setMimeType(ContentService.MimeType.JSON);
-}</div>
-              <button class="code-copy-btn" onclick="copyCode()">코드 복사</button>
-            </div>
-          </div>
-          <div class="step">
-            <div class="step-num">4</div>
-            <div class="step-body">
-              <div class="step-title">웹 앱으로 배포</div>
-              <div class="step-desc">상단 <b>배포</b> → <b>새 배포</b> → 유형: <b>웹 앱</b> → 액세스: <b>모든 사용자</b> → 배포 → URL 복사</div>
-            </div>
-          </div>
-          <div class="step">
-            <div class="step-num">5</div>
-            <div class="step-body">
-              <div class="step-title">URL을 홍담 사이트에 입력</div>
-              <div class="step-desc">복사한 URL을 클로드에게 알려주시면 index.html에 바로 연동해드립니다.</div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- 자동답변 설정 가이드 -->
-    <div class="panel" id="panel-autoreply">
-      <div class="section-head">
-        <div class="section-title">✉️ 자동 답변 이메일 설정</div>
-        <div class="section-desc">Formspree에서 자동 답변 이메일을 설정할 수 있습니다.</div>
-      </div>
-
-      <div class="guide-card">
-        <div class="guide-title">Formspree 자동 답변 설정</div>
-        <div class="steps">
-          <div class="step">
-            <div class="step-num">1</div>
-            <div class="step-body">
-              <div class="step-title">Formspree 로그인</div>
-              <div class="step-desc"><a href="https://formspree.io" target="_blank">formspree.io</a> 로그인 → 홍담문의 폼 선택</div>
-            </div>
-          </div>
-          <div class="step">
-            <div class="step-num">2</div>
-            <div class="step-body">
-              <div class="step-title">Autoresponse 탭 클릭</div>
-              <div class="step-desc">폼 설정 → <b>Autoresponse</b> 탭 → Enable 켜기</div>
-            </div>
-          </div>
-          <div class="step">
-            <div class="step-num">3</div>
-            <div class="step-body">
-              <div class="step-title">자동답변 내용 설정</div>
-              <div class="step-desc">Subject: <b>홍담오가피진 문의 접수 확인</b><br>아래 자동답변 탭의 템플릿을 복사해서 붙여넣으세요.</div>
-            </div>
-          </div>
-          <div class="step">
-            <div class="step-num">4</div>
-            <div class="step-body">
-              <div class="step-title">⚠️ 유료 플랜 필요</div>
-              <div class="step-desc">Formspree 자동답변은 유료($8/월). 무료로 하려면 Google Apps Script 자동답변 사용 (시트 연동 가이드 참조)</div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="guide-card">
-        <div class="guide-title">무료 자동답변 — Apps Script에 추가</div>
-        <div class="steps">
-          <div class="step">
-            <div class="step-num">1</div>
-            <div class="step-body">
-              <div class="step-title">시트 연동 코드에 이메일 발송 추가</div>
-              <div class="step-desc">시트 연동 설정 완료 후, doPost 함수 안에 아래 코드 추가:</div>
-              <div class="code-block">// doPost 함수 내부 sheet.appendRow(...) 아래에 추가
-GmailApp.sendEmail(
-  data['이메일'],  // 문의자 이메일
-  '[홍담오가피진] 문의 접수 확인',
-  '',
-  { htmlBody: getAutoReply(data['이름'], data['문의유형']) }
-);
-
-function getAutoReply(name, type) {
-  return `
-  &lt;div style="font-family:sans-serif;max-width:600px;margin:0 auto"&gt;
-  &lt;div style="background:#14291C;padding:24px;text-align:center"&gt;
-    &lt;span style="color:#C9A24B;font-size:20px;font-weight:bold"&gt;홍담오가피진&lt;/span&gt;
-  &lt;/div&gt;
-  &lt;div style="padding:32px;background:#fff"&gt;
-    &lt;p&gt;안녕하세요, &lt;b&gt;${name}&lt;/b&gt;님.&lt;/p&gt;
-    &lt;p&gt;홍담오가피진에 문의해 주셔서 감사합니다.&lt;/p&gt;
-    &lt;p&gt;&lt;b&gt;[${type}]&lt;/b&gt; 문의가 정상적으로 접수되었습니다.&lt;/p&gt;
-    &lt;p&gt;담당자가 확인 후 &lt;b&gt;영업일 기준 1~2일 내&lt;/b&gt; 연락드리겠습니다.&lt;/p&gt;
-    &lt;p style="margin-top:24px;color:#888"&gt;급한 문의: 041-633-2676&lt;/p&gt;
-  &lt;/div&gt;
-  &lt;/div&gt;`;
-}</div>
-              <button class="code-copy-btn" onclick="copyAutoReply()">코드 복사</button>
-            </div>
-          </div>
-        </div>
-      </div>
     </div>
 
   </main>
@@ -549,25 +413,20 @@ function showTab(name) {
   event.currentTarget.classList.add('active');
 }
 
-function copyCode() {
-  const code = document.querySelector('.code-block').textContent;
-  navigator.clipboard.writeText(code);
-  event.currentTarget.textContent = '✅ 복사됨!';
-  setTimeout(() => event.currentTarget.textContent = '코드 복사', 2000);
-}
-
-function copyAutoReply() {
-  const blocks = document.querySelectorAll('.code-block');
-  navigator.clipboard.writeText(blocks[1].textContent);
-  event.currentTarget.textContent = '✅ 복사됨!';
-  setTimeout(() => event.currentTarget.textContent = '코드 복사', 2000);
-}
-
 // 초기화
 renderTemplates('all', 'all-templates');
 renderTemplates('buy', 'buy-templates');
 renderTemplates('b2b', 'b2b-templates');
 renderTemplates('etc', 'etc-templates');
+
+// 로그인한 역할 표시 (실제 접근 차단은 서버 middleware.js 가 담당)
+(function(){
+  var m=document.cookie.match(/(?:^|; )hd_role=([^;]+)/);
+  var role=m?m[1]:'';
+  if(role==='admin') document.body.classList.add('is-admin');
+  var b=document.getElementById('role-badge');
+  if(b) b.textContent = role==='admin' ? '관리자' : role==='staff' ? '부관리자' : '관리';
+})();
 </script>
 </body>
 </html>
