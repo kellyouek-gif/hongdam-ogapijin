@@ -101,6 +101,10 @@ header {
   padding:9px 18px !important; font-weight:700 !important;
   transition:background .2s !important;
 }
+.h-share { width:36px; height:36px; border-radius:50%; border:none; background:#FEE500; cursor:pointer;
+  display:inline-flex; align-items:center; justify-content:center; margin-left:8px; padding:0; flex-shrink:0; transition:filter .2s; }
+.h-share:hover { filter:brightness(.95); }
+.h-share svg { width:19px; height:19px; }
 .h-cta:hover { background:var(--ogp-green-800) !important; color:var(--ogp-paper) !important; }
 
 /* ── Hero ── */
@@ -651,15 +655,9 @@ footer {
 }
 
 /* ── 카카오톡 공유 버튼 ── */
-.kshare-fab { position:fixed; right:18px; bottom:18px; z-index:400; width:46px; height:46px; border-radius:50%;
-  background:#FEE500; border:none; cursor:pointer; display:flex; align-items:center; justify-content:center;
-  box-shadow:0 6px 20px -4px rgba(0,0,0,.35); transition:transform .2s; }
-.kshare-fab:hover { transform:translateY(-2px); }
-.kshare-fab svg { width:23px; height:23px; }
 .kshare-toast { position:fixed; left:50%; bottom:90px; transform:translateX(-50%); z-index:401; background:rgba(16,38,26,.92);
   color:#fff; font-size:14px; padding:10px 18px; border-radius:999px; opacity:0; pointer-events:none; transition:opacity .25s; }
 .kshare-toast.on { opacity:1; }
-@media (max-width:640px){ .kshare-fab { right:12px; bottom:12px; width:40px; height:40px; } .kshare-fab svg { width:20px; height:20px; } }
 </style>
 </head>
 <body>
@@ -679,6 +677,7 @@ footer {
     <a href="#drinks">음료</a>
     <a href="#b2b">납품문의</a>
     <a href="#contact">문의</a>
+    <button type="button" class="h-share" onclick="shareKakao()" aria-label="카카오톡으로 공유하기" title="카카오톡으로 공유하기"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="#191919" d="M12 3C6.5 3 2 6.5 2 10.8c0 2.8 1.9 5.2 4.7 6.6l-1 3.6c-.1.3.3.6.6.4l4.2-2.8c.5.1 1 .1 1.5.1 5.5 0 10-3.5 10-7.9S17.5 3 12 3z"/></svg></button>
     <a href="#products" class="h-cta">구매하기</a>
   </nav>
 </header>
@@ -1730,9 +1729,6 @@ document.querySelectorAll('.rv').forEach(el => {
 </script>
 
 <!-- 카카오톡 공유 버튼 -->
-<button class="kshare-fab" type="button" onclick="shareKakao()" aria-label="카카오톡으로 공유하기" title="카카오톡으로 공유하기">
-  <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="#191919" d="M12 3C6.5 3 2 6.5 2 10.8c0 2.8 1.9 5.2 4.7 6.6l-1 3.6c-.1.3.3.6.6.4l4.2-2.8c.5.1 1 .1 1.5.1 5.5 0 10-3.5 10-7.9S17.5 3 12 3z"/></svg>
-</button>
 <div class="kshare-toast" id="kshareToast"></div>
 <script src="https://t1.kakaocdn.net/kakao_js_sdk/2.7.4/kakao.min.js" crossorigin="anonymous"></script>
 <script>
